@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  <!-- hack css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hack/0.8.1/hack.css" />
   <!-- main css -->
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
@@ -14,9 +15,40 @@
   {% endif %}
 
 </head>
-<body>
-  <div>
-      {% block content %}{% endblock %}
+<body class="hack">
+  <div class="container" style="padding:3%;">
+    <b style="font-size:30px;">nickipedia</b>
+    <hr>
+    <div class="grid">
+      <div class="cell -2of12">
+        <div class="menu">
+          <a class="menu-item active">
+            home
+            <div class="pull-right">»</div>
+          </a>
+          <a class="menu-item">
+            settings
+            <div class="pull-right">»</div>
+          </a>
+          <a class="menu-item">
+            about
+            <div class="pull-right">»</div>
+          </a>
+        </div>
+      </div>
+      <div class="cell -0.5of12"></div>
+      <div class="cell -7of12">
+        <div>
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+      <div class="cell -0.5of12"></div>
+      <div class="cell -2of12">
+        <div class="alert alert-info">Info message<p>Bachenbenno auf Tour</p></div>
+      </div>
+    </div>
+    <hr>
+    <footer class="footer">Version 0.1</footer>
   </div>
 </body>
 </html>
