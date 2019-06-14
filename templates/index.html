@@ -1,4 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
-<p>Hello World</p>
+{% for post in posts %}
+<div class="media">
+  <div class="media-body">
+    <div class="media-heading">{{ post.author }} @<a>{{ post.username }}</a></div>
+    <div class="media-content">{{ post.text }}</div>
+  </div>
+</div>
+{% endfor %}
 {% endblock content %}
