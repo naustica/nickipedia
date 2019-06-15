@@ -1,2 +1,5 @@
 flask
 werkzeug
+Flask-WTF
+click
+flask-sqlalchemy

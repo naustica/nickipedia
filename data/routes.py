@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request
+from data import app
+from flask import render_template, request
 from werkzeug import secure_filename
+from data.forms import Search
+from data.models import User, Post
 
-app = Flask(__name__)
 
 posts = [
     {
@@ -36,10 +38,13 @@ posts = [
     }
 ]
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', posts=posts)
+    search = Search(request.form)
+    if request.method == 'POST':
+        return search_results(search)
+    return render_template('index.html', posts=posts, form=search)
 
 @app.route('/user/<name>')
 def user(name):
@@ -60,7 +65,3 @@ def uppload_file():
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
