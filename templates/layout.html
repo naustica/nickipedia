@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- hack css -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hack/0.8.1/hack.css" />
+  <!-- plyr css -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.5.3/plyr.css" />
   <!-- main css -->
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
@@ -22,14 +24,16 @@
     <div class="grid">
       <div class="cell -2of12">
         <div class="menu">
-          <a class="menu-item active">
+          <a class="menu-item active" href="/home">
             home
             <div class="pull-right">»</div>
           </a>
+          <br>
           <a class="menu-item">
             settings
             <div class="pull-right">»</div>
           </a>
+          <br>
           <a class="menu-item">
             about
             <div class="pull-right">»</div>
@@ -44,11 +48,15 @@
       </div>
       <div class="cell -0.5of12"></div>
       <div class="cell -2of12">
+        <button class="btn btn-default"><a href="/upload">Upload</a></button>
+        <p/>
         <div class="alert alert-info">Info message<p>Bachenbenno auf Tour</p></div>
       </div>
     </div>
     <hr>
     <footer class="footer">Version 0.1</footer>
   </div>
+  <!-- js -->
+  <script src="https://cdn.plyr.io/3.5.3/plyr.polyfilled.js"></script>
 </body>
 </html>
