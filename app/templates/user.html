@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="media">
+<div class="card">
+  <header class="card-header">Profil von {{ name }}</header>
+  <div class="card-content">
+    <div class="inner">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, quas ex vero enim in doloribus officiis ullam vel nam esse sapiente velit incidunt. Eaque quod et, aut maiores excepturi sint.</div>
+  </div>
+</div>
+<hr>
+<div class="card">
+  <header class="card-header">Poops von {{ name }}</header>
+</div>
+<br>
+<div class="card">
+  <header class="card-header">Peter gestikuliert vor sich hin.</header>
+  <div class="card-content">
+    <video poster="{{url_for('static', filename='videos/test.mp4')}}" id="player" ratio="4:3" style="width:100%;" playsinline controls>
+      <source src="{{url_for('static', filename='videos/test.mp4')}}" type="video/mp4">
+    </video>
+  </div>
+</div>
+</div>
+{% endblock content %}
