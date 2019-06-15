@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from werkzeug import secure_filename
 
 app = Flask(__name__)
 
@@ -43,6 +44,18 @@ def index():
 @app.route('/user/<name>')
 def user(name):
     return render_template('user.html', name=name)
+
+@app.route('/upload')
+def upload_file():
+   return render_template('upload.html')
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def uppload_file():
+   if request.method == 'POST':
+      f = request.files['file']
+      f.save('uploads/' + secure_filename(f.filename))
+      success = True
+      return render_template('upload.html', success=success)
 
 @app.errorhandler(404)
 def page_not_found(error):
