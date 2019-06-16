@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+  <form class=form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+      <div class="form-group">
+        {{ form.username.label(class="form-control-label") }}
+        {{ form.username(class="form-control") }}
+      </div>
+      <div class="form-actions">
+        {{ form.submit(class="btn btn-primary btn-ghost") }}
+    </fieldset>
+  </form>
+</div>
+{% endblock content %}
