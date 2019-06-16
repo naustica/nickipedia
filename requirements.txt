@@ -1,5 +1,6 @@
 flask
 werkzeug
-Flask-WTF
+flask-wtf
 click
 flask-sqlalchemy
+flask-bcrypt
