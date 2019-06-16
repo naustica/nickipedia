@@ -20,10 +20,10 @@
 <body class="hack">
   <div class="container" style="padding:3%;">
     <b style="font-size:30px;">nickipedia</b>
-    <form class="form" style="margin-left: auto; margin-right: auto">
+    <form class="form" action="" method="POST" style="margin-left: auto; margin-right: auto">
       <fieldset class="form-group">
         <label for="search"><b>search:</b></label>
-        <input id="search" type="text" placeholder="search..." class="form-control">
+        <input id="search" name="search" type="text" placeholder="search..." class="form-control">
       </fieldset>
     </form>
     <hr>
@@ -49,12 +49,21 @@
       <div class="cell -0.5of12"></div>
       <div class="cell -7of12">
         <div>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-warning">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
           {% block content %}{% endblock %}
         </div>
       </div>
       <div class="cell -0.5of12"></div>
       <div class="cell -2of12">
-        <button class="btn btn-default"><a href="/upload">Upload</a></button>
+        <button class="btn btn-default"><a href="/upload">upload</a></button>
         <p/>
         <div class="alert alert-info">Info message<p>Bachenbenno auf Tour</p></div>
       </div>
