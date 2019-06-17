@@ -1,21 +1,16 @@
 from data import app
+from flask_login import login_user, logout_user, login_required
 from flask import render_template, request, flash, redirect, url_for
 from werkzeug import secure_filename
-from data.forms import Search, RegistrationForm, LoginForm
+from data.forms import SearchForm, RegistrationForm, LoginForm
 from data.models import User, Post
 from data.models import db
+
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 def index():
     posts = Post.query.all()
-    if request.method == 'POST':
-        search = User.query.filter_by(username=request.form['search']).first()
-        if search == None:
-            pass
-        else:
-            return redirect(url_for('user', name=search.username))
-
     return render_template('index.html', posts=posts)
 
 
@@ -34,13 +29,27 @@ def register():
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
+
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        flash('hi, {}'.format(form.username.data))
-        return redirect(url_for('index'))
+        user = User.query.filter_by(username=form.username.data).first()
+        login_user(user)
+        flash('logged in successfully')
+
+        next = request.args.get('next')
+        return redirect(next or url_for('index'))
     return render_template('login.html', title='Login', form=form)
+
+
+@app.route('/search', methods = ['GET', 'POST'])
+def search():
+    form = SearchForm()
+    if form.validate_on_submit():
+        search = User.query.filter_by(username=request.form['search']).first()
+        return redirect(url_for('user', name=search.username))
+    return render_template('search.html', title='search', form=form)
 
 @app.route('/upload')
 def upload():
