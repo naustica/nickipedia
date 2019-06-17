@@ -4,3 +4,4 @@ flask-wtf
 click
 flask-sqlalchemy
 flask-bcrypt
+flask-login
