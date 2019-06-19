@@ -5,7 +5,7 @@ from flask import flash
 from data.models import User
 
 class SearchForm(FlaskForm):
-    search = StringField('search', validators=[DataRequired(), Length(min=2, max=64)])
+    search = StringField('search:', validators=[DataRequired(), Length(min=2, max=64)])
 
     submit = SubmitField('search')
 
@@ -18,7 +18,7 @@ class SearchForm(FlaskForm):
             raise ValueError('no results')
 
 class RegistrationForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired(), Length(min=2, max=64)])
+    username = StringField('username:', validators=[DataRequired(), Length(min=2, max=64)])
 
     submit = SubmitField('sign up')
 
@@ -31,7 +31,7 @@ class RegistrationForm(FlaskForm):
             raise ValueError('username taken')
 
 class LoginForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired(), Length(min=2, max=64)])
+    username = StringField('username:', validators=[DataRequired(), Length(min=2, max=64)])
 
     submit = SubmitField('login')
 
