@@ -1,15 +1,24 @@
-{% extends "layout.html" %}
 {% block content %}
-<div class="container">
-  <form class=form method="POST" action="">
-    {{ form.hidden_tag() }}
+<div id="header">
+  <b>nickipedia</b>
+</div>
+<div class="container" style="position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-warning">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <form class=form method="POST" action="" style="margin-left: auto; margin-right: auto;">
+    {{ loginform.hidden_tag() }}
     <fieldset class="form-group">
       <div class="form-group">
-        {{ form.username.label(class="form-control-label") }}
-        {{ form.username(class="form-control") }}
+        {{ loginform.username.label(class="form-control-label", style="font-weight:bold") }}
+        {{ loginform.username(class="form-control") }}
       </div>
-      <div class="form-actions">
-        {{ form.submit(class="btn btn-primary btn-ghost") }}
     </fieldset>
   </form>
 </div>
