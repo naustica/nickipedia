@@ -1,15 +1,12 @@
-{% extends "layout.html" %}
 {% block content %}
 <div class="container">
-  <form class=form method="POST" action="">
-    {{ form.hidden_tag() }}
+  <form class=form method="POST" action="" style="margin-left: auto; margin-right: auto;">
+    {{ searchform.hidden_tag() }}
     <fieldset class="form-group">
       <div class="form-group">
-        {{ form.search.label(class="form-control-label") }}
-        {{ form.search(class="form-control") }}
+        {{ searchform.search.label(class="form-control-label", style="font-weight:bold") }}
+        {{ searchform.search(class="form-control", placeholder="search...") }}
       </div>
-      <div class="form-actions">
-        {{ form.submit(class="btn btn-primary btn-ghost") }}
     </fieldset>
   </form>
 </div>
