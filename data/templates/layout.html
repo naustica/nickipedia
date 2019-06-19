@@ -18,14 +18,10 @@
 
 </head>
 <body class="hack">
+  {% if current_user.is_authenticated %}
   <div class="container" style="padding:3%;">
     <b style="font-size:30px;">nickipedia</b>
-    <form class="form" action="" method="POST" style="margin-left: auto; margin-right: auto">
-      <fieldset class="form-group">
-        <label for="search"><b>search:</b></label>
-        <input id="search" name="search" type="text" placeholder="search..." class="form-control">
-      </fieldset>
-    </form>
+    {% include "search.html" %}
     <hr>
     <div class="grid">
       <div class="cell -2of12">
@@ -63,14 +59,22 @@
       </div>
       <div class="cell -0.5of12"></div>
       <div class="cell -2of12">
-        <button class="btn btn-default"><a href="/upload">upload</a></button>
+        {% if current_user.is_authenticated %}
+        <button class="btn btn-error btn-ghost"><a style="text-decoration:none" href="/logout">logout</a></button>
         <p/>
+        <button class="btn btn-default btn-ghost"><a href="/upload">upload</a></button>
+        <p/>
+        {% else %}
+        {% endif %}
         <div class="alert alert-info">Info message<p>Bachenbenno auf Tour</p></div>
       </div>
     </div>
     <hr>
     <footer class="footer">Version 0.1</footer>
   </div>
+    {% else %}
+    {% include "login.html" %}
+    {% endif %}
   <!-- js -->
   <script src="https://cdn.plyr.io/3.5.3/plyr.polyfilled.js"></script>
 </body>
