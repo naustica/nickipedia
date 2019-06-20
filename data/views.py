@@ -5,47 +5,59 @@ from werkzeug import secure_filename
 from data.forms import SearchForm, RegistrationForm, LoginForm
 from data.models import User, Post
 from data.models import db
+from functools import wraps
 
+def add_search(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        global searchform
+        searchform = SearchForm()
+        if searchform.validate_on_submit():
+            search = User.query.filter_by(username=request.form['search']).first()
+            return redirect(url_for('user', name=search.username))
+        return function(*args, **kwargs)
+    return wrapper
+
+def add_login(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        global loginform
+        loginform = LoginForm()
+        if loginform.validate_on_submit():
+            user = User.query.filter_by(username=loginform.username.data).first()
+            login_user(user)
+            flash('logged in successfully')
+
+            next = request.args.get('next')
+            return redirect(next or url_for('index'))
+        return function(*args, **kwargs)
+    return wrapper
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
+@add_login
+def login():
+
+    return render_template('login.html', loginform=loginform)
+
 @app.route('/home', methods=['GET', 'POST'])
+@add_search
 def index():
     posts = Post.query.all()
-    searchform = SearchForm()
-    if searchform.validate_on_submit():
-        search = User.query.filter_by(username=request.form['search']).first()
-        return redirect(url_for('user', name=search.username))
 
-    loginform = LoginForm()
-    if loginform.validate_on_submit():
-        user = User.query.filter_by(username=loginform.username.data).first()
-        login_user(user)
-        flash('logged in successfully')
-
-        next = request.args.get('next')
-        return redirect(next or url_for('index'))
-
-    return render_template('index.html', posts=posts, searchform=searchform, loginform=loginform)
+    return render_template('index.html', posts=posts, searchform=searchform)
 
 
 @app.route('/user/<name>', methods=['GET', 'POST'])
 @login_required
+@add_search
 def user(name):
-    searchform = SearchForm()
-    if searchform.validate_on_submit():
-        search = User.query.filter_by(username=request.form['search']).first()
-        return redirect(url_for('user', name=search.username))
-
     return render_template('user.html', name=name, searchform=searchform)
 
 @app.route('/register', methods = ['GET', 'POST'])
 @login_required
+@add_search
 def register():
-    searchform = SearchForm()
-    if searchform.validate_on_submit():
-        search = User.query.filter_by(username=request.form['search']).first()
-        return redirect(url_for('user', name=search.username))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data)
@@ -57,11 +69,8 @@ def register():
 
 @app.route('/upload', methods = ['GET', 'POST'])
 @login_required
+@add_search
 def upload():
-    searchform = SearchForm()
-    if searchform.validate_on_submit():
-        search = User.query.filter_by(username=request.form['search']).first()
-        return redirect(url_for('user', name=search.username))
     return render_template('upload.html', searchform=searchform)
 
 @app.route('/uploader', methods = ['GET', 'POST'])
@@ -86,4 +95,4 @@ def unauthorized_callback():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
