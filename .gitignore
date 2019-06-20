@@ -1,6 +1,6 @@
 venv/
 __pycache__/
-images/
-videos/
-uploads/
+images/*
+videos/*
+uploads/*
 *.sqlite
