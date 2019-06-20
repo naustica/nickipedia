@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- hack css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hack/0.8.1/hack.css" />
-  <!-- plyr css -->
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.5.3/plyr.css" />
-  <!-- main css -->
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-
-  {% if title %}
-    <title>nickipedia - {{ title }}</title>
-  {% else %}
-    <title>nickipedia</title>
-  {% endif %}
-
-</head>
+{% include "meta.html" %}
 <body class="hack">
   {% if current_user.is_authenticated %}
   <div class="container" style="padding:3%;">
@@ -45,15 +27,7 @@
       <div class="cell -0.5of12"></div>
       <div class="cell -7of12">
         <div>
-          {% with messages = get_flashed_messages() %}
-            {% if messages %}
-              {% for message in messages %}
-                <div class="alert alert-warning">
-                  {{ message }}
-                </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
+          {% include "messages.html" %}
           {% block content %}{% endblock %}
         </div>
       </div>
