@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, SubmitField
+from wtforms import Form, StringField, SubmitField, TextAreaField
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length
 from flask import flash
@@ -42,3 +42,12 @@ class LoginForm(FlaskForm):
         if user is None:
             flash('get rekt username dont exist')
             raise ValueError('username dont exist')
+
+class PoopForm(FlaskForm):
+    content = StringField('', validators=[DataRequired(), Length(min=1, max=160)])
+
+    submit = SubmitField('posten')
+
+    def validate_content(self, content):
+
+        pass
