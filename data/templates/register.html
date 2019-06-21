@@ -1,16 +1,20 @@
-{% extends "layout.html" %}
-{% block content %}
-<div class="container">
-  <form class=form method="POST" action="">
-    {{ form.hidden_tag() }}
-    <fieldset class="form-group">
-      <div class="form-group">
-        {{ form.username.label(class="form-control-label") }}
-        {{ form.username(class="form-control") }}
-      </div>
-      <div class="form-actions">
-        {{ form.submit(class="btn btn-primary btn-ghost") }}
-    </fieldset>
-  </form>
-</div>
-{% endblock content %}
+{% include "meta.html" %}
+<body class="hack">
+  <div id="header">
+    <b>nickipedia</b>
+  </div>
+  <div class="container" style="position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);">
+    {% include "messages.html" %}
+    <form class=form method="POST" action="">
+      {{ registrationform.hidden_tag() }}
+      <fieldset class="form-group">
+        <div class="form-group">
+          {{ registrationform.username.label(class="form-control-label") }}
+          {{ registrationform.username(class="form-control") }}
+        </div>
+        <div class="form-actions">
+          {{ registrationform.submit(class="btn btn-primary btn-ghost") }}
+      </fieldset>
+    </form>
+  </div>
+</body>
