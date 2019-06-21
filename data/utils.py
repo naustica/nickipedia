@@ -1,9 +1,10 @@
-from data.forms import SearchForm, RegistrationForm, LoginForm
+from data.forms import SearchForm, RegistrationForm, LoginForm, PoopForm
 from functools import wraps
 from data.models import db
 from data.models import User, Post
 from flask import request, flash, redirect, url_for
-from flask_login import login_user
+from flask_login import login_user, current_user
+
 
 def add_search(function):
     @wraps(function)
@@ -42,5 +43,19 @@ def add_register(function):
             db.session.commit()
             flash('account created for {}'.format(registrationform.username.data))
             return redirect(url_for('index'))
+        return function(*args, **kwargs)
+    return wrapper
+
+def add_compose_poop(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        global poopform
+        poopform = PoopForm()
+        if poopform.validate_on_submit():
+            post = Post(author_id=current_user.get_id(), content=poopform.content.data)
+            db.session.add(post)
+            db.session.commit()
+            flash('posted')
+        poopform = PoopForm(formdata=None)
         return function(*args, **kwargs)
     return wrapper
