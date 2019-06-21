@@ -1,6 +1,5 @@
 {% include "meta.html" %}
 <body class="hack">
-  {% if current_user.is_authenticated %}
   <div class="container" style="padding:3%;">
     <b style="font-size:30px;">nickipedia</b>
     {% include "search.html" %}
@@ -33,22 +32,19 @@
       </div>
       <div class="cell -0.5of12"></div>
       <div class="cell -2of12">
-        {% if current_user.is_authenticated %}
+        {% include "compose.html" %}
+        <p/>
         <button class="btn btn-error btn-ghost"><a style="text-decoration:none" href="/logout">logout</a></button>
         <p/>
         <button class="btn btn-default btn-ghost"><a href="/upload">upload</a></button>
         <p/>
-        {% else %}
-        {% endif %}
         <div class="alert alert-info">Info message<p>Bachenbenno auf Tour</p></div>
       </div>
     </div>
     <hr>
     <footer class="footer">Version 0.1</footer>
   </div>
-    {% else %}
-    {% include "login.html" %}
-    {% endif %}
+
   <!-- js -->
   <script src="https://cdn.plyr.io/3.5.3/plyr.polyfilled.js"></script>
   <script src="{{ url_for('static', filename='js/main.js') }}" type="text/javascript"></script>
