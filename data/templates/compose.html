@@ -1,0 +1,14 @@
+{% block content %}
+<button id="poop-button" class="btn btn-primary btn-ghost">poopen</button>
+<div class="compose-poop-window">
+  <div class="poop-content">
+    <span class="close-button">&times;</span>
+    <form class=form method="POST" action="" style="margin-left: auto; margin-right: auto;">
+      {{ poopform.hidden_tag() }}
+      <fieldset class="form-group form-textarea">
+          {{ poopform.content(id="poop-form-control", class="form-control", placeholder="kek...") }}
+      </fieldset>
+    </form>
+  </div>
+</div>
+{% endblock content %}
