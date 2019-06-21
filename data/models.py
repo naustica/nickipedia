@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
 class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     content = db.Column(db.Text)
 
     def __repr__(self):
