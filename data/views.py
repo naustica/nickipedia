@@ -79,3 +79,9 @@ def unauthorized_callback():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+@app.route("/reset")
+def reset():
+    db.drop_all()
+    db.create_all()
+    return redirect(url_for('register'))
