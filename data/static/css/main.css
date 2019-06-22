@@ -11,7 +11,7 @@ body {
     font-size: var(--fnt-size)
 }
 .container {
-    max-width: 80rem;
+    max-width: 100rem;
     margin: 0 auto;
     padding: 0 1rem;
 }
@@ -32,6 +32,7 @@ body {
     background-color: rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
+    display: none;
     transform: scale(1.02);
     transition: visibility 0s linear 0.15s, opacity 0.15s, transform 0.15s;
 }
@@ -43,7 +44,8 @@ body {
     transform: translate(-50%, -50%);
     background-color: #FFFFFF;
     padding: 1rem 1.5rem;
-    width: 50%;
+    width: 450px;
+    height: 300px;
     border: 1px solid #ccc;
     border-radius: 0.5rem;
 }
@@ -57,12 +59,60 @@ body {
 .close-button:hover {
     font-weight: bold;
 }
+.compose-poop-form {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+.compose-textarea {
+    resize: none;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 350px;
+    font-size: 1.5rem;
+    padding: 1rem;
+    height: 150px;
+}
 .show-compose-poop-window{
     opacity: 1;
+    display: block;
     visibility: visible;
     transform: scale(1.0);
     transition: visibility 0s linear 0s, opacity 0.15s, transform 0.15s;
 }
-#poop-form-control{
-    font-size: 1.5rem;;
+.btn {
+    border-radius: 10px;
+    width: 7rem;
+}
+.dismiss-flash {
+    float: right;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 1.5rem;
+}
+.dismiss-flash:hover {
+    font-weight: bold;
+}
+.img-profil {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+.horizontal-line {
+    position: relative;
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background: #ccc;
+}
+.vertical-line-l {
+    position: relative;
+    border-left: 1px solid #ccc;
+    height: 100%;
+}
+.vertical-line-r {
+    position: relative;
+    border-right: 1px solid #ccc;
+    height: 100%;
 }
