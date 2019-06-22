@@ -12,6 +12,11 @@ function windowOnClick(event) {
   }
 }
 
+function dismissFlashMessage() {
+  var flashMessage = document.getElementById("flash-message");
+  flashMessage.style.display = "none"
+}
+
 poopButton.addEventListener("click", toggleComposeWindow);
 closeButton.addEventListener("click", toggleComposeWindow);
 window.addEventListener("click", windowOnClick)
