@@ -44,7 +44,7 @@ class LoginForm(FlaskForm):
             raise ValueError('username dont exist')
 
 class PoopForm(FlaskForm):
-    content = StringField('', validators=[DataRequired(), Length(min=1, max=160)])
+    content = TextAreaField('', validators=[DataRequired(), Length(min=1, max=160)])
 
     submit = SubmitField('posten')
 
