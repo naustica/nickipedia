@@ -41,6 +41,7 @@ def add_register(function):
             user = User(username=registrationform.username.data)
             db.session.add(user)
             db.session.commit()
+            login_user(user)
             flash('account created for {}'.format(registrationform.username.data))
             return redirect(url_for('index'))
         return function(*args, **kwargs)
