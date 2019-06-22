@@ -3,45 +3,49 @@
   <div class="container" style="padding:3%;">
     <b style="font-size:30px;">nickipedia</b>
     {% include "search.html" %}
-    <hr>
+    <div class="horizontal-line"></div>
     <div class="grid">
-      <div class="cell -2of12">
-        <div class="menu">
+      <div class="cell -2of12" style="margin: 1rem;">
+        <div class="menu" style="margin-top: 1rem; margin-right: 2rem;">
           <a class="menu-item active" href="/home">
-            home
+            <b>home</b>
             <div class="pull-right">»</div>
           </a>
           <br>
           <a class="menu-item">
-            settings
+            <b>settings</b>
             <div class="pull-right">»</div>
           </a>
           <br>
           <a class="menu-item">
-            about
+            <b>about</b>
             <div class="pull-right">»</div>
           </a>
         </div>
       </div>
-      <div class="cell -0.5of12"></div>
-      <div class="cell -7of12">
+      <div class="cell -0.5of12">
+        <div class="vertical-line-l"></div>
+      </div>
+        <div class="cell -7of12">
         <div>
           {% include "messages.html" %}
           {% block content %}{% endblock %}
         </div>
       </div>
-      <div class="cell -0.5of12"></div>
-      <div class="cell -2of12">
+      <div class="cell -0.5of12">
+        <div class="vertical-line-r"></div>
+      </div>
+      <div class="cell -2of12" style="margin: 2rem;">
         {% include "compose.html" %}
         <p/>
-        <button class="btn btn-error btn-ghost"><a style="text-decoration:none" href="/logout">logout</a></button>
+        <button class="btn btn-error btn-ghost" onClick="window.location.href='/logout'">logout</button>
         <p/>
-        <button class="btn btn-default btn-ghost"><a href="/upload">upload</a></button>
+        <button class="btn btn-default btn-ghost" onClick="window.location.href='/upload'">upload</button>
         <p/>
-        <div class="alert alert-info">Info message<p>Bachenbenno auf Tour</p></div>
+        <div class="alert alert-info">info message<p>bachenbenno auf tour</p></div>
       </div>
     </div>
-    <hr>
+    <div class="horizontal-line"></div>
     <footer class="footer">Version 0.1</footer>
   </div>
 
