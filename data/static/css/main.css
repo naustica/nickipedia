@@ -23,7 +23,7 @@ body {
     transform: translate(-50%,-50%);
     font-size: 30px;
 }
-.compose-poop-window {
+.window {
     position: fixed;
     left: 0;
     top: 0;
@@ -36,7 +36,7 @@ body {
     transform: scale(1.02);
     transition: visibility 0s linear 0.15s, opacity 0.15s, transform 0.15s;
 }
-.poop-content{
+.window-content{
     position: absolute;
     top: 30%;
     left: 50%;
@@ -45,7 +45,7 @@ body {
     background-color: #FFFFFF;
     padding: 1rem 1.5rem;
     width: 450px;
-    height: 300px;
+    height: 340px;
     border: 1px solid #ccc;
     border-radius: 0.5rem;
 }
@@ -69,12 +69,12 @@ body {
     border: 2px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    width: 350px;
+    width: 330px;
     font-size: 1.5rem;
     padding: 1rem;
-    height: 150px;
+    height: 170px;
 }
-.show-compose-poop-window{
+.show-window {
     opacity: 1;
     display: block;
     visibility: visible;
