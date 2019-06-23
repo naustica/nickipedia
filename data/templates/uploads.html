@@ -1,0 +1,23 @@
+{% block content %}
+<button id="upload-button" class="btn btn-primary btn-ghost">upload</button>
+<div id="upload-window" class="window">
+  <div class="container" style="margin: 3rem;">
+    <div class="window-content">
+      <span id="close-upload-window" class="close-button">&times;</span>
+      <hr>
+      <div class="media">
+        <div class="media-left">
+          <img src="{{url_for('static', filename='images/test.jpg')}}" class="img-profil" style="margin-top: 1.5rem;"/>
+        </div>
+        <div class="media-body">
+          <div class="media-content">
+            {{ dropzone.create(action=url_for('.index' or '.user')) }}
+            {{ dropzone.style('border: 2px solid #ccc; border-radius: 5px; margin: 1rem; width: 300px; height: 180px;') }}
+            <button class="btn btn-success btn-ghost" onClick="window.location.href='/home'">upload complete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
