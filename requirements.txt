@@ -5,3 +5,4 @@ click
 flask-sqlalchemy
 flask-bcrypt
 flask-login
+flask-dropzone
