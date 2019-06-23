@@ -1,24 +1,26 @@
 {% block content %}
 <button id="poop-button" class="btn btn-primary btn-ghost">poopen</button>
-<div class="compose-poop-window">
-  <div class="poop-content">
-    <span class="close-button">&times;</span>
-    <hr>
-    <div class="media">
-      <div class="media-left">
-        <img src="{{url_for('static', filename='images/test.jpg')}}" class="img-profil"/>
-      </div>
-      <div class="media-body">
-        <div class="media-content">
-          <form class="compose-poop-form" method="POST" action="">
-            {{ poopform.hidden_tag() }}
-            <fieldset>
-              {{ poopform.content(class="compose-textarea", placeholder="kek...") }}
-            </fieldset>
-            <div class="form-actions" style="float: right; padding-top: 1rem;">
-              {{ poopform.submit(class="btn btn-primary btn-ghost") }}
-            </div>
-          </form>
+<div id="compose-poop-window" class="window">
+  <div class="container" style="margin: 3rem;">
+    <div class="window-content">
+      <span id="close-compose-window" class="close-button">&times;</span>
+      <hr>
+      <div class="media">
+        <div class="media-left">
+          <img src="{{url_for('static', filename='images/test.jpg')}}" class="img-profil"/>
+        </div>
+        <div class="media-body">
+          <div class="media-content">
+            <form class="compose-poop-form" method="POST" action="">
+              {{ poopform.hidden_tag() }}
+              <fieldset>
+                {{ poopform.content(class="compose-textarea", placeholder="kek...") }}
+              </fieldset>
+              <div class="form-actions" style="float: right; padding-top: 1rem;">
+                {{ poopform.submit(class="btn btn-primary btn-ghost") }}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
