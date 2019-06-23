@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hack/0.8.1/hack.css" />
   <!-- plyr css -->
   <link rel="stylesheet" href="https://cdn.plyr.io/3.5.3/plyr.css" />
+  <!-- dropzone css and js -->
+  {{ dropzone.load_css() }}
+  {{ dropzone.load_js() }}
   <!-- main css -->
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
 
