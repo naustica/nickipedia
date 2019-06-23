@@ -8,17 +8,17 @@
       <div class="cell -2of12" style="margin: 1rem;">
         <div class="menu" style="margin-top: 1rem; margin-right: 2rem;">
           <a class="menu-item active" href="/home">
-            <b>home</b>
+            <b style="font-size: 14px;">home</b>
             <div class="pull-right">»</div>
           </a>
           <br>
           <a class="menu-item">
-            <b>settings</b>
+            <b style="font-size: 14px;">settings</b>
             <div class="pull-right">»</div>
           </a>
           <br>
           <a class="menu-item">
-            <b>about</b>
+            <b style="font-size: 14px;">about</b>
             <div class="pull-right">»</div>
           </a>
         </div>
@@ -40,7 +40,7 @@
         <p/>
         <button class="btn btn-error btn-ghost" onClick="window.location.href='/logout'">logout</button>
         <p/>
-        <button class="btn btn-default btn-ghost" onClick="window.location.href='/upload'">upload</button>
+        {% include "uploads.html" %}
         <p/>
         <div class="alert alert-info">info message<p>bachenbenno auf tour</p></div>
       </div>
