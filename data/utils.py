@@ -4,6 +4,10 @@ from data.models import db
 from data.models import User, Post
 from flask import request, flash, redirect, url_for
 from flask_login import login_user, current_user
+import os
+from data import basedir
+from werkzeug import secure_filename
+import time
 
 
 def add_search(function):
@@ -58,5 +62,16 @@ def add_compose_poop(function):
             db.session.commit()
             flash('posted')
         poopform = PoopForm(formdata=None)
+        return function(*args, **kwargs)
+    return wrapper
+
+def add_uploader(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        if request.method == 'POST':
+            f = request.files.get('file')
+            f.save(os.path.join(basedir, 'uploads/') + secure_filename(f.filename))
+            time.sleep(1)
+            flash('uploaded')
         return function(*args, **kwargs)
     return wrapper
