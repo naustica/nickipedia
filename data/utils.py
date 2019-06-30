@@ -69,9 +69,12 @@ def add_uploader(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
         if request.method == 'POST':
-            f = request.files.get('file')
-            f.save(os.path.join(basedir, 'uploads/') + secure_filename(f.filename))
-            time.sleep(1)
-            flash('uploaded')
+            try:
+                f = request.files.get('file')
+                f.save(os.path.join(basedir, 'uploads/') + secure_filename(f.filename))
+                time.sleep(1)
+                flash('uploaded')
+            except:
+                flash('error-image-uploading')
         return function(*args, **kwargs)
     return wrapper
