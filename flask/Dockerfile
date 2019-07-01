@@ -12,4 +12,4 @@ EXPOSE 5000
 COPY . /app
 WORKDIR /app
 
-CMD ["python3", "run.py"]
+CMD ["uwsgi", "app.ini"]
