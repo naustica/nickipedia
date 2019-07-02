@@ -7,3 +7,4 @@ flask-bcrypt
 flask-login
 flask-dropzone
 uwsgi
+psycopg2-binary
