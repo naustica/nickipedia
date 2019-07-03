@@ -13,11 +13,11 @@
           <div class="media-content">
             <form class="compose-poop-form" method="POST" action="">
               {{ poopform.hidden_tag() }}
-              <fieldset>
-                {{ poopform.content(class="compose-textarea", placeholder="kek...") }}
+              <fieldset >
+                {{ poopform.content(id="compose-textarea", class="compose-textarea", placeholder="kek...") }}
               </fieldset>
               <div class="form-actions" style="float: right; padding-top: 1rem;">
-                {{ poopform.submit(class="btn btn-primary btn-ghost") }}
+                {{ poopform.submit(id="compose-submit-button", class="btn btn-primary btn-ghost") }}
               </div>
             </form>
           </div>
