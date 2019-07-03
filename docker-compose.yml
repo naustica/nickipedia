@@ -15,15 +15,3 @@ services:
     restart: always
     ports:
       - "80:80"
-
-  database:
-    container_name: postgres
-    image: postgres:latest
-    env_file: database.conf
-    ports:
-      - 5432:5432
-    volumes:
-      - db_volume:/var/libpostgresql
-
-volumes:
-  db_volume:
