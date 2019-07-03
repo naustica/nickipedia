@@ -61,7 +61,7 @@ def add_compose_poop(function):
             db.session.add(post)
             db.session.commit()
             flash('posted')
-        poopform = PoopForm(formdata=None)
+            return redirect(url_for('index'))
         return function(*args, **kwargs)
     return wrapper
 
