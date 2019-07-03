@@ -24,9 +24,14 @@ function windowOnClick(event) {
   }
 }
 
-function dismissFlashMessage() {
-  var flashMessage = document.getElementById("flash-message");
-  flashMessage.style.display = "none"
+function dismissFlashMessage(messageWindow) {
+  var flashMessage = messageWindow.parentNode;
+  if (flashMessage.id == "flash-message") {
+    flashMessage.remove();
+  }
+  else {
+    console.log(messageWindow + "has no parent node with id 'flash-message'");
+  }
 }
 
 poopButton.addEventListener("click", toggleComposeWindow);
