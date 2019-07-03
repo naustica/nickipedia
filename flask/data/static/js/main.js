@@ -6,6 +6,8 @@ var uploadWindow = document.querySelector("#upload-window");
 var uploadButton = document.querySelector("#upload-button");
 var closeUploadWindowButton = document.querySelector("#close-upload-window");
 
+var composeInput = document.getElementById("compose-textarea");
+
 function toggleComposeWindow() {
   composeWindow.classList.toggle("show-window");
 }
@@ -39,5 +41,12 @@ closeComposeWindowButton.addEventListener("click", toggleComposeWindow);
 
 uploadButton.addEventListener("click", toggleUploadWindow);
 closeUploadWindowButton.addEventListener("click", toggleUploadWindow);
+
+composeInput.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    document.getElementById("compose-submit-button").click();
+  }
+});
 
 window.addEventListener("click", windowOnClick)
