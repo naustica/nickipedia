@@ -2,7 +2,7 @@
   {% if messages %}
     {% for message in messages %}
       <div id="flash-message" class="alert alert-warning" style="margin: 1rem;">
-        <span class="dismiss-flash" onClick="dismissFlashMessage()">&times;</span>
+        <span class="dismiss-flash" onClick="dismissFlashMessage(this)">&times;</span>
         {{ message }}
       </div>
     {% endfor %}
