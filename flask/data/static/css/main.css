@@ -80,6 +80,10 @@ body {
   border-radius: 10px;
   width: 7rem; }
 
+.btn:hover {
+  transform: scale(1.1);
+  transition: 0.25s ease-in-out; }
+
 .dismiss-flash {
   float: right;
   cursor: pointer;
