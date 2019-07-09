@@ -1,16 +1,3 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var composeInput = document.getElementById("compose-textarea");
 function dismissFlashMessage(messageWindow) {
     var flashMessage = messageWindow.parentNode;
@@ -28,8 +15,9 @@ composeInput.addEventListener("keyup", function (event) {
     }
 });
 var WindowBox = /** @class */ (function () {
-    function WindowBox() {
+    function WindowBox(_a) {
         var _this = this;
+        var triggerID = _a.triggerID, modalID = _a.modalID, closeWindowID = _a.closeWindowID;
         this.toggleWindow = function () {
             _this.modal.classList.toggle("show-window");
         };
@@ -38,9 +26,9 @@ var WindowBox = /** @class */ (function () {
                 _this.toggleWindow();
             }
         };
-        this.trigger = null;
-        this.modal = null;
-        this.closeWindow = null;
+        this.trigger = document.querySelector(triggerID);
+        this.modal = document.querySelector(modalID);
+        this.closeWindow = document.querySelector(closeWindowID);
         if (this.trigger !== null && this.modal !== null && this.closeWindow !== null) {
             this.trigger.addEventListener("click", this.toggleWindow);
             this.closeWindow.addEventListener("click", this.toggleWindow);
@@ -49,37 +37,5 @@ var WindowBox = /** @class */ (function () {
     }
     return WindowBox;
 }());
-var ComposeWindow = /** @class */ (function (_super) {
-    __extends(ComposeWindow, _super);
-    function ComposeWindow() {
-        var _this = _super.call(this) || this;
-        _this.trigger = document.querySelector("#poop-button");
-        _this.modal = document.querySelector("#compose-poop-window");
-        _this.closeWindow = document.querySelector("#close-compose-window");
-        if (_this.trigger !== null && _this.modal !== null && _this.closeWindow !== null) {
-            _this.trigger.addEventListener("click", _this.toggleWindow);
-            _this.closeWindow.addEventListener("click", _this.toggleWindow);
-            window.addEventListener("click", _this.windowOnClick);
-        }
-        return _this;
-    }
-    return ComposeWindow;
-}(WindowBox));
-var UploadWindow = /** @class */ (function (_super) {
-    __extends(UploadWindow, _super);
-    function UploadWindow() {
-        var _this = _super.call(this) || this;
-        _this.trigger = document.querySelector("#upload-button");
-        _this.modal = document.querySelector("#upload-window");
-        _this.closeWindow = document.querySelector("#close-upload-window");
-        if (_this.trigger !== null && _this.modal !== null && _this.closeWindow !== null) {
-            _this.trigger.addEventListener("click", _this.toggleWindow);
-            _this.closeWindow.addEventListener("click", _this.toggleWindow);
-            window.addEventListener("click", _this.windowOnClick);
-        }
-        return _this;
-    }
-    return UploadWindow;
-}(WindowBox));
-var composeWindow = new ComposeWindow();
-var uploadWindow = new UploadWindow();
+var composeWindow = new WindowBox({ triggerID: "#poop-button", modalID: "#compose-poop-window", closeWindowID: "#close-compose-window" });
+var uploadWindow = new WindowBox({ triggerID: "#upload-button", modalID: "#upload-window", closeWindowID: "#close-upload-window" });

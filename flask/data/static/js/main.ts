@@ -23,16 +23,22 @@ composeInput.addEventListener("keyup", function(event) {
   }
 });
 
+interface WindowBoxParameters {
+  triggerID: string;
+  modalID: string;
+  closeWindowID: string;
+}
+
 class WindowBox {
 
   public trigger: any;
   public modal: any;
   public closeWindow: any;
 
-  public constructor() {
-    this.trigger = null;
-    this.modal = null;
-    this.closeWindow = null;
+  public constructor({triggerID, modalID, closeWindowID}: WindowBoxParameters) {
+    this.trigger = document.querySelector(triggerID);
+    this.modal = document.querySelector(modalID);
+    this.closeWindow = document.querySelector(closeWindowID);
 
     if (this.trigger !== null && this.modal !== null && this.closeWindow !== null) {
       this.trigger.addEventListener("click", this.toggleWindow);
@@ -51,37 +57,5 @@ class WindowBox {
   }
 }
 
-class ComposeWindow extends WindowBox {
-
-    constructor() {
-      super();
-      this.trigger = document.querySelector("#poop-button");
-      this.modal = document.querySelector("#compose-poop-window");
-      this.closeWindow = document.querySelector("#close-compose-window");
-
-      if (this.trigger !== null && this.modal !== null && this.closeWindow !== null) {
-        this.trigger.addEventListener("click", this.toggleWindow);
-        this.closeWindow.addEventListener("click", this.toggleWindow);
-        window.addEventListener("click", this.windowOnClick);
-      }
-    }
-}
-
-class UploadWindow extends WindowBox {
-
-  constructor() {
-    super();
-    this.trigger = document.querySelector("#upload-button");
-    this.modal = document.querySelector("#upload-window");
-    this.closeWindow = document.querySelector("#close-upload-window");
-
-    if (this.trigger !== null && this.modal !== null && this.closeWindow !== null) {
-      this.trigger.addEventListener("click", this.toggleWindow);
-      this.closeWindow.addEventListener("click", this.toggleWindow);
-      window.addEventListener("click", this.windowOnClick);
-    }
-  }
-}
-
-const composeWindow = new ComposeWindow();
-const uploadWindow = new UploadWindow();
+const composeWindow = new WindowBox({triggerID: "#poop-button", modalID: "#compose-poop-window", closeWindowID: "#close-compose-window"});
+const uploadWindow = new WindowBox({triggerID: "#upload-button", modalID: "#upload-window", closeWindowID: "#close-upload-window"});
