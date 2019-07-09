@@ -1,29 +1,8 @@
-var composeWindow = document.querySelector("#compose-poop-window");
-var poopButton = document.querySelector("#poop-button");
-var closeComposeWindowButton = document.querySelector("#close-compose-window");
 
-var uploadWindow = document.querySelector("#upload-window");
-var uploadButton = document.querySelector("#upload-button");
-var closeUploadWindowButton = document.querySelector("#close-upload-window");
 
 var composeInput = document.getElementById("compose-textarea");
 
-function toggleComposeWindow() {
-  composeWindow.classList.toggle("show-window");
-}
 
-function toggleUploadWindow() {
-  uploadWindow.classList.toggle("show-window");
-}
-
-function windowOnClick(event) {
-  if (event.target == composeWindow) {
-    toggleComposeWindow();
-  }
-  else if (event.target == uploadWindow) {
-    toggleUploadWindow();
-  }
-}
 
 function dismissFlashMessage(messageWindow) {
   var flashMessage = messageWindow.parentNode;
@@ -35,11 +14,7 @@ function dismissFlashMessage(messageWindow) {
   }
 }
 
-poopButton.addEventListener("click", toggleComposeWindow);
-closeComposeWindowButton.addEventListener("click", toggleComposeWindow);
 
-uploadButton.addEventListener("click", toggleUploadWindow);
-closeUploadWindowButton.addEventListener("click", toggleUploadWindow);
 
 composeInput.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
@@ -48,4 +23,65 @@ composeInput.addEventListener("keyup", function(event) {
   }
 });
 
-window.addEventListener("click", windowOnClick)
+class WindowBox {
+
+  public trigger: any;
+  public modal: any;
+  public closeWindow: any;
+
+  public constructor() {
+    this.trigger = null;
+    this.modal = null;
+    this.closeWindow = null;
+
+    if (this.trigger !== null && this.modal !== null && this.closeWindow !== null) {
+      this.trigger.addEventListener("click", this.toggleWindow);
+      this.closeWindow.addEventListener("click", this.toggleWindow);
+      window.addEventListener("click", this.windowOnClick);
+    }
+
+  }
+  toggleWindow = (): void => {
+    this.modal.classList.toggle("show-window");
+  }
+  windowOnClick = (event): void => {
+    if (event.target === this.modal) {
+      this.toggleWindow();
+    }
+  }
+}
+
+class ComposeWindow extends WindowBox {
+
+    constructor() {
+      super();
+      this.trigger = document.querySelector("#poop-button");
+      this.modal = document.querySelector("#compose-poop-window");
+      this.closeWindow = document.querySelector("#close-compose-window");
+
+      if (this.trigger !== null && this.modal !== null && this.closeWindow !== null) {
+        this.trigger.addEventListener("click", this.toggleWindow);
+        this.closeWindow.addEventListener("click", this.toggleWindow);
+        window.addEventListener("click", this.windowOnClick);
+      }
+    }
+}
+
+class UploadWindow extends WindowBox {
+
+  constructor() {
+    super();
+    this.trigger = document.querySelector("#upload-button");
+    this.modal = document.querySelector("#upload-window");
+    this.closeWindow = document.querySelector("#close-upload-window");
+
+    if (this.trigger !== null && this.modal !== null && this.closeWindow !== null) {
+      this.trigger.addEventListener("click", this.toggleWindow);
+      this.closeWindow.addEventListener("click", this.toggleWindow);
+      window.addEventListener("click", this.windowOnClick);
+    }
+  }
+}
+
+const composeWindow = new ComposeWindow();
+const uploadWindow = new UploadWindow();
