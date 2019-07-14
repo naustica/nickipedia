@@ -1,13 +1,9 @@
 {% include "meta.html" %}
-<body class="hack">
-  <div id="header">
-    <b>nickipedia</b>
-  </div>
+<body class="container">
   <div class="container" style="position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);">
     {% include "messages.html" %}
     <form class=form method="POST" action="">
       {{ registrationform.hidden_tag() }}
-      <fieldset class="form-group">
         <div class="form-group">
           {{ registrationform.username.label(class="form-control-label") }}
           {{ registrationform.username(class="form-control") }}
@@ -15,7 +11,6 @@
         <div class="form-actions">
           {{ registrationform.submit(class="btn btn-primary btn-ghost") }}
         </div>
-      </fieldset>
     </form>
   </div>
   {% include "scripts.html" %}

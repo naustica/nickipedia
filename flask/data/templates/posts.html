@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for post in posts %}
+<div class="media" id="posts">
+  <img src="{{url_for('static', filename='images/test.jpg')}}" class="align-self-center mr-3" id="img-profil"/>
+  <div class="media-body">
+    <div class="mt-0">{{ post.author.username }} @<a href="user/{{ post.author.username }}">{{ post.author.username }}</a></div>
+    <div class="mb-0">{{ post.content }}</div>
+  </div>
+</div>
+{% endfor %}
+{% endblock content %}
