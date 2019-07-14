@@ -18,6 +18,7 @@ class SearchForm(FlaskForm):
             raise ValueError('no results')
 
 class RegistrationForm(FlaskForm):
+
     username = StringField('username:', validators=[DataRequired(), Length(min=2, max=64)])
 
     submit = SubmitField('sign up')
@@ -31,6 +32,7 @@ class RegistrationForm(FlaskForm):
             raise ValueError('username taken')
 
 class LoginForm(FlaskForm):
+
     username = StringField('username:', validators=[DataRequired(), Length(min=2, max=64)])
 
     submit = SubmitField('login')
@@ -44,6 +46,7 @@ class LoginForm(FlaskForm):
             raise ValueError('username dont exist')
 
 class PoopForm(FlaskForm):
+
     content = TextAreaField('', validators=[DataRequired(), Length(min=1, max=160)])
 
     submit = SubmitField('posten')
