@@ -19,14 +19,12 @@ def login():
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 @add_search
-@add_compose_poop
-@add_uploader
 def index():
     posts = Post.query.order_by(desc(Post.id)).all()
 
-    from data.utils import searchform, poopform
+    from data.utils import searchform
 
-    return render_template('index.html', posts=posts, searchform=searchform, poopform=poopform)
+    return render_template('search.html', posts=posts, searchform=searchform)
 
 
 @app.route('/user/<name>', methods=['GET', 'POST'])
