@@ -1,7 +1,7 @@
-from data.forms import SearchForm, RegistrationForm, LoginForm, PoopForm
+from data.forms import SearchForm, RegistrationForm, LoginForm, CommentForm
 from functools import wraps
 from data.models import db
-from data.models import User, Post
+from data.models import User, Comment
 from flask import request, flash, redirect, url_for
 from flask_login import login_user, current_user
 import os
@@ -17,9 +17,10 @@ def add_search(function):
         searchform = SearchForm()
         if searchform.validate_on_submit():
             search = User.query.filter_by(username=request.form['search']).first()
-            return redirect(url_for('user', name=search.username))
+            return redirect(url_for('result', search=search.username))
         return function(*args, **kwargs)
     return wrapper
+
 
 def add_login(function):
     @wraps(function)
@@ -36,6 +37,7 @@ def add_login(function):
         return function(*args, **kwargs)
     return wrapper
 
+
 def add_register(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
@@ -51,19 +53,21 @@ def add_register(function):
         return function(*args, **kwargs)
     return wrapper
 
-def add_compose_poop(function):
+
+def add_comment_composer(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
-        global poopform
-        poopform = PoopForm()
-        if poopform.validate_on_submit():
-            post = Post(author_id=current_user.get_id(), content=poopform.content.data)
-            db.session.add(post)
+        global commentform
+        commentform = CommentForm()
+        if commentform.validate_on_submit():
+            comment = Comment(author_id=current_user.get_id(), video_id=1, content=commentform.content.data)
+            db.session.add(comment)
             db.session.commit()
             flash('posted')
-            return redirect(url_for('index'))
+            return redirect(url_for('video', video_id=1))
         return function(*args, **kwargs)
     return wrapper
+
 
 def add_uploader(function):
     @wraps(function)
