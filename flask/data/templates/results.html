@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container" style="margin-top: 3rem;">
+  {% for i in range(3) %}
+  <div class="card mb-2" id="result-card">
+    <div class="row no-gutters">
+      <div class="col-md-3">
+        <img src="../static/images/test.jpg" class="card-img-top" id="card-img-result" alt="...">
+      </div>
+      <div class="col-md-4">
+        <div class="card-body">
+          <h5 class="card-title">{{ search }}</h5>
+          <p class="card-text">Card text</p>
+        </div>
+        <div class="card-body">
+          <a href="/watch/1" class="card-link">Card link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}
