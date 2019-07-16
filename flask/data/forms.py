@@ -1,8 +1,9 @@
-from wtforms import Form, StringField, SubmitField, TextAreaField
+from wtforms import Form, StringField, SubmitField, TextAreaField, TextField
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length
 from flask import flash
 from data.models import User
+
 
 class SearchForm(FlaskForm):
     search = StringField('search:', validators=[DataRequired(), Length(min=2, max=64)])
@@ -16,6 +17,7 @@ class SearchForm(FlaskForm):
         if search is None:
             flash('get rekt no results')
             raise ValueError('no results')
+
 
 class RegistrationForm(FlaskForm):
 
@@ -31,6 +33,7 @@ class RegistrationForm(FlaskForm):
             flash('get rekt username taken')
             raise ValueError('username taken')
 
+
 class LoginForm(FlaskForm):
 
     username = StringField('username:', validators=[DataRequired(), Length(min=2, max=64)])
@@ -45,9 +48,10 @@ class LoginForm(FlaskForm):
             flash('get rekt username dont exist')
             raise ValueError('username dont exist')
 
-class PoopForm(FlaskForm):
 
-    content = TextAreaField('', validators=[DataRequired(), Length(min=1, max=160)])
+class CommentForm(FlaskForm):
+
+    content = TextField('', validators=[DataRequired(), Length(min=1, max=80)])
 
     submit = SubmitField('posten')
 
