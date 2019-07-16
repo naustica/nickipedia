@@ -2,7 +2,7 @@
 <body class="container">
   <div class="container" id="login-container">
     {% include "messages.html" %}
-    <form method="POST" action="" style="margin-left: auto; margin-right: auto;">
+    <form class="login-form" method="POST" action="">
       {{ loginform.hidden_tag() }}
         <div class="form-group">
           {{ loginform.username(class="form-control", placeholder="username") }}
