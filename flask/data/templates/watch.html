@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container" style="margin-top: 2.5rem;">
+  <div class="row" style="width: 100%; padding: 1rem;">
+    <div class="col-sm-9">
+      <video class="card-img-top" poster="{{url_for('static', filename=root) }}" id="player" ratio="4:3" style="width:100%; border-radius: 5px; outline: none;" playsinline controls>
+        <source src="{{url_for('static', filename=root) }}" type="video/mp4">
+      </video>
+      <div class="card" style="margin-top: 0.5rem; opacity: 0.95; background-color: #F5F5F5; border: 2px solid #ccc; border-radius: 5px;">
+        <div class="card-body">
+          <h1 class="card-title" style="z-index: 1;">{{ video_title }}</h1>
+          <h5 class="card-subtitle"><a href="{{ url_for('user', name=video_author) }}" class="card-link">{{ video_author }}</a></h5>
+          <br>
+          <p class="card-text">{{ video_description }}</p>
+        </div>
+      </div>
+      <div class="container">
+          <div class="media">
+            <img src="{{url_for('static', filename='images/test.jpg')}}" class="align-self-start mr-3" id="img-profil"/>
+            <div class="media-body">
+              <div class="mb-0">
+                <form class="compose-comment-form" method="POST" action="">
+                  {{ commentform.hidden_tag() }}
+                  <fieldset >
+                    {{ commentform.content(id="compose-textarea", class="compose-textarea", placeholder="leave a comment...") }}
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="background-color: transparent; opacity: 0.95;">
+      {% for i in range(3) %}
+      <div class="card" style="height: 150px; width: 150px; background-color: transparent; margin: 1rem; border-radius: 5px;">
+        <img src="../static/images/background.jpg" class="card-img-top" alt="..." style="border-radius: 5px;">
+        <div class="card-img-overlay">
+          <h5 class="card-title">Video Vorschläge</h5>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="col-8" style="margin-top: -1.5rem;">
+  {% for comment in comments %}
+  <div class="media" id="posts" style="opacity: 0.95; margin-left: 1rem; border: 2px solid #ccc;">
+    <img src="{{url_for('static', filename='images/test.jpg')}}" class="align-self-center mr-3" id="img-profil"/>
+    <div class="media-body">
+      <div class="mt-0">{{ comment.author.username }} @<a href="user/{{ comment.author.username }}">{{ comment.author.username }}</a></div>
+      <div class="mb-0">{{ comment.content }}</div>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock content %}
