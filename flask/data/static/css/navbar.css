@@ -1,0 +1,11 @@
+.navbar {
+  position: fixed;
+  overflow: hidden;
+  z-index: 100; }
+
+.n-breadcrumb {
+  position: fixed;
+  overflow: hidden;
+  z-index: 100; }
+
+/*# sourceMappingURL=navbar.css.map */

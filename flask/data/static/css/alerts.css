@@ -1,0 +1,14 @@
+.dismiss-flash {
+  float: right;
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 1.5rem; }
+
+.dismiss-flash:hover {
+  font-weight: bold; }
+
+#flash-message {
+  margin: 1rem;
+  z-index: 101; }
+
+/*# sourceMappingURL=alerts.css.map */

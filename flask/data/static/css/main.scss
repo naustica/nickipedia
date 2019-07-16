@@ -1,6 +1,17 @@
+@import "navbar.scss";
+@import "forms.scss";
+@import "windows.scss";
+@import "alerts.scss";
+@import "login.scss";
+@import "register.scss";
+@import "cards.scss"; 
+
+:root {
+    --white: #F5F5F5;
+}
 body, html {
     font-size: 14px;
-    background-image: url('../images/background.jpg');
+    background-image: url("../images/background.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -9,88 +20,13 @@ body, html {
 .container {
     padding: 2rem;
 }
-.searchform {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    width: 50%;
-}
-.window {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    visibility: hidden;
-    display: none;
-    transform: scale(1.02);
-    transition: visibility 0s linear 0.15s, opacity 0.15s, transform 0.15s;
-}
-.window-content{
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    text-align: center;
-    transform: translate(-50%, -50%);
-    background-color: #FFFFFF;
-    padding: 1rem 1.5rem;
-    width: 450px;
-    height: 340px;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-}
-.close-button {
-    float: right;
-    line-height: 2rem;
-    cursor: pointer;
-    font-weight: normal;
-    font-size: 1.5rem;
-}
-.close-button:hover {
-    font-weight: bold;
-}
-.compose-poop-form {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-}
-.compose-textarea {
-    resize: none;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    width: 330px;
-    font-size: 1.5rem;
-    padding: 1rem;
-    height: 170px;
-}
-.show-window {
-    opacity: 1;
-    display: block;
-    visibility: visible;
-    transform: scale(1.0);
-    transition: visibility 0s linear 0s, opacity 0.15s, transform 0.15s;
-}
 .btn {
     border-radius: 10px;
     width: 7rem;
 }
 .btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     transition: 0.25s ease-in-out;
-}
-.dismiss-flash {
-    float: right;
-    cursor: pointer;
-    font-weight: normal;
-    font-size: 1.5rem;
-}
-.dismiss-flash:hover {
-    font-weight: bold;
 }
 #img-profil {
     border-radius: 50%;
@@ -98,32 +34,10 @@ body, html {
     width: 50px;
 }
 #posts {
-    margin: 2rem;
-    background-color: white;
+    margin-bottom: 1.5rem;
+    background-color: var(--white);
     opacity: 0.9;
     padding: 1rem;
     border-radius: 10px;
     z-index: 1
-}
-.navbar {
-    position: fixed;
-    overflow: hidden;
-    z-index: 100;
-}
-#login-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    width: 30%;
-    transform: translate(-50%, -50%);
-}
-input[type=text] {
-    border-radius: 10px;
-    padding: 1.5rem;
-    transition: all 0.3s ease-in-out;
-}
-input[type=text]:focus {
-    border-radius: 20px;
-    transition: border-radius 0.3s;
 }
