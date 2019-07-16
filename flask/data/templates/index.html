@@ -1,0 +1,17 @@
+{% include "meta.html" %}
+<body>
+{% include "navbar.html" %}
+<div class="container">
+  {% include "breadcrumb.html" %}
+  {% include "messages.html" %}
+  <form class="searchform" method="POST" action="">
+    {{ searchform.hidden_tag() }}
+    <fieldset class="form-group">
+      <div class="form-group">
+        {{ searchform.search(class="form-control", id="search-input", placeholder="search...") }}
+      </div>
+    </fieldset>
+  </form>
+</div>
+{% include "scripts.html" %}
+</body>
