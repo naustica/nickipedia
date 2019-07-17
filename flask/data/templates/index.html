@@ -1,17 +1,11 @@
-{% include "meta.html" %}
-<body>
-{% include "navbar.html" %}
-<div class="container">
-  {% include "breadcrumb.html" %}
-  {% include "messages.html" %}
-  <form class="searchform" method="POST" action="">
-    {{ searchform.hidden_tag() }}
-    <fieldset class="form-group">
-      <div class="form-group">
-        {{ searchform.search(class="form-control", id="search-input", placeholder="search...") }}
-      </div>
-    </fieldset>
-  </form>
-</div>
-{% include "scripts.html" %}
-</body>
+{% extends "layout.html" %}
+{% block content %}
+<div class="container" id="searchform-container">
+    <form method="POST" action="">
+      {{ searchform.hidden_tag() }}
+      <fieldset>
+        {{ searchform.search(class="searchform-textarea", placeholder="search...") }}
+      </fieldset>
+    </form>
+  </div>
+{% endblock content %}

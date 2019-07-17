@@ -21,7 +21,7 @@
               <div class="mb-0">
                 <form class="compose-comment-form" method="POST" action="">
                   {{ commentform.hidden_tag() }}
-                  <fieldset >
+                  <fieldset>
                     {{ commentform.content(id="compose-textarea", class="compose-textarea", placeholder="leave a comment...") }}
                   </fieldset>
                 </form>
@@ -48,7 +48,7 @@
   <div class="media" id="posts" style="opacity: 0.95; margin-left: 1rem; border: 2px solid #ccc;">
     <img src="{{url_for('static', filename='images/test.jpg')}}" class="align-self-center mr-3" id="img-profil"/>
     <div class="media-body">
-      <div class="mt-0">{{ comment.author.username }} @<a href="user/{{ comment.author.username }}">{{ comment.author.username }}</a></div>
+      <div class="mt-0">{{ comment.author.username }} @<a href="../user/{{ comment.author.username }}">{{ comment.author.username }}</a></div>
       <div class="mb-0">{{ comment.content }}</div>
     </div>
   </div>
