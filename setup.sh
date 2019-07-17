@@ -13,3 +13,5 @@ readonly BASENAME=$PWD
 #cd "$BASENAME"
 
 python ./flask/dbconfig.py
+cd ~
+cd "$BASENAME"
