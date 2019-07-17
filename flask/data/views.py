@@ -10,6 +10,8 @@ from data.forms import CommentForm, SearchForm, LoginForm, RegistrationForm
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
+    current_page = 'login'
+
     loginform = LoginForm()
     if loginform.validate_on_submit():
         user = User.query.filter_by(username=loginform.username.data).first()
@@ -19,7 +21,7 @@ def login():
         next = request.args.get('next')
         return redirect(next or url_for('index'))
 
-    return render_template('login.html', loginform=loginform)
+    return render_template('login.html', current_page=current_page, loginform=loginform)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -49,6 +51,8 @@ def user(name):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 
+    current_page = 'registration'
+
     registrationform = RegistrationForm()
     if registrationform.validate_on_submit():
         user = User(username=registrationform.username.data)
@@ -58,7 +62,7 @@ def register():
         flash('account created for {}'.format(registrationform.username.data))
         return redirect(url_for('index'))
 
-    return render_template('register.html', title='Register', registrationform=registrationform)
+    return render_template('register.html', title='Register', current_page=current_page, registrationform=registrationform)
 
 
 @app.route('/watch/<video_id>', methods=['GET', 'POST'])
