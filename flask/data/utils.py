@@ -1,72 +1,9 @@
-from data.forms import SearchForm, RegistrationForm, LoginForm, CommentForm
 from functools import wraps
-from data.models import db
-from data.models import User, Comment
-from flask import request, flash, redirect, url_for
-from flask_login import login_user, current_user
+from flask import request, flash
 import os
 from data import basedir
 from werkzeug import secure_filename
 import time
-
-
-def add_search(function):
-    @wraps(function)
-    def wrapper(*args, **kwargs):
-        global searchform
-        searchform = SearchForm()
-        if searchform.validate_on_submit():
-            search = User.query.filter_by(username=request.form['search']).first()
-            return redirect(url_for('result', search=search.username))
-        return function(*args, **kwargs)
-    return wrapper
-
-
-def add_login(function):
-    @wraps(function)
-    def wrapper(*args, **kwargs):
-        global loginform
-        loginform = LoginForm()
-        if loginform.validate_on_submit():
-            user = User.query.filter_by(username=loginform.username.data).first()
-            login_user(user)
-            flash('logged in successfully')
-
-            next = request.args.get('next')
-            return redirect(next or url_for('index'))
-        return function(*args, **kwargs)
-    return wrapper
-
-
-def add_register(function):
-    @wraps(function)
-    def wrapper(*args, **kwargs):
-        global registrationform
-        registrationform = RegistrationForm()
-        if registrationform.validate_on_submit():
-            user = User(username=registrationform.username.data)
-            db.session.add(user)
-            db.session.commit()
-            login_user(user)
-            flash('account created for {}'.format(registrationform.username.data))
-            return redirect(url_for('index'))
-        return function(*args, **kwargs)
-    return wrapper
-
-
-def add_comment_composer(function):
-    @wraps(function)
-    def wrapper(*args, **kwargs):
-        global commentform
-        commentform = CommentForm()
-        if commentform.validate_on_submit():
-            comment = Comment(author_id=current_user.get_id(), video_id=1, content=commentform.content.data)
-            db.session.add(comment)
-            db.session.commit()
-            flash('posted')
-            return redirect(url_for('video', video_id=1))
-        return function(*args, **kwargs)
-    return wrapper
 
 
 def add_uploader(function):
