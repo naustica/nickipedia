@@ -1,27 +1,5 @@
+declare var jquery: any;
 
-
-var composeInput = document.getElementById("compose-textarea");
-
-
-
-function dismissFlashMessage(messageWindow) {
-  var flashMessage = messageWindow.parentNode;
-  if (flashMessage.id == "flash-message") {
-    flashMessage.remove();
-  }
-  else {
-    console.log(messageWindow + "has no parent node with id 'flash-message'");
-  }
-}
-
-
-
-composeInput.addEventListener("keyup", function(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    document.getElementById("compose-submit-button").click();
-  }
-});
 
 interface WindowBoxParameters {
   triggerID: string;
@@ -50,7 +28,7 @@ class WindowBox {
   toggleWindow = (): void => {
     this.modal.classList.toggle("show-window");
   }
-  windowOnClick = (event): void => {
+  windowOnClick = (event: any): void => {
     if (event.target === this.modal) {
       this.toggleWindow();
     }

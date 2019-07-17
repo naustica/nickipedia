@@ -1,19 +1,3 @@
-var composeInput = document.getElementById("compose-textarea");
-function dismissFlashMessage(messageWindow) {
-    var flashMessage = messageWindow.parentNode;
-    if (flashMessage.id == "flash-message") {
-        flashMessage.remove();
-    }
-    else {
-        console.log(messageWindow + "has no parent node with id 'flash-message'");
-    }
-}
-composeInput.addEventListener("keyup", function (event) {
-    if (event.keyCode === 13) {
-        event.preventDefault();
-        document.getElementById("compose-submit-button").click();
-    }
-});
 var WindowBox = /** @class */ (function () {
     function WindowBox(_a) {
         var _this = this;
@@ -39,3 +23,4 @@ var WindowBox = /** @class */ (function () {
 }());
 var composeWindow = new WindowBox({ triggerID: "#poop-button", modalID: "#compose-poop-window", closeWindowID: "#close-compose-window" });
 var uploadWindow = new WindowBox({ triggerID: "#upload-button", modalID: "#upload-window", closeWindowID: "#close-upload-window" });
+//# sourceMappingURL=main.js.map
