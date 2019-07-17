@@ -1,0 +1,28 @@
+{
+  "name": "nickipedia",
+  "version": "0.0.1",
+  "description": "the official nickipedia website",
+  "main": "index.js",
+  "scripts": {
+    "test": "1,2,3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naustica/nickipedia.git"
+  },
+  "keywords": [
+    "rofl"
+  ],
+  "author": "naustica",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/naustica/nickipedia/issues"
+  },
+  "homepage": "https://github.com/naustica/nickipedia#readme",
+  "devDependencies": {
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.6"
+  }
+}

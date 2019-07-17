@@ -1,0 +1,9 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "sourceMap": true
+  },
+  "files":[
+    "flask/data/static/js/main.ts"
+  ]
+}
