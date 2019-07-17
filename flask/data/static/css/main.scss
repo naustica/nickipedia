@@ -4,7 +4,7 @@
 @import "alerts.scss";
 @import "login.scss";
 @import "register.scss";
-@import "cards.scss"; 
+@import "cards.scss";
 
 :root {
     --white: #F5F5F5;
@@ -16,7 +16,7 @@ body, html {
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
-}
+} 
 .container {
     padding: 2rem;
 }

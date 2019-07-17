@@ -1,14 +1,19 @@
-.searchform {
-    position: absolute;
+#searchform-container {
+    width: 50%;
+    position: fixed;
     top: 40%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
-    width: 50%;
-    outline: none;
 }
-.searchform:focus {
+.searchform-textarea {
     outline: none;
+    width: 100%;
+    height: 1rem;
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+    background-color: #F5F5F5;
+    opacity: 0.95;
 }
 .compose-comment-form {
     margin-left: auto;
@@ -30,9 +35,11 @@ input[type=text] {
     padding: 1.5rem;
     transition: all 0.3s ease-in-out;
     border-width: 0px;
+    outline: none;
 }
 input[type=text]:focus {
     border-radius: 20px;
     transition: border-radius 0.3s;
     border-width: 0px;
+    outline: none;
 }
