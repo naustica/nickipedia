@@ -9,6 +9,9 @@
 :root {
     --white: #F5F5F5;
 }
+a, a:link, a:visited, a:active, a:hover {
+    text-decoration: none;
+}
 body, html {
     font-size: 14px;
     background-image: url("../images/background.jpg");
@@ -22,7 +25,6 @@ body, html {
 }
 .btn {
     border-radius: 10px;
-    width: 7rem;
 }
 .btn:hover {
     transform: scale(1.05);

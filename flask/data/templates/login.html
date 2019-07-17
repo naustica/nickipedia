@@ -1,13 +1,14 @@
-{% include "meta.html" %}
-<body class="container">
-  <div class="container" id="login-container">
-    {% include "messages.html" %}
-    <form class="login-form" method="POST" action="">
-      {{ loginform.hidden_tag() }}
-        <div class="form-group">
-          {{ loginform.username(class="form-control", placeholder="username") }}
-        </div>
-    </form>
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+  <form method="POST" action="">
+    {{ loginform.hidden_tag() }}
+    <fieldset>
+      {{ loginform.username(class="login-textarea", placeholder="username...") }}
+    </fieldset>
+  </form>
+  <div class="login-info">
+    <a href="/register" style="font-size: 16px;">dont have an account?</a>
   </div>
-  {% include "scripts.html" %}
-</body>
+</div>
+{% endblock content %}

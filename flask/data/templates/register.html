@@ -1,17 +1,14 @@
-{% include "meta.html" %}
-<body class="container">
-  <div class="container" id="register-container">
-    {% include "messages.html" %}
-    <form class=form method="POST" action="">
-      {{ registrationform.hidden_tag() }}
-        <div class="form-group">
-          {{ registrationform.username.label(class="form-control-label") }}
-          {{ registrationform.username(class="form-control") }}
-        </div>
-        <div class="form-actions">
-          {{ registrationform.submit(class="btn btn-primary btn-ghost") }}
-        </div>
-    </form>
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+  <form class=form method="POST" action="">
+    {{ registrationform.hidden_tag() }}
+    <fieldset>
+      {{ registrationform.username(class="register-textarea", placeholder="username...") }}
+    </fieldset>
+  </form>
+  <div class="register-info">
+    <a href="/login" style="font-size: 16px;">already have an account?</a>
   </div>
-  {% include "scripts.html" %}
-</body>
+</div>
+{% endblock content %}
