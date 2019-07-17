@@ -2,7 +2,7 @@ from wtforms import Form, StringField, SubmitField, TextAreaField, TextField
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length
 from flask import flash
-from data.models import User
+from data.models import User, Video
 
 
 class SearchForm(FlaskForm):
@@ -12,7 +12,7 @@ class SearchForm(FlaskForm):
 
     def validate_search(self, search):
 
-        search = User.query.filter_by(username=search.data).first()
+        search = Video.query.filter(Video.title.like('{}{}{}'.format('%', search.data, '%'))).first()
 
         if search is None:
             flash('get rekt no results')
