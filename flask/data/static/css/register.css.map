@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,mBAAoB;EAClB,QAAQ,EAAE,QAAQ;EAClB,GAAG,EAAE,GAAG;EACR,IAAI,EAAE,GAAG;EACT,YAAY,EAAE,IAAI;EAClB,SAAS,EAAE,qBAAqB",
-"sources": ["register.scss"],
-"names": [],
-"file": "register.css"
-}

@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,cAAe;EACX,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,OAAO;EACf,WAAW,EAAE,MAAM;EACnB,SAAS,EAAE,MAAM;;AAErB,oBAAqB;EACjB,WAAW,EAAE,IAAI;;AAErB,cAAe;EACX,MAAM,EAAE,IAAI;EACZ,OAAO,EAAE,GAAG",
-"sources": ["alerts.scss"],
-"names": [],
-"file": "alerts.css"
-}

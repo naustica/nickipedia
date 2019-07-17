@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,YAAa;EACX,gBAAgB,EAAE,OAAO;EACzB,MAAM,EAAE,MAAM;EACd,KAAK,EAAE,GAAG;EACV,aAAa,EAAE,IAAI;EACnB,OAAO,EAAE,IAAI;;AAEf,gBAAiB;EACf,aAAa,EAAE,IAAI;EACnB,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,KAAK;EACb,OAAO,EAAE,MAAM",
-"sources": ["cards.scss"],
-"names": [],
-"file": "cards.css"
-}
