@@ -31,8 +31,7 @@ def index():
 
     searchform = SearchForm()
     if searchform.validate_on_submit():
-        search = User.query.filter_by(username=request.form['search']).first()
-        return redirect(url_for('result', search=search.username))
+        return redirect(url_for('result', search=request.form['search']))
 
     current_page = 'index'
 
@@ -62,7 +61,7 @@ def register():
         flash('account created for {}'.format(registrationform.username.data))
         return redirect(url_for('index'))
 
-    return render_template('register.html', title='Register', current_page=current_page, registrationform=registrationform)
+    return render_template('register.html', title='registration', current_page=current_page, registrationform=registrationform)
 
 
 @app.route('/watch/<video_id>', methods=['GET', 'POST'])
@@ -85,6 +84,8 @@ def video(video_id):
 
     comments = Comment.query.filter_by(video_id=video_id).order_by(desc(Comment.id)).all()
 
+    suggestions = Video.query.filter(Video.id != video_id).all()
+
     commentform = CommentForm()
     if commentform.validate_on_submit():
         comment = Comment(author_id=current_user.get_id(), video_id=video_id, content=commentform.content.data)
@@ -96,13 +97,15 @@ def video(video_id):
     return render_template('watch.html', video_id=video_id, comments=comments,
                             commentform=commentform, root=root, video_title=video_title,
                             video_description=video_description, video_author=video_author,
-                            current_page=current_page)
+                            current_page=current_page, suggestions=suggestions)
 
 
 @app.route('/result/<search>', methods=['GET', 'POST'])
 def result(search):
 
     current_page = 'result'
+
+    search = Video.query.filter(Video.title.like('{}{}{}'.format('%', search, '%'))).all()
 
     return render_template('results.html', search=search, current_page=current_page)
 
