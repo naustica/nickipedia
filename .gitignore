@@ -7,3 +7,4 @@ __pycache__/
 typings/
 node_modules/
 package-lock.json
+.sass-cache/
