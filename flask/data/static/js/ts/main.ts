@@ -1,6 +1,5 @@
 declare var jquery: any;
 
-
 interface WindowBoxParameters {
   triggerID: string;
   modalID: string;
