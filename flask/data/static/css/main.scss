@@ -12,6 +12,9 @@
 a, a:link, a:visited, a:active, a:hover {
     text-decoration: none;
 }
+#result-link {
+    color: black; 
+}
 body, html {
     font-size: 14px;
     background-image: url("../images/background.jpg");
