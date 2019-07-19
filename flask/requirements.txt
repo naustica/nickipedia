@@ -8,5 +8,4 @@ flask-login
 flask-dropzone
 uwsgi
 psycopg2-binary
-flask_restful
 flask-cors
