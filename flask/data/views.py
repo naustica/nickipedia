@@ -5,6 +5,7 @@ from data.models import User, Comment, Video
 from data.models import db
 from sqlalchemy import desc
 from data.forms import CommentForm, SearchForm, LoginForm, RegistrationForm
+from requests import put, get
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -105,9 +106,11 @@ def result(search):
 
     current_page = 'result'
 
+    search_term = search
+
     search = Video.query.filter(Video.title.like('{}{}{}'.format('%', search, '%'))).all()
 
-    return render_template('results.html', search=search, current_page=current_page)
+    return render_template('results.html', search=search, current_page=current_page, search_term=search_term)
 
 
 @app.errorhandler(404)
