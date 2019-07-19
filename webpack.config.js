@@ -4,9 +4,9 @@ var webpack = require("webpack");
 module.exports = {
   mode: "production",
   devtool: "source-map",
-  entry: ["./flask/data/static/js/main.tsx"],
+  entry: ["./flask/data/website/static/js/main.tsx"],
   output: {
-    path: path.resolve(__dirname, "flask/data/static/js"),
+    path: path.resolve(__dirname, "flask/data/website/static/js"),
     filename: "main.js"
   },
   resolve: {
