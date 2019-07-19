@@ -4,10 +4,14 @@ import os
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_dropzone import Dropzone
+from flask_restful import Api
+from flask_cors import CORS
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
+CORS(app)
+api = Api(app)
 
 app.config['SECRET_KEY'] = "1und1"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
@@ -31,3 +35,4 @@ login_manager.login_view = 'login'
 
 
 from data import views
+from data.resources import api
