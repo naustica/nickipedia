@@ -1,14 +1,16 @@
-from data import app, login_manager
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
-from flask import render_template, request, flash, redirect, url_for
-from data.models import User, Comment, Video
-from data.models import db
+from data.models import db, User, Comment, Video
+from data import login_manager
 from sqlalchemy import desc
-from data.forms import CommentForm, SearchForm, LoginForm, RegistrationForm
+from data.website.forms import CommentForm, SearchForm, LoginForm, RegistrationForm
 from requests import put, get
 
 
-@app.route('/login', methods=['GET', 'POST'])
+bp = Blueprint("views", __name__, template_folder='templates', static_folder='static', static_url_path='views/static', url_prefix='/')
+
+
+@bp.route('/login', methods=['GET', 'POST'])
 def login():
 
     current_page = 'login'
@@ -20,26 +22,26 @@ def login():
         flash('logged in successfully')
 
         next = request.args.get('next')
-        return redirect(next or url_for('index'))
+        return redirect(next or url_for('views.index'))
 
     return render_template('login.html', current_page=current_page, loginform=loginform)
 
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/home', methods=['GET', 'POST'])
+@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/home', methods=['GET', 'POST'])
 @login_required
 def index():
 
     searchform = SearchForm()
     if searchform.validate_on_submit():
-        return redirect(url_for('result', search=request.form['search']))
+        return redirect(url_for('views.result', search=request.form['search']))
 
     current_page = 'index'
 
     return render_template('index.html', searchform=searchform, current_page=current_page)
 
 
-@app.route('/user/<name>', methods=['GET', 'POST'])
+@bp.route('/user/<name>', methods=['GET', 'POST'])
 @login_required
 def user(name):
 
@@ -48,7 +50,7 @@ def user(name):
     return render_template('user.html', name=name, current_page=current_page)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@bp.route('/register', methods=['GET', 'POST'])
 def register():
 
     current_page = 'registration'
@@ -60,12 +62,12 @@ def register():
         db.session.commit()
         login_user(user)
         flash('account created for {}'.format(registrationform.username.data))
-        return redirect(url_for('index'))
+        return redirect(url_for('views.index'))
 
     return render_template('register.html', title='registration', current_page=current_page, registrationform=registrationform)
 
 
-@app.route('/watch/<video_id>', methods=['GET', 'POST'])
+@bp.route('/watch/<video_id>', methods=['GET', 'POST'])
 def video(video_id):
 
     current_page = 'video'
@@ -93,7 +95,7 @@ def video(video_id):
         db.session.add(comment)
         db.session.commit()
         flash('posted')
-        return redirect(url_for('video', video_id=video_id))
+        return redirect(url_for('views.video', video_id=video_id))
 
     return render_template('watch.html', video_id=video_id, comments=comments,
                             commentform=commentform, root=root, video_title=video_title,
@@ -101,7 +103,7 @@ def video(video_id):
                             current_page=current_page, suggestions=suggestions)
 
 
-@app.route('/result/<search>', methods=['GET', 'POST'])
+@bp.route('/result/<search>', methods=['GET', 'POST'])
 def result(search):
 
     current_page = 'result'
@@ -113,25 +115,25 @@ def result(search):
     return render_template('results.html', search=search, current_page=current_page, search_term=search_term)
 
 
-@app.errorhandler(404)
+@bp.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
 
 
 @login_manager.unauthorized_handler
 def unauthorized_callback():
-    return redirect(url_for('login'))
+    return redirect(url_for('views.login'))
 
 
-@app.route('/logout')
+@bp.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('views.login'))
 
 
-@app.route('/reset')
+@bp.route('/reset')
 def reset():
     db.drop_all()
     db.create_all()
-    return redirect(url_for('register'))
+    return redirect(url_for('views.register'))

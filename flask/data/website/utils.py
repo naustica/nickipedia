@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import request, flash
 import os
-from data import basedir
+from data.config import basedir
 from werkzeug import secure_filename
 import time
 
