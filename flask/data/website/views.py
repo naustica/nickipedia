@@ -1,10 +1,13 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
-from data.models import db, User, Comment, Video
+from data import db
+from data.database.user import User
+from data.database.comment import Comment
+from data.database.video import Video
 from data import login_manager
 from sqlalchemy import desc
 from data.website.forms import CommentForm, SearchForm, LoginForm, RegistrationForm
-from requests import put, get
+# from requests import put, get
 
 
 bp = Blueprint("views", __name__, template_folder='templates', static_folder='static', static_url_path='views/static', url_prefix='/')
@@ -108,11 +111,15 @@ def result(search):
 
     current_page = 'result'
 
-    search_term = search
+    search = Video.query.filter(Video.title.ilike('{}{}{}'.format('%', search, '%'))).all()
 
-    search = Video.query.filter(Video.title.like('{}{}{}'.format('%', search, '%'))).all()
+    return render_template('results.html', search=search, current_page=current_page)
 
-    return render_template('results.html', search=search, current_page=current_page, search_term=search_term)
+
+@bp.route('/test', methods=['GET', 'POST'])
+def test():
+
+    return render_template('test.html')
 
 
 @bp.errorhandler(404)
@@ -136,4 +143,7 @@ def logout():
 def reset():
     db.drop_all()
     db.create_all()
+
+    from data import db_start
+
     return redirect(url_for('views.register'))
