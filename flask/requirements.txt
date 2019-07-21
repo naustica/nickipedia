@@ -9,3 +9,4 @@ flask-dropzone
 uwsgi
 psycopg2-binary
 flask-cors
+flask-marshmallow
