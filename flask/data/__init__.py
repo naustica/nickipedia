@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import os
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_dropzone import Dropzone
 from flask_cors import CORS
+import os
 
 
 db = SQLAlchemy()
@@ -18,7 +18,7 @@ def create_app():
     app = Flask(__name__)
     CORS(app)
 
-    app.config.from_object('data.config.DevelopementConfig')
+    app.config.from_object(os.environ['APP_SETTINGS'])
 
     db.init_app(app)
     bcrypt.init_app(app)
