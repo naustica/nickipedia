@@ -8,5 +8,5 @@ typings/
 node_modules/
 package-lock.json
 .sass-cache/
-dbconfig.py
+db_start.py
 *.map
