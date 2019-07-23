@@ -15,7 +15,7 @@ def add_uploader(function):
                 f.save(os.path.join(basedir, 'uploads/') + secure_filename(f.filename))
                 time.sleep(1)
                 flash('uploaded')
-            except:
+            except Exception:
                 flash('error-image-uploading')
         return function(*args, **kwargs)
     return wrapper
