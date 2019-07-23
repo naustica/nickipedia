@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
-from data import db
+from data import db, login_manager, bcrypt
 from data.database.user import User
 from data.database.comment import Comment
 from data.database.video import Video
-from data import login_manager
 from sqlalchemy import desc
 from data.website.forms import CommentForm, SearchForm, LoginForm, RegistrationForm
-# from requests import put, get
+import requests
+from flask_jwt_extended import decode_token, create_access_token
 
 
 bp = Blueprint("views", __name__, template_folder='templates', static_folder='static', static_url_path='views/static', url_prefix='/')
@@ -20,21 +20,27 @@ def login():
 
     loginform = LoginForm()
     if loginform.validate_on_submit():
-        user = User.query.filter_by(username=loginform.username.data).first()
-        login_user(user)
-        flash('logged in successfully')
+        data = {'username': loginform.username.data, 'email': 'lul@kek.de', 'password': create_access_token('nasenbär')}
+        r = requests.post('http://127.0.0.1:5000' + url_for('auth.login'), json=data).json()
+        if r['status'] == 'success':
+            jwt_decoded = decode_token(r['access_token'])
+            user = User.query.filter_by(username=jwt_decoded['identity']).first()
+            login_user(user)
+            flash('logged in successfully')
+            return redirect(url_for('views.index'))
+        else:
+            flash('registration api error, maybe url host')
+            flash(r)
 
         next = request.args.get('next')
-        return redirect(next or url_for('views.index'))
+        return redirect(next or url_for('views.login'))
 
     return render_template('login.html', current_page=current_page, loginform=loginform)
 
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/home', methods=['GET', 'POST'])
-@login_required
 def index():
-
     searchform = SearchForm()
     if searchform.validate_on_submit():
         return redirect(url_for('views.result', search=request.form['search']))
@@ -45,7 +51,6 @@ def index():
 
 
 @bp.route('/user/<name>', methods=['GET', 'POST'])
-@login_required
 def user(name):
 
     current_page = 'user'
@@ -60,12 +65,17 @@ def register():
 
     registrationform = RegistrationForm()
     if registrationform.validate_on_submit():
-        user = User(username=registrationform.username.data)
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        flash('account created for {}'.format(registrationform.username.data))
-        return redirect(url_for('views.index'))
+        data = {'username': registrationform.username.data, 'email': 'lul@kek.de', 'password': bcrypt.generate_password_hash('nasenbär').decode('utf-8')}
+        r = requests.post('http://127.0.0.1:5000' + url_for('auth.register_user'), json=data).json()
+        if r['status'] == 'success':
+            jwt_decoded = decode_token(r['access_token'])
+            user = User.query.filter_by(username=jwt_decoded['identity']).first()
+            flash('account created for {}'.format(user.username))
+            login_user(user)
+            return redirect(url_for('views.index'))
+        else:
+            flash('registration api error, maybe url host')
+            flash(r)
 
     return render_template('register.html', title='registration', current_page=current_page, registrationform=registrationform)
 
@@ -94,7 +104,8 @@ def video(video_id):
 
     commentform = CommentForm()
     if commentform.validate_on_submit():
-        comment = Comment(author_id=current_user.get_id(), video_id=video_id, content=commentform.content.data)
+
+        comment = Comment(author_id=current_user.id, video_id=video_id, content=commentform.content.data)
         db.session.add(comment)
         db.session.commit()
         flash('posted')
@@ -127,15 +138,15 @@ def page_not_found(error):
     return render_template('404.html'), 404
 
 
-@login_manager.unauthorized_handler
-def unauthorized_callback():
-    return redirect(url_for('views.login'))
-
-
-@bp.route('/logout')
+@bp.route('logout')
 @login_required
 def logout():
     logout_user()
+    return redirect(url_for('views.login'))
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
     return redirect(url_for('views.login'))
 
 
