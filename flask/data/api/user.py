@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, make_response
 from data.database.user import User, user_schema, users_schema
 from data import db
+from data.api.tools.utils import permission_needed
 
 
 bp = Blueprint('user', __name__, url_prefix='/api')
@@ -15,6 +16,7 @@ def get_all_user():
 
 
 @bp.route('/user/<id>', methods=['GET'])
+@permission_needed
 def get_user(id):
     try:
         id = int(id)
@@ -36,10 +38,11 @@ def add_user():
     new_user = User(username, email, password)
     new_user.save()
 
-    return user_schema.jsonify(new_user), 200
+    return make_response(jsonify(message='user created')), 201
 
 
 @bp.route('/user/<id>', methods=['PUT'])
+@permission_needed
 def user_update(id):
     try:
         id = int(id)
@@ -52,10 +55,11 @@ def user_update(id):
 
     db.session.commit()
 
-    return user_schema.jsonify(user), 200
+    return make_response(jsonify(message='user updated')), 200
 
 
 @bp.route('/user/<id>', methods=['DELETE'])
+@permission_needed
 def user_delete(id):
     try:
         id = int(id)
@@ -64,4 +68,4 @@ def user_delete(id):
     user = User.query.get(id)
     user.delete()
 
-    return user_schema.jsonify(user), 200
+    return make_response(jsonify(message='user deleted')), 200
