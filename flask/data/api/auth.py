@@ -63,16 +63,17 @@ def login():
     user = User.query.filter_by(username=username).first()
 
     jwt_decoded = decode_token(password)
+    password = jwt_decoded['identity']
 
     try:
-        if bcrypt.check_password_hash(user.password, jwt_decoded['identity']):
+        if bcrypt.check_password_hash(user.password, password):
             user.authenticated = True
             db.session.commit()
             expires = timedelta(seconds=60)
             access_token = create_access_token(identity=username, expires_delta=expires)
             return make_response(jsonify(status='success', access_token=access_token)), 200
         else:
-            return make_response(jsonify(status='fail', message='wrong keywords'))
+            return make_response(jsonify(status='fail', message='wrong keywords, maybe password not encoded.'))
     except Exception as e:
         print(e)
         return make_response(jsonify(status='fail', message='try again')), 500
