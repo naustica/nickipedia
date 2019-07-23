@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, make_response, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from data import db, login_manager, bcrypt
 from data.database.user import User
@@ -8,6 +8,7 @@ from sqlalchemy import desc
 from data.website.forms import CommentForm, SearchForm, LoginForm, RegistrationForm
 import requests
 from flask_jwt_extended import decode_token, create_access_token
+from datetime import timedelta
 
 
 bp = Blueprint("views", __name__, template_folder='templates', static_folder='static', static_url_path='views/static', url_prefix='/')
@@ -20,7 +21,8 @@ def login():
 
     loginform = LoginForm()
     if loginform.validate_on_submit():
-        data = {'username': loginform.username.data, 'email': 'lul@kek.de', 'password': create_access_token('nasenbär')}
+        expires = timedelta(seconds=60)
+        data = {'username': loginform.username.data, 'password': create_access_token('nasenbär', expires_delta=expires)}
         r = requests.post('http://127.0.0.1:5000' + url_for('auth.login'), json=data).json()
         if r['status'] == 'success':
             jwt_decoded = decode_token(r['access_token'])
@@ -130,7 +132,7 @@ def result(search):
 @bp.route('/test', methods=['GET', 'POST'])
 def test():
 
-    return render_template('test.html')
+    return make_response(jsonify(test=42))
 
 
 @bp.errorhandler(404)
@@ -141,6 +143,9 @@ def page_not_found(error):
 @bp.route('logout')
 @login_required
 def logout():
+    user = current_user
+    user.authenticated = False
+    db.session.commit()
     logout_user()
     return redirect(url_for('views.login'))
 
