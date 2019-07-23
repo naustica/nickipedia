@@ -35,13 +35,19 @@ def create_app():
     from data.website import views
     app.register_blueprint(views.bp)
 
-    from data.api import routes
-    app.register_blueprint(routes.bp)
+    from data.api import search
+    app.register_blueprint(search.bp)
 
     from data.api import user
     app.register_blueprint(user.bp)
 
     from data.api import auth
     app.register_blueprint(auth.bp)
+
+    from data.api import video
+    app.register_blueprint(video.bp)
+
+    from data.api import comment
+    app.register_blueprint(comment.bp)
 
     return app
