@@ -4,9 +4,11 @@ flask-wtf
 click
 flask-sqlalchemy
 flask-bcrypt
-flask-login
 flask-dropzone
 uwsgi
 psycopg2-binary
 flask-cors
 flask-marshmallow
+marshmallow-sqlalchemy
+flask-login
+flask-jwt-extended
