@@ -7,6 +7,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class BaseConfig:
     HOST = '0.0.0.0'
     SECRET_KEY = os.environ['SECRET_KEY']
+    JWT_SECRET_KEY = os.environ['SECRET_KEY']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DROPZONE_ALLOWED_FILE_TYPE = 'video' and 'image'
     DROPZONE_MAX_FILES = 1
