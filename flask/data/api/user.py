@@ -11,14 +11,18 @@ def get_all_user():
     all_user = User.get_all()
     result = users_schema.dump(all_user)
 
-    return jsonify(result.data)
+    return jsonify(result.data), 200
 
 
 @bp.route('/user/<id>', methods=['GET'])
 def get_user(id):
+    try:
+        id = int(id)
+    except Exception:
+        return jsonify(message='id must be an integer'), 400
     user = User.query.get(id)
     if user is None:
-        return jsonify(message='User not found'), 404
+        return jsonify(message='user not found'), 404
 
     return user_schema.jsonify(user), 200
 
@@ -32,11 +36,15 @@ def add_user():
     new_user = User(username, email, password)
     new_user.save()
 
-    return user_schema.jsonify(new_user)
+    return user_schema.jsonify(new_user), 200
 
 
 @bp.route('/user/<id>', methods=['PUT'])
 def user_update(id):
+    try:
+        id = int(id)
+    except Exception:
+        return jsonify(message='id must be an integer'), 400
     user = User.query.get(id)
     username = request.json['username']
 
@@ -44,12 +52,16 @@ def user_update(id):
 
     db.session.commit()
 
-    return user_schema.jsonify(user)
+    return user_schema.jsonify(user), 200
 
 
 @bp.route('/user/<id>', methods=['DELETE'])
 def user_delete(id):
+    try:
+        id = int(id)
+    except Exception:
+        return jsonify(message='id must be an integer'), 400
     user = User.query.get(id)
     user.delete()
 
-    return user_schema.jsonify(user)
+    return user_schema.jsonify(user), 200

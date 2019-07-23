@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request, make_response
 from data.database.user import User
 from flask_jwt_extended import create_access_token, decode_token
-from data import bcrypt
+from data import bcrypt, db
+from datetime import timedelta
 
 
 bp = Blueprint('auth', __name__, url_prefix='/api/auth')
@@ -33,7 +34,9 @@ def register_user():
             new_user = User(username, email, password)
             new_user.save()
             new_user.authenticated = True
-            access_token = create_access_token(identity=username)
+            db.session.commit()
+            expires = timedelta(seconds=60)
+            access_token = create_access_token(identity=username, expires_delta=expires)
             return make_response(jsonify(status='success', access_token=access_token)), 200
 
         except Exception:
@@ -49,26 +52,24 @@ def login():
         return make_response(jsonify(message='missing json')), 400
 
     username = request.json['username']
-    email = request.json['email']
     password = request.json['password']
 
     if not username:
         return make_response(jsonify(message='missing username parameter')), 400
 
-    if not email:
-        return make_response(jsonify(message='missing email parameter')), 400
-
     if not password:
         return make_response(jsonify(message='missing password parameter')), 400
 
-    user = User.query.filter_by(username=username, email=email).first()
+    user = User.query.filter_by(username=username).first()
 
     jwt_decoded = decode_token(password)
 
     try:
         if bcrypt.check_password_hash(user.password, jwt_decoded['identity']):
             user.authenticated = True
-            access_token = create_access_token(identity=username)
+            db.session.commit()
+            expires = timedelta(seconds=60)
+            access_token = create_access_token(identity=username, expires_delta=expires)
             return make_response(jsonify(status='success', access_token=access_token)), 200
         else:
             return make_response(jsonify(status='fail', message='wrong keywords'))
