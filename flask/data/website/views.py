@@ -8,6 +8,7 @@ from sqlalchemy import desc
 from data.website.forms import CommentForm, SearchForm, LoginForm, RegistrationForm
 import requests
 from flask_jwt_extended import decode_token
+from data.config import local_files_path
 
 
 bp = Blueprint("views", __name__, template_folder='templates', static_folder='static', static_url_path='views/static', url_prefix='/')
@@ -98,11 +99,15 @@ def video(video_id):
 
     root = video.root
 
+    filename = video.filename
+
     video_title = video.title
 
     video_author = video.author_id
 
     video_description = video.text
+
+    video_root = local_files_path + 'videos/' + video_author + '/' + filename
 
     comments = Comment.query.filter_by(video_id=video_id).order_by(desc(Comment.id)).all()
 
@@ -118,7 +123,7 @@ def video(video_id):
         return redirect(url_for('views.video', video_id=video_id))
 
     return render_template('watch.html', video_id=video_id, comments=comments,
-                            commentform=commentform, root=root, video_title=video_title,
+                            commentform=commentform, root=video_root, video_title=video_title,
                             video_description=video_description, video_author=video_author,
                             current_page=current_page, suggestions=suggestions)
 
