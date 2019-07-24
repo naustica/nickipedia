@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, make_response
 from data.database.video import Video
 
 
@@ -15,4 +15,4 @@ def get_results(term):
         result = {'id': int(result.id), 'properties': {'title': str(result.title), 'text': str(result.text)}}
         data.append(result)
 
-    return jsonify(data), 200
+    return make_response(jsonify(data)), 200
