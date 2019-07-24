@@ -1,14 +1,13 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, make_response, jsonify
+from flask import Blueprint, render_template, request, flash, redirect, url_for, make_response, jsonify, session
 from flask_login import login_user, logout_user, login_required, current_user
-from data import db, login_manager, bcrypt
+from data import db, login_manager
 from data.database.user import User
 from data.database.comment import Comment
 from data.database.video import Video
 from sqlalchemy import desc
 from data.website.forms import CommentForm, SearchForm, LoginForm, RegistrationForm
 import requests
-from flask_jwt_extended import decode_token, create_access_token
-from datetime import timedelta
+from flask_jwt_extended import decode_token
 
 
 bp = Blueprint("views", __name__, template_folder='templates', static_folder='static', static_url_path='views/static', url_prefix='/')
@@ -21,13 +20,13 @@ def login():
 
     loginform = LoginForm()
     if loginform.validate_on_submit():
-        expires = timedelta(seconds=60)
-        data = {'username': loginform.username.data, 'password': create_access_token('nasenbär', expires_delta=expires)}
+        data = {'username': loginform.username.data, 'password': 'test'}
         r = requests.post('http://127.0.0.1:5000' + url_for('auth.login'), json=data).json()
         if r['status'] == 'success':
             jwt_decoded = decode_token(r['access_token'])
             user = User.query.filter_by(username=jwt_decoded['identity']).first()
             login_user(user)
+            session[current_user.username] = r['access_token']
             flash('logged in successfully')
             return redirect(url_for('views.index'))
         else:
@@ -67,14 +66,19 @@ def register():
 
     registrationform = RegistrationForm()
     if registrationform.validate_on_submit():
-        data = {'username': registrationform.username.data, 'email': 'lul@kek.de', 'password': bcrypt.generate_password_hash('nasenbär').decode('utf-8')}
-        r = requests.post('http://127.0.0.1:5000' + url_for('auth.register_user'), json=data).json()
+        data = {'username': registrationform.username.data, 'email': 'lul@kek.de', 'password': 'test'}
+        r = requests.post('http://127.0.0.1:5000' + url_for('user.add_user'), json=data).json()
         if r['status'] == 'success':
-            jwt_decoded = decode_token(r['access_token'])
-            user = User.query.filter_by(username=jwt_decoded['identity']).first()
-            flash('account created for {}'.format(user.username))
-            login_user(user)
-            return redirect(url_for('views.index'))
+            r = requests.post('http://127.0.0.1:5000' + url_for('auth.login'), json=data).json()
+            if r['status'] == 'success':
+                jwt_decoded = decode_token(r['access_token'])
+                user = User.query.filter_by(username=jwt_decoded['identity']).first()
+                flash('account created for {}'.format(user.username))
+                login_user(user)
+                session[current_user.username] = r['access_token']
+                return redirect(url_for('views.index'))
+            else:
+                flash('login failed')
         else:
             flash('registration api error, maybe url host')
             flash(r)
@@ -107,7 +111,7 @@ def video(video_id):
     commentform = CommentForm()
     if commentform.validate_on_submit():
 
-        comment = Comment(author_id=current_user.id, video_id=video_id, content=commentform.content.data)
+        comment = Comment(author_id=current_user.username, video_id=video_id, content=commentform.content.data)
         db.session.add(comment)
         db.session.commit()
         flash('posted')
@@ -143,9 +147,9 @@ def page_not_found(error):
 @bp.route('logout')
 @login_required
 def logout():
-    user = current_user
-    user.authenticated = False
-    db.session.commit()
+    headers = {'Authorization': session[current_user.username]}
+    requests.post('http://127.0.0.1:5000' + url_for('auth.logout'), headers=headers)
+
     logout_user()
     return redirect(url_for('views.login'))
 
