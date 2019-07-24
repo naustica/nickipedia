@@ -1,13 +1,13 @@
-from data import db, ma, login_manager
+from data import db, ma, login_manager, bcrypt
+from marshmallow import post_load, pre_load, validates, ValidationError
 
 
 class User(db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    username = db.Column(db.String(32), unique=True, nullable=False)
+    username = db.Column(db.String(32), primary_key=True, unique=True, nullable=False)
     email = db.Column(db.String(128), unique=False, nullable=False)
     password = db.Column(db.String, nullable=False)
-    authenticated = db.Column(db.Boolean, default=False)
+    authenticated = db.Column(db.Boolean(), default=None)
     comments = db.relationship('Comment', backref='author', lazy=True)
     videos = db.relationship('Video', backref='owner', lazy=True)
 
@@ -29,7 +29,7 @@ class User(db.Model):
         return True
 
     def get_id(self):
-        return self.id
+        return self.username
 
     def is_authenticated(self):
         self.authenticated
@@ -37,22 +37,46 @@ class User(db.Model):
     def is_anonymous(self):
         return False
 
+    def __repr__(self):
+        return '{}'.format(self.username)
+
     @staticmethod
     def get_all():
         return User.query.all()
 
-    def __repr__(self):
-        return '{}'.format(self.username)
+    @staticmethod
+    def username_exists(username):
+        if User.query.filter_by(username=username).first():
+            return True
+        else:
+            return False
 
 
 class UserSchema(ma.Schema):
-    class Meta:
-        fields = ('username', 'email')
+    username = ma.String(required=True)
+    email = ma.String(required=True)
+    password = ma.String(required=True, load_only=True)
+
+    @pre_load
+    def process_input(self, data):
+        if data.get('password'):
+            password = data['password']
+            data['password'] = bcrypt.generate_password_hash(password).decode('utf-8')
+        return data
+
+    @post_load
+    def load_user(self, data):
+        return User(**data)
+
+    @validates('username')
+    def validate_username(self, username):
+        if User.username_exists(username):
+            raise ValidationError('username exists')
 
 
 @login_manager.user_loader
-def load_user(id):
-    return User.query.get(id)
+def load_user(username):
+    return User.query.get(username)
 
 
 user_schema = UserSchema()
