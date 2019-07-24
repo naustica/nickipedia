@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, make_response, request
 from data.database.comment import Comment, comment_schema, comments_schema
 from data import db
+from data.api.auth import permission_needed
 
 
 bp = Blueprint('comment', __name__, url_prefix='/api')
@@ -41,7 +42,12 @@ def get_all_comments(video_id):
 
 
 @bp.route('/comment/<comment_id>', methods=['PUT'])
+@permission_needed
 def update_comment(comment_id):
+
+    if not request.is_json:
+        return make_response(jsonify(message='missing json')), 400
+
     comment = Comment.query.get(comment_id)
 
     content = request.json['content']
