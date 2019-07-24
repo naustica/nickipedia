@@ -10,3 +10,4 @@ package-lock.json
 .sass-cache/
 db_start.py
 *.map
+upload_videos/*
