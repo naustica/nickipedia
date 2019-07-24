@@ -1,4 +1,6 @@
 from data import db, ma
+from marshmallow import post_load
+from sqlalchemy import func
 
 
 class Video(db.Model):
@@ -9,6 +11,7 @@ class Video(db.Model):
     filename = db.Column(db.Text(), default='dummy', nullable=False)
     title = db.Column(db.String(128), nullable=False)
     text = db.Column(db.Text(), nullable=True)
+    timestamp = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
     comments = db.relationship('Comment', backref='user', lazy=True)
 
     def __init__(self, author_id, title, text, root='dummy'):
@@ -34,8 +37,15 @@ class Video(db.Model):
 
 
 class VideoSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'author_id', 'title', 'text')
+    id = ma.Integer(required=False, dump_only=True)
+    author_id = ma.String(required=True)
+    title = ma.String(required=True)
+    text = ma.String(required=True)
+    timestamp = ma.DateTime(required=False, dump_only=True)
+
+    @post_load
+    def load_video(self, data):
+        return Video(**data)
 
 
 video_schema = VideoSchema()
