@@ -4,11 +4,11 @@ from sqlalchemy import func
 
 class Comment(db.Model):
     __tablename__ = 'comments'
-    id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    video_id = db.Column(db.Integer, db.ForeignKey('videos.id'))
-    content = db.Column(db.Text)
-    timestamp = db.Column(db.DateTime, server_default=func.now())
+    id = db.Column(db.Integer(), primary_key=True)
+    author_id = db.Column(db.String(), db.ForeignKey('users.username'))
+    video_id = db.Column(db.Integer(), db.ForeignKey('videos.id'))
+    content = db.Column(db.Text())
+    timestamp = db.Column(db.DateTime(), server_default=func.now())
 
     def __init__(self, author_id, video_id, content):
         self.content = content
