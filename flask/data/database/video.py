@@ -14,11 +14,12 @@ class Video(db.Model):
     timestamp = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
     comments = db.relationship('Comment', backref='user', lazy=True)
 
-    def __init__(self, author_id, title, text, root='dummy'):
+    def __init__(self, author_id, title, text, root=None, filename=None):
         self.author_id = author_id
         self.root = root
         self.title = title
         self.text = text
+        self.filename = filename
 
     def save(self):
         db.session.add(self)
