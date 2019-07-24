@@ -18,17 +18,16 @@ def create_video():
     text = request.form['text']
     author_id = request.form['author_id']
 
-    path = '{}{}'.format(upload_path, author_id)
+    path = '{}{}/{}'.format(upload_path, 'videos', author_id)
 
     if not os.path.exists(path):
         os.makedirs(path)
 
     file = request.files.get('file')
     filename = secure_filename(file.filename)
-    root = os.getcwd() + '/data/database/upload_files/' + author_id
-    file.save('{}{}{}'.format(root, '/', filename))
+    file.save('{}{}{}'.format(path, '/', filename))
 
-    new_video = Video(author_id, title, text, root, filename)
+    new_video = Video(author_id, title, text, path, filename)
     new_video.save()
     return make_response(jsonify(message='video created')), 201
 
