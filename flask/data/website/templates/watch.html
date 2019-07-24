@@ -3,8 +3,8 @@
 <div class="container" style="margin-top: 2.5rem;">
   <div class="row" style="width: 100%; padding: 1rem;">
     <div class="col-sm-9">
-      <video class="card-img-top" poster="{{url_for('views.static', filename=root) }}" id="player" ratio="4:3" style="width:100%; border-radius: 5px; outline: none;" playsinline controls>
-        <source src="{{url_for('views.static', filename=root) }}" type="video/mp4">
+      <video class="card-img-top" poster="{{ root }}" id="player" ratio="4:3" style="width:100%; border-radius: 5px; outline: none;" playsinline controls>
+        <source src="{{ root }}" type="video/mp4">
       </video>
       <div class="card" style="margin-top: 0.5rem; opacity: 0.95; background-color: #F5F5F5; border: 2px solid #ccc; border-radius: 5px;">
         <div class="card-body">
