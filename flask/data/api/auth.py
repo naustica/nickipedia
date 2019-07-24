@@ -16,7 +16,7 @@ def permission_needed(function):
             access_token = request.headers.get('Authorization')
 
             if not access_token:
-                return make_response(jsonify(message='missing access_token'))
+                return make_response(jsonify(message='missing access_token')), 401
 
             decoded_token = decode_token(access_token)
 
@@ -30,10 +30,10 @@ def permission_needed(function):
                 return make_response(jsonify(message='user not found')), 400
 
             if not token:
-                return make_response(jsonify(message='invalid token'))
+                return make_response(jsonify(message='invalid token')), 401
 
         except Exception:
-            return make_response(jsonify(message='permission needed.')), 400
+            return make_response(jsonify(message='permission needed.')), 401
         return function(*args, **kwargs)
     return wrapper
 
