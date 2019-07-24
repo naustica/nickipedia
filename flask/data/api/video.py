@@ -13,9 +13,9 @@ def create_video():
 
     title = request.json['title']
     text = request.json['text']
-    creator = request.json['creator']
+    author_id = request.json['author_id']
 
-    new_video = Video(creator, title, text)
+    new_video = Video(author_id, title, text)
     new_video.save()
     return make_response(jsonify(message='video created')), 201
 
@@ -32,10 +32,7 @@ def get_all_videos():
 
 @bp.route('/video/<id>', methods=['GET'])
 def get_video(id):
-    try:
-        id = int(id)
-    except Exception:
-        return jsonify(message='id must be an integer'), 400
+
     video = Video.query.get(id)
     if video is None:
         return jsonify(message='video not found'), 404
@@ -46,10 +43,7 @@ def get_video(id):
 @bp.route('/video/<id>', methods=['PUT'])
 @permission_needed
 def update_video(id):
-    try:
-        id = int(id)
-    except Exception:
-        return jsonify(message='id must be an integer'), 400
+
     video = Video.query.get(id)
     if video is None:
         return jsonify(message='video not found'), 404
@@ -68,10 +62,7 @@ def update_video(id):
 @bp.route('/video/<id>', methods=['DELETE'])
 @permission_needed
 def delete_video(id):
-    try:
-        id = int(id)
-    except Exception:
-        return jsonify(message='id must be an integer'), 400
+
     video = Video.query.get(id)
     if video is None:
         return jsonify(message='video not found'), 404
