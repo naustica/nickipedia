@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, make_response
 from data.database.user import User, user_schema, users_schema
 from data import db
-from data.api.tools.utils import permission_needed
+from data.api.auth import permission_needed
 
 
 bp = Blueprint('user', __name__, url_prefix='/api')
@@ -15,40 +15,35 @@ def get_all_user():
     return jsonify(result.data), 200
 
 
-@bp.route('/user/<id>', methods=['GET'])
+@bp.route('/user/<username>', methods=['GET'])
 @permission_needed
-def get_user(id):
-    try:
-        id = int(id)
-    except Exception:
-        return jsonify(message='id must be an integer'), 400
-    user = User.query.get(id)
+def get_user(username):
+    user = User.query.get(username)
     if user is None:
         return jsonify(message='user not found'), 404
 
     return user_schema.jsonify(user), 200
 
 
-@bp.route('/user', methods=['POST'])
+@bp.route('/user/register', methods=['POST'])
 def add_user():
-    username = request.json['username']
-    email = request.json['email']
-    password = request.json['password']
+    if not request.is_json:
+        return make_response(jsonify(message='missing json')), 400
 
-    new_user = User(username, email, password)
-    new_user.save()
+    user, errors = user_schema.load(request.get_json())
+    if errors:
+        return make_response(jsonify(errors)), 400
 
-    return make_response(jsonify(message='user created')), 201
+    user.save()
+
+    return make_response(jsonify(status='success')), 200
 
 
-@bp.route('/user/<id>', methods=['PUT'])
-@permission_needed
-def user_update(id):
-    try:
-        id = int(id)
-    except Exception:
-        return jsonify(message='id must be an integer'), 400
-    user = User.query.get(id)
+@bp.route('/user/<username>', methods=['PUT'])
+def user_update(username):
+
+    user = User.query.get(username)
+
     username = request.json['username']
 
     user.username = username
@@ -58,14 +53,9 @@ def user_update(id):
     return make_response(jsonify(message='user updated')), 200
 
 
-@bp.route('/user/<id>', methods=['DELETE'])
-@permission_needed
-def user_delete(id):
-    try:
-        id = int(id)
-    except Exception:
-        return jsonify(message='id must be an integer'), 400
-    user = User.query.get(id)
+@bp.route('/user/<username>', methods=['DELETE'])
+def user_delete(username):
+    user = User.query.get(username)
     user.delete()
 
     return make_response(jsonify(message='user deleted')), 200
