@@ -100,7 +100,7 @@ def video(video_id):
 
     video_title = video.title
 
-    video_author = User.query.filter_by(id=video.author_id).first()
+    video_author = video.author_id
 
     video_description = video.text
 
