@@ -2,6 +2,7 @@ import os
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+upload_path = os.getcwd() + '/data/database/upload_videos/'
 
 
 class BaseConfig:
