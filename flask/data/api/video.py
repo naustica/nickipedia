@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request, make_response
 from data.database.video import Video, video_schema, videos_schema
-from data.api.tools.utils import permission_needed
+from data.api.auth import permission_needed
 from data import db
 
 
