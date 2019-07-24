@@ -2,20 +2,33 @@ from flask import Blueprint, jsonify, request, make_response
 from data.database.video import Video, video_schema, videos_schema
 from data.api.auth import permission_needed
 from data import db
+from werkzeug import secure_filename
+import os
+from data.config import upload_path
 
 
 bp = Blueprint('video', __name__, url_prefix='/api')
 
 
 @bp.route('/video', methods=['POST'])
-@permission_needed
+#@permission_needed
 def create_video():
 
-    title = request.json['title']
-    text = request.json['text']
-    author_id = request.json['author_id']
+    title = request.form['title']
+    text = request.form['text']
+    author_id = request.form['author_id']
 
-    new_video = Video(author_id, title, text)
+    path = '{}{}'.format(upload_path, author_id)
+
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    file = request.files.get('file')
+    filename = secure_filename(file.filename)
+    root = os.getcwd() + '/data/database/upload_files/' + author_id
+    file.save('{}{}{}'.format(root, '/', filename))
+
+    new_video = Video(author_id, title, text, root, filename)
     new_video.save()
     return make_response(jsonify(message='video created')), 201
 
@@ -43,6 +56,9 @@ def get_video(id):
 @bp.route('/video/<id>', methods=['PUT'])
 @permission_needed
 def update_video(id):
+
+    if not request.is_json:
+        return make_response(jsonify(message='missing json')), 400
 
     video = Video.query.get(id)
     if video is None:
