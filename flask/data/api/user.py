@@ -19,7 +19,7 @@ def get_all_user():
 @permission_needed
 def get_user(username):
     user = User.query.get(username)
-    if user is None:
+    if not user:
         return jsonify(message='user not found'), 404
 
     return user_schema.jsonify(user), 200
