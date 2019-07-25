@@ -15,4 +15,4 @@ flask-jwt-extended
 gunicorn
 pafy
 youtube_dl
-flask-testing
+requests
