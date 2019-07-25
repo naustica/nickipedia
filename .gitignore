@@ -11,3 +11,4 @@ package-lock.json
 db_start.py
 *.map
 upload_videos/*
+*.temp
