@@ -17,7 +17,7 @@ bp = Blueprint("views", __name__, template_folder='templates', static_folder='st
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
 
-    current_page = 'login'
+    current_page_title = 'login'
 
     loginform = LoginForm()
     if loginform.validate_on_submit():
@@ -37,7 +37,7 @@ def login():
         next = request.args.get('next')
         return redirect(next or url_for('views.login'))
 
-    return render_template('login.html', current_page=current_page, loginform=loginform)
+    return render_template('login.html', current_page_title=current_page_title, loginform=loginform)
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -47,23 +47,23 @@ def index():
     if searchform.validate_on_submit():
         return redirect(url_for('views.result', search=request.form['search']))
 
-    current_page = 'index'
+    current_page_title = 'index'
 
-    return render_template('index.html', searchform=searchform, current_page=current_page)
+    return render_template('index.html', searchform=searchform, current_page_title=current_page_title)
 
 
 @bp.route('/user/<name>', methods=['GET', 'POST'])
 def user(name):
 
-    current_page = 'user'
+    current_page_title = 'user'
 
-    return render_template('user.html', name=name, current_page=current_page)
+    return render_template('user.html', name=name, current_page_title=current_page_title)
 
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
 
-    current_page = 'registration'
+    current_page_title = 'registration'
 
     registrationform = RegistrationForm()
     if registrationform.validate_on_submit():
@@ -84,13 +84,13 @@ def register():
             flash('registration api error, maybe url host')
             flash(r)
 
-    return render_template('register.html', title='registration', current_page=current_page, registrationform=registrationform)
+    return render_template('register.html', current_page_title=current_page_title, registrationform=registrationform)
 
 
 @bp.route('/watch/<video_id>', methods=['GET', 'POST'])
 def video(video_id):
 
-    current_page = 'video'
+    current_page_title = 'video'
 
     video = Video.query.filter_by(id=video_id).first()
 
@@ -125,17 +125,17 @@ def video(video_id):
     return render_template('watch.html', video_id=video_id, comments=comments,
                             commentform=commentform, root=video_root, video_title=video_title,
                             video_description=video_description, video_author=video_author,
-                            current_page=current_page, suggestions=suggestions)
+                            current_page_title=current_page_title, suggestions=suggestions)
 
 
 @bp.route('/result/<search>', methods=['GET', 'POST'])
 def result(search):
 
-    current_page = 'result'
+    current_page_title = 'result'
 
     search = Video.query.filter(Video.title.ilike('{}{}{}'.format('%', search, '%'))).all()
 
-    return render_template('results.html', search=search, current_page=current_page)
+    return render_template('results.html', search=search, current_page_title=current_page_title)
 
 
 @bp.route('/test', methods=['GET', 'POST'])

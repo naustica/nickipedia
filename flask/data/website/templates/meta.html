@@ -13,8 +13,8 @@
   <!-- main css -->
   <link rel="stylesheet" type="text/css" href="{{ url_for('views.static', filename='css/main.css') }}">
 
-  {% if title %}
-    <title>nickipedia - {{ title }}</title>
+  {% if current_page_title %}
+    <title>nickipedia - {{ current_page_title }}</title>
   {% else %}
     <title>nickipedia</title>
   {% endif %}
