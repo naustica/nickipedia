@@ -47,7 +47,7 @@ class User(db.Model):
 
     @staticmethod
     def username_exists(username):
-        if User.query.filter_by(username=username).first():
+        if User.query.get(username):
             return True
         else:
             return False
