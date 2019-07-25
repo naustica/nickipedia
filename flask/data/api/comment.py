@@ -9,6 +9,9 @@ bp = Blueprint('comment', __name__, url_prefix='/api')
 
 @bp.route('/comment', methods=['GET'])
 def get_comments():
+    """
+    example: GET: host/api/comment?comment_id=1&video_id=1
+    """
 
     comment_id = request.args.get('comment_id', default=0, type=int)
     video_id = request.args.get('video_id', default=0, type=int)
@@ -34,6 +37,9 @@ def get_comments():
 
 @bp.route('/comment', methods=['POST'])
 def create_comment():
+    """
+    example: POST: host/api/comment
+    """
 
     if not request.is_json:
         return make_response(jsonify(message='missing json')), 400
@@ -50,6 +56,9 @@ def create_comment():
 @bp.route('/comment', methods=['PUT'])
 @permission_needed
 def update_comment():
+    """
+    example: PUT: host/api/comment?comment_id=1
+    """
 
     if not request.is_json:
         return make_response(jsonify(message='missing json')), 400
@@ -75,6 +84,9 @@ def update_comment():
 
 @bp.route('/comment', methods=['DELETE'])
 def delete_comment():
+    """
+    example: DELETE: host/api/comment?comment_id=1
+    """
 
     comment_id = request.args.get('comment_id', default=0, type=int)
 

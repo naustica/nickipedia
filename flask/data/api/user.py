@@ -9,6 +9,9 @@ bp = Blueprint('user', __name__, url_prefix='/api')
 
 @bp.route('/user', methods=['GET'])
 def get_user():
+    """
+    example: GET: host/api/user?username=nickipedia
+    """
 
     username = request.args.get('username', default='', type=str)
     all = request.args.get('all', default=False, type=bool)
@@ -30,6 +33,10 @@ def get_user():
 
 @bp.route('/user/register', methods=['POST'])
 def add_user():
+    """
+    example: POST: host/api/user
+    """
+
     if not request.is_json:
         return make_response(jsonify(message='missing json')), 400
 
@@ -44,6 +51,9 @@ def add_user():
 
 @bp.route('/user', methods=['PUT'])
 def user_update():
+    """
+    example: PUT: host/api/user?username=nickipedia
+    """
 
     username = request.args.get('username', default='', type=str)
 
@@ -63,6 +73,9 @@ def user_update():
 
 @bp.route('/user', methods=['DELETE'])
 def user_delete():
+    """
+    example: DELETE: host/api/user?username=nickipedia
+    """
 
     username = request.args.get('username', default='', type=str)
 

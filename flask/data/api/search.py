@@ -7,6 +7,9 @@ bp = Blueprint('search', __name__, url_prefix='/api')
 
 @bp.route('/search', methods=['GET'])
 def get_results():
+    """
+    example: GET: host/api/search?term=nickipedia
+    """
 
     term = request.args.get('term', default='', type=str)
 

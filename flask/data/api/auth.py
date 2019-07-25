@@ -40,6 +40,9 @@ def permission_needed(function):
 
 @bp.route('/login', methods=['POST'])
 def login():
+    """
+    example: POST: host/api/auth/login
+    """
 
     if not request.is_json:
         return make_response(jsonify(message='missing json')), 400
@@ -72,6 +75,10 @@ def login():
 @bp.route('/logout', methods=['POST'])
 @permission_needed
 def logout():
+    """
+    example: POST: host/api/auth/logout
+    """
+
     access_token = request.headers.get('Authorization')
 
     decoded_token = decode_token(access_token)
