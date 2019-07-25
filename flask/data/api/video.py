@@ -27,21 +27,21 @@ def create_video():
     file = request.files.get('file')
 
     if not title:
-        return make_response(jsonify(message='no title found')), 400
+        return make_response(jsonify(message='no title found.')), 400
 
     if not text:
-        return make_response(jsonify(message='no text found')), 400
+        return make_response(jsonify(message='no text found.')), 400
 
     if not author_id:
-        return make_response(jsonify(message='no author_id found')), 400
+        return make_response(jsonify(message='no author_id found.')), 400
 
     if not file:
-        return make_response(jsonify(message='no file found')), 400
+        return make_response(jsonify(message='no file found.')), 400
 
     filename = secure_filename(file.filename)
 
     if not fnmatch(filename, '*.mp4'):
-        return make_response(jsonify(message='the video format should be mp4')), 400
+        return make_response(jsonify(message='the video format should be mp4.')), 400
 
     path = '{}{}/{}'.format(upload_path, 'videos', author_id)
 
@@ -53,11 +53,15 @@ def create_video():
 
     new_video = Video(author_id, title, text, path, new_filename)
     new_video.save()
-    return make_response(jsonify(message='video created')), 201
+    return make_response(jsonify(message='video created.')), 201
 
 
 @bp.route('/video/add_from_url', methods=['GET'])
+#@permission_needed
 def add_video_from_url():
+    """
+    example: GET: host/api/video?url=nickipedia
+    """
 
     url = request.args.get('url', default='', type=str)
 
@@ -73,22 +77,26 @@ def add_video_from_url():
 
     path = '{}{}/{}'.format(upload_path, 'videos', author_id)
 
-    if not os.path.exists(path):
-        os.makedirs(path)
-
     new_filename = secure_filename(str(datetime.now()) + '.mp4')
 
-    video = pafy.new(url)
+    try:
+        video = pafy.new(url)
 
-    title = video.title
-    text = video.description
-    best = video.getbest()
+        title = video.title
+        text = video.description
+        best = video.getbest(preftype='mp4')
 
-    best.download(filepath='{}{}{}'.format(path, '/', new_filename))
+        if not os.path.exists(path):
+            os.makedirs(path)
 
-    new_video = Video(author_id, title, text, path, new_filename)
-    new_video.save()
-    return make_response(jsonify(message='video added')), 201
+        best.download(filepath='{}{}{}'.format(path, '/', new_filename), quiet=True)
+
+        new_video = Video(author_id, title, text, path, new_filename)
+        new_video.save()
+        return make_response(jsonify(message='video added.')), 201
+
+    except ValueError:
+        return make_response(jsonify(message='video url not correct.')), 400
 
 
 @bp.route('/video', methods=['GET'])
@@ -112,7 +120,7 @@ def get_videos():
 
         video = Video.query.get(video_id)
         if not video:
-            return make_response(jsonify(message='video not found')), 404
+            return make_response(jsonify(message='video not found.')), 404
 
         return make_response(video_schema.jsonify(video)), 200
 
@@ -125,29 +133,29 @@ def update_video():
     """
 
     if not request.is_json:
-        return make_response(jsonify(message='missing json')), 400
+        return make_response(jsonify(message='missing json.')), 400
 
     video_id = request.args.get('video_id', default=0, type=int)
 
     video = Video.query.get(video_id)
     if not video:
-        return make_response(jsonify(message='video not found')), 404
+        return make_response(jsonify(message='video not found.')), 404
 
     title = request.json['title']
     text = request.json['text']
 
     if not title:
-        return make_response(jsonify(message='no title in parameter')), 400
+        return make_response(jsonify(message='no title in parameter.')), 400
 
     if not text:
-        return make_response(jsonify(message='no text in parameter')), 400
+        return make_response(jsonify(message='no text in parameter.')), 400
 
     video.title = title
     video.text = text
 
     db.session.commit()
 
-    return make_response(jsonify(message='video updated')), 201
+    return make_response(jsonify(message='video updated.')), 201
 
 
 @bp.route('/video', methods=['DELETE'])
@@ -161,8 +169,8 @@ def delete_video():
 
     video = Video.query.get(video_id)
     if not video:
-        return make_response(jsonify(message='video not found')), 404
+        return make_response(jsonify(message='video not found.')), 404
 
     video.delete()
 
-    return make_response(jsonify(message='video deleted')), 200
+    return make_response(jsonify(message='video deleted.')), 200
