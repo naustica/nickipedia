@@ -43,11 +43,12 @@ def login():
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/home', methods=['GET', 'POST'])
 def index():
+
+    current_page_title = 'home'
+
     searchform = SearchForm()
     if searchform.validate_on_submit():
         return redirect(url_for('views.result', search=request.form['search']))
-
-    current_page_title = 'index'
 
     return render_template('index.html', searchform=searchform, current_page_title=current_page_title)
 
