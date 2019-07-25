@@ -11,6 +11,7 @@ class BaseConfig:
     SECRET_KEY = os.environ['SECRET_KEY']
     JWT_SECRET_KEY = os.environ['SECRET_KEY']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    MAX_CONTENT_LENGTH = 100 * 1024 * 1024
     DROPZONE_ALLOWED_FILE_TYPE = 'video' and 'image'
     DROPZONE_MAX_FILES = 1
     DROPZONE_TIMEOUT = 10000
