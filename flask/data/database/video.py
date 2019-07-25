@@ -12,7 +12,7 @@ class Video(db.Model):
     title = db.Column(db.String(128), nullable=False)
     text = db.Column(db.Text(), nullable=True)
     timestamp = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
-    comments = db.relationship('Comment', backref='user', lazy=True)
+    comments = db.relationship('Comment', backref='user', cascade='all,delete', lazy=True)
 
     def __init__(self, author_id, title, text, root=None, filename=None):
         self.author_id = author_id

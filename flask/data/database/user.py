@@ -8,8 +8,9 @@ class User(db.Model):
     email = db.Column(db.String(128), unique=False, nullable=False)
     password = db.Column(db.String, nullable=False)
     authenticated = db.Column(db.Boolean(), default=None)
-    comments = db.relationship('Comment', backref='author', lazy=True)
-    videos = db.relationship('Video', backref='owner', lazy=True)
+    token = db.relationship('Token', backref='access_token', cascade='all,delete', lazy=True)
+    comments = db.relationship('Comment', backref='author', cascade='all,delete', lazy=True)
+    videos = db.relationship('Video', backref='owner', cascade='all,delete', lazy=True)
 
     def __init__(self, username, email, password, authenticated=False):
         self.username = username
