@@ -13,3 +13,4 @@ marshmallow-sqlalchemy
 flask-login
 flask-jwt-extended
 gunicorn
+pafy
