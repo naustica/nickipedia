@@ -29,12 +29,17 @@ class Video(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+        db.session.commit()
+
     @staticmethod
     def get_all():
         return Video.query.all()
 
     def __repr__(self):
-        return '<Video: {}'.format(self.title)
+        return 'Video: {}'.format(self.title)
 
 
 class VideoSchema(ma.Schema):

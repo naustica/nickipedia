@@ -24,8 +24,13 @@ class Comment(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+        db.session.commit()
+
     def __repr__(self):
-        return '<Comment: {}'.format(self.content)
+        return 'Comment: {}'.format(self.content)
 
 
 class CommentSchema(ma.Schema):
