@@ -7,19 +7,33 @@ from data.api.auth import permission_needed
 bp = Blueprint('comment', __name__, url_prefix='/api')
 
 
-@bp.route('/comment/<video_id>/<comment_id>', methods=['GET'])
-def get_comment(video_id, comment_id):
+@bp.route('/comment', methods=['GET'])
+def get_comments():
 
-    comment = Comment.query.filter_by(id=comment_id, video_id=video_id).first()
+    comment_id = request.args.get('comment_id', default=0, type=int)
+    video_id = request.args.get('video_id', default=0, type=int)
+    all = request.args.get('all', default=False, type=bool)
 
-    if not comment:
-        return make_response(jsonify(message='comment not found')), 404
+    if all:
+        all_comments = Comment.query.filter_by(video_id=video_id).all()
+        if not all_comments:
+            return make_response(jsonify(message='specify a correct video_id')), 404
+        result = comments_schema.dump(all_comments)
 
-    return comment_schema.jsonify(comment), 200
+        return make_response(jsonify(result.data)), 200
+
+    if not all:
+
+        comment = Comment.query.filter_by(id=comment_id, video_id=video_id).first()
+
+        if not comment:
+            return make_response(jsonify(message='comment not found')), 404
+
+        return make_response(comment_schema.jsonify(comment)), 200
 
 
-@bp.route('/comment/<video_id>', methods=['POST'])
-def create_comment(video_id):
+@bp.route('/comment', methods=['POST'])
+def create_comment():
 
     if not request.is_json:
         return make_response(jsonify(message='missing json')), 400
@@ -33,24 +47,24 @@ def create_comment(video_id):
     return make_response(jsonify(status='success')), 200
 
 
-@bp.route('/comment/<video_id>', methods=['GET'])
-def get_all_comments(video_id):
-    all_comments = Comment.query.filter_by(video_id=video_id).all()
-    result = comments_schema.dump(all_comments)
-
-    return jsonify(result.data), 200
-
-
-@bp.route('/comment/<comment_id>', methods=['PUT'])
+@bp.route('/comment', methods=['PUT'])
 @permission_needed
-def update_comment(comment_id):
+def update_comment():
 
     if not request.is_json:
         return make_response(jsonify(message='missing json')), 400
 
+    comment_id = request.args.get('comment_id', default=0, type=int)
+
     comment = Comment.query.get(comment_id)
 
+    if not comment:
+        return make_response(jsonify(message='no correct comment_id'))
+
     content = request.json['content']
+
+    if not content:
+        return make_response(jsonify(message='no content parameter'))
 
     comment.content = content
 
@@ -59,8 +73,10 @@ def update_comment(comment_id):
     return make_response(jsonify(message='comment updated')), 200
 
 
-@bp.route('/comment/<comment_id>', methods=['DELETE'])
-def delete_comment(comment_id):
+@bp.route('/comment', methods=['DELETE'])
+def delete_comment():
+
+    comment_id = request.args.get('comment_id', default=0, type=int)
 
     comment = Comment.query.get(comment_id)
 

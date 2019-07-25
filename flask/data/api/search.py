@@ -1,12 +1,15 @@
-from flask import Blueprint, jsonify, make_response
+from flask import Blueprint, jsonify, make_response, request
 from data.database.video import Video
 
 
 bp = Blueprint('search', __name__, url_prefix='/api')
 
 
-@bp.route('/search/<term>', methods=['GET'])
-def get_results(term):
+@bp.route('/search', methods=['GET'])
+def get_results():
+
+    term = request.args.get('term', default='', type=str)
+
     search = Video.query.filter(Video.title.ilike('{}{}{}'.format('%', term, '%'))).all()
 
     data = []
