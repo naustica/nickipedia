@@ -141,19 +141,16 @@ def update_video():
     if not video:
         return make_response(jsonify(message='video not found.')), 404
 
-    title = request.json['title']
-    text = request.json['text']
+    data = request.get_json()
+    data.pop('id', None)
+    data.pop('author_id', None)
 
-    if not title:
-        return make_response(jsonify(message='no title in parameter.')), 400
+    errors = video_schema.validate(data, partial=True)
 
-    if not text:
-        return make_response(jsonify(message='no text in parameter.')), 400
+    if errors:
+        return make_response(jsonify(errors)), 400
 
-    video.title = title
-    video.text = text
-
-    db.session.commit()
+    video.update(**data)
 
     return make_response(jsonify(message='video updated.')), 201
 

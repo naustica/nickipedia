@@ -62,11 +62,15 @@ def user_update():
     if not user:
         return make_response(jsonify(message='user not found')), 400
 
-    new_email = request.json['email']
+    data = request.get_json()
+    data.pop('username', None)
 
-    user.email = new_email
+    errors = user_schema.validate(data, partial=True)
 
-    db.session.commit()
+    if errors:
+        return make_response(jsonify(errors)), 400
+
+    user.update(**data)
 
     return make_response(jsonify(message='user updated')), 200
 

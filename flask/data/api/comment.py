@@ -54,7 +54,7 @@ def create_comment():
 
 
 @bp.route('/comment', methods=['PUT'])
-@permission_needed
+#@permission_needed
 def update_comment():
     """
     example: PUT: host/api/comment?comment_id=1
@@ -70,14 +70,16 @@ def update_comment():
     if not comment:
         return make_response(jsonify(message='no correct comment_id'))
 
-    content = request.json['content']
+    data = request.get_json()
+    data.pop('id', None)
+    data.pop('author_id', None)
 
-    if not content:
-        return make_response(jsonify(message='no content parameter'))
+    errors = comment_schema.validate(data, partial=True)
 
-    comment.content = content
+    if errors:
+        return make_response(jsonify(errors)), 400
 
-    db.session.commit()
+    comment.update(**data)
 
     return make_response(jsonify(message='comment updated')), 200
 
