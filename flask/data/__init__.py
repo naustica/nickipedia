@@ -32,8 +32,29 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'views.login'
 
-    from data.website import views
-    app.register_blueprint(views.bp)
+    from data.website.views import login
+    app.register_blueprint(login.bp)
+
+    from data.website.views import register
+    app.register_blueprint(register.bp)
+
+    from data.website.views import video
+    app.register_blueprint(video.bp)
+
+    from data.website.views import user
+    app.register_blueprint(user.bp)
+
+    from data.website.views import home
+    app.register_blueprint(home.bp)
+
+    from data.website.views import result
+    app.register_blueprint(result.bp)
+
+    from data.website.views import helpers
+    app.register_blueprint(helpers.bp)
+
+    from data.website.views import response
+    app.register_blueprint(response.bp)
 
     from data.api import search
     app.register_blueprint(search.bp)
