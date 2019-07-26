@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, session
+from flask import render_template, request, flash, redirect, url_for, session
 from flask_login import login_user, logout_user, login_required, current_user
 from data import login_manager
 from data.config import local_server_adress
@@ -6,12 +6,10 @@ from data.database.user import User
 from data.website.forms import LoginForm
 import requests
 from flask_jwt_extended import decode_token
+from . import main
 
 
-bp = Blueprint('login', __name__, template_folder='./../templates', static_folder='./../static', static_url_path='website/static', url_prefix='/')
-
-
-@bp.route('/login', methods=['GET', 'POST'])
+@main.route('/login', methods=['GET', 'POST'])
 def login():
 
     current_page_title = 'login'
@@ -26,22 +24,22 @@ def login():
             login_user(user)
             session[current_user.username] = r['access_token']
             flash('logged in successfully')
-            return redirect(url_for('home.index'))
+            return redirect(url_for('main.index'))
         else:
             flash('registration api error, maybe url host')
             flash(r)
 
         next = request.args.get('next')
-        return redirect(next or url_for('login.login'))
+        return redirect(next or url_for('main.login'))
 
     return render_template('login.html', current_page_title=current_page_title, loginform=loginform)
 
 
-@bp.route('logout')
+@main.route('logout')
 @login_required
 def logout():
     headers = {'Authorization': session[current_user.username]}
     requests.post(local_server_adress + url_for('auth_api.logout'), headers=headers)
 
     logout_user()
-    return redirect(url_for('login.login'))
+    return redirect(url_for('main.login'))

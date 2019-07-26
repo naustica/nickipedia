@@ -9,7 +9,7 @@
       <div class="card" style="margin-top: 0.5rem; opacity: 0.95; background-color: #F5F5F5; border: 2px solid #ccc; border-radius: 5px;">
         <div class="card-body">
           <h1 class="card-title" style="z-index: 1;">{{ video_title }}</h1>
-          <h5 class="card-subtitle"><a href="{{ url_for('user.user', name=video_author) }}" class="card-link">{{ video_author }}</a></h5>
+          <h5 class="card-subtitle"><a href="{{ url_for('main.user', name=video_author) }}" class="card-link">{{ video_author }}</a></h5>
           <br>
           <p class="card-text">{{ video_description }}</p>
         </div>

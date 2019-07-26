@@ -1,16 +1,14 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, session
+from flask import render_template, flash, redirect, url_for, session
 from flask_login import login_user, current_user
 from data.database.user import User
 from data.website.forms import RegistrationForm
 import requests
 from data.config import local_server_adress
 from flask_jwt_extended import decode_token
+from . import main
 
 
-bp = Blueprint('register', __name__, template_folder='./../templates', static_folder='./../static', static_url_path='website/static', url_prefix='/')
-
-
-@bp.route('/register', methods=['GET', 'POST'])
+@main.route('/register', methods=['GET', 'POST'])
 def register():
 
     current_page_title = 'registration'
@@ -27,7 +25,7 @@ def register():
                 flash('account created for {}'.format(user.username))
                 login_user(user)
                 session[current_user.username] = r['access_token']
-                return redirect(url_for('home.index'))
+                return redirect(url_for('main.index'))
             else:
                 flash('login failed')
         else:

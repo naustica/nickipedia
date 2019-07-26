@@ -1,11 +1,9 @@
-from flask import Blueprint, render_template
+from flask import render_template
 from data.database.video import Video
+from . import main
 
 
-bp = Blueprint('result', __name__, template_folder='./../templates', static_folder='./../static', static_url_path='website/static', url_prefix='/')
-
-
-@bp.route('/result/<search>', methods=['GET', 'POST'])
+@main.route('/result/<search>', methods=['GET', 'POST'])
 def result(search):
 
     current_page_title = 'result'
