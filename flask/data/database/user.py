@@ -9,7 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(128), unique=False, nullable=False)
     password = db.Column(db.String(), nullable=False)
     authenticated = db.Column(db.Boolean(), default=None)
-    profil_picure = db.Column(db.String(), default=os.getcwd() + '/data/database/files/default/default_pic_a.jpg', nullable=False)
+    profile_picure = db.Column(db.String(), default=os.getcwd() + '/data/database/files/default/default_pic_a.jpg', nullable=False)
     token = db.relationship('Token', backref='access_token', cascade='all,delete', lazy=True)
     comments = db.relationship('Comment', backref='author', cascade='all,delete', lazy=True)
     videos = db.relationship('Video', backref='owner', cascade='all,delete', lazy=True)
