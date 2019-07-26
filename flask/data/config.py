@@ -4,7 +4,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 upload_path = os.getcwd() + '/data/database/files/'
 local_files_path = 'http://0.0.0.0:8000/'
-local_server = 'http://127.0.0.1:5000/'
+local_server_adress = 'http://127.0.0.1:5000'
 
 
 class BaseConfig:
