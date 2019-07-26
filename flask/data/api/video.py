@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request, make_response
 from data.database.video import Video, video_schema, videos_schema
 from data.api.auth import permission_needed
-from data import db
 from werkzeug import secure_filename
 import os
 from data.config import upload_path
@@ -21,9 +20,9 @@ def create_video():
     example: POST: host/api/video
     """
 
-    title = request.form['title']
-    text = request.form['text']
-    author_id = request.form['author_id']
+    title = request.form.get('title')
+    text = request.form.get('text')
+    author_id = request.form.get('author_id')
     file = request.files.get('file')
 
     if not title:
