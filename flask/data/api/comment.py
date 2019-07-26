@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, make_response, request
 from data.database.comment import Comment, comment_schema, comments_schema
-from data import db
 from data.api.auth import permission_needed
 
 
