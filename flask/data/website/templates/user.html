@@ -15,8 +15,8 @@
 <div class="card">
   <header class="card-header">Peter gestikuliert vor sich hin.</header>
   <div class="card-content">
-    <video poster="{{url_for('views.static', filename='videos/test.mp4')}}" id="player" ratio="4:3" style="width:100%;" playsinline controls>
-      <source src="{{url_for('views.static', filename='videos/test.mp4')}}" type="video/mp4">
+    <video poster="{{url_for('.static', filename='videos/test.mp4')}}" id="player" ratio="4:3" style="width:100%;" playsinline controls>
+      <source src="{{url_for('.static', filename='videos/test.mp4')}}" type="video/mp4">
     </video>
   </div>
 </div>

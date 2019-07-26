@@ -11,7 +11,7 @@
   {{ dropzone.load_css() }}
   {{ dropzone.load_js() }}
   <!-- main css -->
-  <link rel="stylesheet" type="text/css" href="{{ url_for('views.static', filename='css/main.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/main.css') }}">
 
   {% if current_page_title %}
     <title>nickipedia - {{ current_page_title }}</title>
