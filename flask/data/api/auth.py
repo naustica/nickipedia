@@ -47,8 +47,8 @@ def login():
     if not request.is_json:
         return make_response(jsonify(message='missing json')), 400
 
-    username = request.json['username']
-    password = request.json['password']
+    username = request.json.get('username')
+    password = request.json.get('password')
 
     if not username:
         return make_response(jsonify(message='missing username parameter')), 400
