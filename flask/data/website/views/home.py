@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from data.website.forms import SearchForm
+from data.website.views.forms import SearchForm
 from . import main
 
 

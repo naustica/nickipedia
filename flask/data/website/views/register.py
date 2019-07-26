@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, session
 from flask_login import login_user, current_user
 from data.database.user import User
-from data.website.forms import RegistrationForm
+from data.website.views.forms import RegistrationForm
 import requests
 from data.config import local_server_adress
 from flask_jwt_extended import decode_token

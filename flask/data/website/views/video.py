@@ -4,7 +4,7 @@ from data import db
 from data.database.comment import Comment
 from data.database.video import Video
 from sqlalchemy import desc
-from data.website.forms import CommentForm
+from data.website.views.forms import CommentForm
 from data.config import local_files_path
 from . import main
 

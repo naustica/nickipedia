@@ -1,9 +1,8 @@
 from flask import render_template, request, flash, redirect, url_for, session
 from flask_login import login_user, logout_user, login_required, current_user
-from data import login_manager
 from data.config import local_server_adress
 from data.database.user import User
-from data.website.forms import LoginForm
+from data.website.views.forms import LoginForm
 import requests
 from flask_jwt_extended import decode_token
 from . import main

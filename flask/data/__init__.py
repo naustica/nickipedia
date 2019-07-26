@@ -30,9 +30,9 @@ def create_app():
     dropzone.init_app(app)
     jwt.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'views.login'
+    login_manager.login_view = 'main.login'
 
-    from data.website.main import main as website_main_blueprint
+    from data.website.views import main as website_main_blueprint
     app.register_blueprint(website_main_blueprint)
 
     from data.api import search
