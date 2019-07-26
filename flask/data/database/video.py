@@ -1,25 +1,28 @@
 from data import db, ma
 from marshmallow import post_load
 from sqlalchemy import func
+import os
 
 
 class Video(db.Model):
     __tablename__ = 'videos'
     id = db.Column(db.Integer(), primary_key=True, nullable=False)
     author_id = db.Column(db.String(), db.ForeignKey('users.username'), nullable=False)
-    root = db.Column(db.Text(), default='dummy', nullable=False)
-    filename = db.Column(db.Text(), default='dummy', nullable=False)
+    root = db.Column(db.String(), default='dummy', nullable=False)
+    filename = db.Column(db.String(), default='dummy', nullable=False)
     title = db.Column(db.String(128), nullable=False)
     text = db.Column(db.Text(), nullable=True)
+    thumbnail = db.Column(db.String(), default=os.getcwd() + '/data/database/files/default/default_thumbnail.jpg', nullable=False)
     timestamp = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
     comments = db.relationship('Comment', backref='user', cascade='all,delete', lazy=True)
 
-    def __init__(self, author_id, title, text, root=None, filename=None):
+    def __init__(self, author_id, title, text, root=None, filename=None, thumbnail=None):
         self.author_id = author_id
         self.root = root
         self.title = title
         self.text = text
         self.filename = filename
+        self.thumbnail = thumbnail
 
     def save(self):
         db.session.add(self)
