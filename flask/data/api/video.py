@@ -10,7 +10,7 @@ import pafy
 from flask_jwt_extended import decode_token
 
 
-bp = Blueprint('video', __name__, url_prefix='/api')
+bp = Blueprint('video_api', __name__, url_prefix='/api')
 
 
 @bp.route('/video', methods=['POST'])

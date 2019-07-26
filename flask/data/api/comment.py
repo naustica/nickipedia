@@ -3,7 +3,7 @@ from data.database.comment import Comment, comment_schema, comments_schema
 from data.api.auth import permission_needed
 
 
-bp = Blueprint('comment', __name__, url_prefix='/api')
+bp = Blueprint('comment_api', __name__, url_prefix='/api')
 
 
 @bp.route('/comment', methods=['GET'])

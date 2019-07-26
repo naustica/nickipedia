@@ -8,7 +8,7 @@ from fnmatch import fnmatch
 from datetime import datetime
 
 
-bp = Blueprint('user', __name__, url_prefix='/api')
+bp = Blueprint('user_api', __name__, url_prefix='/api')
 
 
 @bp.route('/user', methods=['GET'])

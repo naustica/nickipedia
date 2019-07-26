@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, make_response, request
 from data.database.video import Video
 
 
-bp = Blueprint('search', __name__, url_prefix='/api')
+bp = Blueprint('search_api', __name__, url_prefix='/api')
 
 
 @bp.route('/search', methods=['GET'])

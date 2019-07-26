@@ -6,7 +6,7 @@ from data import bcrypt, db
 from functools import wraps
 
 
-bp = Blueprint('auth', __name__, url_prefix='/api/auth')
+bp = Blueprint('auth_api', __name__, url_prefix='/api/auth')
 
 
 def permission_needed(function):
