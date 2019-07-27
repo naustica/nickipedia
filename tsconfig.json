@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "sourceMap": true,
+    "noImplicitAny": false,
     "target": "es6",
     "sourceMap": true,
     "jsx": "react",
