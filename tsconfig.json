@@ -1,12 +1,15 @@
 {
-  "compileOnSave": true,
+  "compileOnSave": false,
   "compilerOptions": {
     "sourceMap": true,
     "target": "es6",
     "sourceMap": true,
-    "jsx": "react"
+    "jsx": "react",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "module": "ESNext",
   },
-  "files":[
-    "flask/data/website/static/js/ts/main.ts"
-  ]
+  "exclude": [
+    "node_modules"
+  ],
 }
