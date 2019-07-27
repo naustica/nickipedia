@@ -10,7 +10,7 @@ class SearchResult extends React.Component {
 
       componentDidMount() {
             var search: string = document.getElementById('root').getAttribute('term');
-            fetch('http://0.0.0.0:5000/api/search/' + search)
+            fetch('http://0.0.0.0:5000/api/search?term=' + 'peter')
             .then(res => res.json())
             .then((data) => {
                   this.setState({ results: data})
@@ -23,6 +23,6 @@ class SearchResult extends React.Component {
                   <Results results={this.state.results} />
             )
       }
-}  
+}
 
 export default SearchResult;

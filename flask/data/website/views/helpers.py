@@ -1,4 +1,4 @@
-from flask import redirect, url_for, make_response, jsonify
+from flask import redirect, url_for, render_template
 from data import db
 from . import main
 
@@ -6,7 +6,9 @@ from . import main
 @main.route('/test', methods=['GET', 'POST'])
 def test():
 
-    return make_response(jsonify(test=42))
+    current_page_title = 'test'
+
+    return render_template('test.html', current_page_title=current_page_title)
 
 
 @main.route('/reset')
