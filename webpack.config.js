@@ -10,25 +10,15 @@ module.exports = {
     filename: "main.js"
   },
   resolve: {
-    extensions: [".tsx", ".ts"]
+    extensions: [".tsx", ".ts", ".js", "json"]
   },
   module: {
     rules: [
       {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        use: "ts-loader"
-      },
-      {
-        enforce: "pre",
-        test: /\.js$/,
-        loader: "source-map-loader"
+        use: "awesome-typescript-loader"
       }
     ]
-  },
-
-  externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
-    }
+  }
 };
