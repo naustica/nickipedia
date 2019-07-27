@@ -13,3 +13,4 @@ db_start.py
 upload_videos/*
 *.temp
 flask/data/website/static/js/main.js
+website/src/bundle.js
