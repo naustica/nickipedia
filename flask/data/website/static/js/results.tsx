@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Results from './components/results';
 
 
@@ -23,6 +23,6 @@ class SearchResult extends React.Component {
                   <Results results={this.state.results} />
             )
       }
-}
+}  
 
 export default SearchResult;
