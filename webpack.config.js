@@ -20,5 +20,10 @@ module.exports = {
         use: "awesome-typescript-loader"
       }
     ]
+  },
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM",
+    "axios": "axios"
   }
 };
