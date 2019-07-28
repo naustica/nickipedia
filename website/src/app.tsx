@@ -5,11 +5,8 @@ import {BrowserRouter as Router, HashRouter, Route, Switch, Link} from 'react-ro
 import './app.css';
 
 import Navbar from './components/navbar/navbar';
+import Home from './components/home/home';
 
-
-function Index() {
-  return <h2>home</h2>
-}
 
 function Settings() {
   return <h2>settings</h2>
@@ -27,7 +24,7 @@ function Error() {
 class App extends Component {
     render() {
       return (
-          <HashRouter>
+          <Router>
             <Navbar />
               <div className="app">
                   <div className="container">
@@ -35,8 +32,8 @@ class App extends Component {
                           <div className="col">
                               <div>
                                 <Switch>
-                                  <Route path='/' exact component={Index}/>
-                                  <Route path='/home' exact component={Index}/>
+                                  <Route path='/' exact component={Home}/>
+                                  <Route path='/home' exact component={Home}/>
                                   <Route path='/settings' component={Settings}/>
                                   <Route path='/about' component={About}/>
                                   <Route component={Error}/>
@@ -46,7 +43,7 @@ class App extends Component {
                         </div>
                     </div>
                 </div>
-          </HashRouter>
+          </Router>
       )
     }
 }

@@ -9,7 +9,7 @@ a, a:link, a:visited, a:active, a:hover {
 }
 body, html {
     font-size: 14px;
-    background-image: url("/images/background.jpg");
+    background-image: url("./images/background.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -37,4 +37,17 @@ body, html {
     padding: 1rem;
     border-radius: 10px;
     z-index: 1
+}
+input[type=text] {
+    border-radius: 10px;
+    padding: 0.8rem;
+    transition: all 0.3s ease-in-out;
+    border-width: 0px;
+    outline: none;
+}
+input[type=text]:focus {
+    border-radius: 20px;
+    transition: border-radius 0.3s;
+    border-width: 0px;
+    outline: none;
 }
