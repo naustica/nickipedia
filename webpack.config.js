@@ -1,12 +1,20 @@
 var path = require("path");
 var webpack = require("webpack");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: "production",
   devtool: "source-map",
   entry: ["./website/src/app.tsx"],
+  performance: {
+    maxEntrypointSize: 500000,
+    maxAssetSize: 500000
+  },
+  devServer: {
+    port: 3000,
+  },
   output: {
-    path: path.resolve(__dirname, "website/src"),
+    path: path.resolve(__dirname, "./website"),
     filename: "bundle.js"
   },
   watch: true,
@@ -23,9 +31,18 @@ module.exports = {
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(png|jpg)$/,
+        use: "url-loader"
       }
     ]
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './website/index.html'
+    })
+  ],
   externals: {
     "react": "React",
     "react-dom": "ReactDOM",
