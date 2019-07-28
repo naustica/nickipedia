@@ -4,7 +4,7 @@ var webpack = require("webpack");
 module.exports = {
   mode: "production",
   devtool: "source-map",
-  entry: ["./website/src/index.tsx"],
+  entry: ["./website/src/app.tsx"],
   output: {
     path: path.resolve(__dirname, "website/src"),
     filename: "bundle.js"
@@ -19,6 +19,10 @@ module.exports = {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
         use: "awesome-typescript-loader"
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       }
     ]
   },
