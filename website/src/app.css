@@ -1,0 +1,41 @@
+:root {
+  --white: #F5F5F5; }
+
+a, a:link, a:visited, a:active, a:hover {
+  text-decoration: none; }
+
+#result-link {
+  color: black; }
+
+body, html {
+  font-size: 14px;
+  background-image: url("/images/background.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed; }
+
+.container {
+  padding: 2rem; }
+
+.btn {
+  border-radius: 10px; }
+
+.btn:hover {
+  transform: scale(1.05);
+  transition: 0.25s ease-in-out; }
+
+#img-profil {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px; }
+
+#posts {
+  margin-bottom: 1.5rem;
+  background-color: var(--white);
+  opacity: 0.9;
+  padding: 1rem;
+  border-radius: 10px;
+  z-index: 1; }
+
+/*# sourceMappingURL=app.css.map */
