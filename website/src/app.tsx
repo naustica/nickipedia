@@ -6,6 +6,7 @@ import './app.css';
 
 import Navbar from './components/navbar/navbar';
 import Home from './components/home/home';
+import Login from './components/login/login';
 
 
 function Settings() {
@@ -36,6 +37,7 @@ class App extends Component {
                                   <Route path='/home' exact component={Home}/>
                                   <Route path='/settings' component={Settings}/>
                                   <Route path='/about' component={About}/>
+                                  <Route path='/login' component={Login}/>
                                   <Route component={Error}/>
                                 </Switch>
                               </div>
