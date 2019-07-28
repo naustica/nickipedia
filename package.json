@@ -4,7 +4,7 @@
   "description": "the official nickipedia website",
   "main": "index.js",
   "scripts": {
-    "compile-react": "webpack-dev-server --inline"
+    "compile-react": "webpack-dev-server --inline --hot"
   },
   "repository": {
     "type": "git",
