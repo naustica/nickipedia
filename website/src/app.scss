@@ -1,4 +1,33 @@
-@import "node_modules/bootstrap/scss/bootstrap";
+// main.scss
+
+$border-radius: 15px;
+$input-border-radius-lg: 15px;
+$input-font-size-lg: 16px;
+$input-height-lg: 3rem;
+$input-bg: #F5F5F5;
+$input-padding-y-lg: 1rem;
+$input-padding-x-lg: 1.5rem;
+
+// required
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+// optional
+@import "node_modules/bootstrap/scss/grid";
+@import "node_modules/bootstrap/scss/tables";
+@import "node_modules/bootstrap/scss/type";
+@import "node_modules/bootstrap/scss/images";
+@import "node_modules/bootstrap/scss/code";
+@import "node_modules/bootstrap/scss/forms";
+@import "node_modules/bootstrap/scss/navbar";
+@import "node_modules/bootstrap/scss/breadcrumb";
+@import "node_modules/bootstrap/scss/alert";
+@import "node_modules/bootstrap/scss/input-group";
+@import "node_modules/bootstrap/scss/nav";
+@import "node_modules/bootstrap/scss/reboot";
+@import "node_modules/bootstrap/scss/close";
+@import "node_modules/bootstrap/scss/buttons";
 
 
 :root {
@@ -41,17 +70,16 @@ body, html {
     border-radius: 10px;
     z-index: 1
 }
-input[type=text], input[type=password], input[type=email] {
-    border-radius: 15px;
-    padding: 0.8rem;
-    padding-left: 1.5rem;
+.form-control {
     transition: all 0.3s ease-in-out;
     border-width: 0px;
     outline: none;
 }
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+.form-control:focus {
     border-radius: 20px;
     transition: border-radius 0.3s;
     border-width: 0px;
     outline: none;
+    border-color: None;
+    box-shadow: 0 0 0 0;
 }
