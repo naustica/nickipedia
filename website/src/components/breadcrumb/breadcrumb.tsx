@@ -11,7 +11,7 @@ class Breadcrumb extends Component {
       return (
           <nav className="nav-breadcrumb" aria-label="breadcrumb">
             <ol className="breadcrumb" id="ol-breadcrumb">
-              <li className="breadcrumb-item"><Link to='/'>home</Link></li>
+              <li className="breadcrumb-item"><Link to='/' style={{color: "black"}}>home</Link></li>
               <li className="breadcrumb-item active" aria-current="page">current page</li>
             </ol>
           </nav>
