@@ -7,6 +7,7 @@ import './app.scss';
 import Navbar from './components/navbar/navbar';
 import Home from './components/home/home';
 import Login from './components/login/login';
+import Results from './components/results/results';
 
 
 function Settings() {
@@ -38,6 +39,7 @@ class App extends Component {
                                   <Route path='/settings' component={Settings}/>
                                   <Route path='/about' component={About}/>
                                   <Route path='/login' component={Login}/>
+                                  <Route path='/result:term' component={Results}/>
                                   <Route component={Error}/>
                                 </Switch>
                               </div>

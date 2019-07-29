@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Redirect, withRouter} from 'react-router-dom';
 
 import './home.scss'
 
 
-class Home extends Component<{}, { term: string }> {
-  constructor(props:never) {
+class Home extends Component<{ history: any }, { term: string }> {
+  constructor(props) {
     super(props)
     this.state = {
       term: ''
@@ -16,18 +17,18 @@ class Home extends Component<{}, { term: string }> {
   getTerm(event:React.ChangeEvent<HTMLInputElement>): void {
     this.setState({term: event.target.value})
   }
-  submitForm(event:React.FormEvent<HTMLFormElement>): void {
+  submitForm(event:React.FormEvent<HTMLFormElement>): any {
     var form = event.target as HTMLFormElement;
     event.preventDefault();
     axios.get('api/search?term=' + this.state.term)
-      .then(response => {
-        const results = response.data;
-        console.log(results);
+      .then(() => {
+        this.props.history.push('/result' + this.state.term)
       })
       .catch(error => {
         console.log(error)
         form.reset();
       })
+
   }
   render() {
     return (
@@ -42,5 +43,4 @@ class Home extends Component<{}, { term: string }> {
   }
 }
 
-
-export default Home;
+export default withRouter(Home);
