@@ -101,7 +101,7 @@ def add_video_from_url():
 @bp.route('/video', methods=['GET'])
 def get_videos():
     """
-    example: GET: host/api/video/?video_id=1
+    example: GET: host/api/video?video_id=1
     """
 
     video_id = request.args.get('video_id', default=0, type=int)

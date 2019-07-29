@@ -15,6 +15,9 @@ def get_results():
 
     search = Video.query.filter(Video.title.ilike('{}{}{}'.format('%', term, '%'))).all()
 
+    if not search:
+        return make_response(jsonify(message='no results')), 404
+
     data = []
 
     for result in search:
