@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import './login.css'
+import './login.scss'
 
 
 class Login extends Component<{}, { username?: string, password?: string}> {

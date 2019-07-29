@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import './home.css'
+import './home.scss'
 
 
 class Home extends Component<{}, { term: string }> {
