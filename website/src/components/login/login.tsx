@@ -23,7 +23,9 @@ class Login extends Component<{}, { username?: string, password?: string}> {
     return (
       <div className="container" id="login-container">
         <form onSubmit={this.submitForm}>
-          <input id="login-username" type="text" name="username" autoFocus onChange={this.onChange} placeholder="username"/>
+          <div className="form-group input-group-lg">
+            <input className="form-control from-control-lg" type="text" name="username" autoFocus onChange={this.onChange} placeholder="username"/>
+          </div>
         </form>
       </div>
   )
