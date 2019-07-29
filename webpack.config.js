@@ -7,8 +7,8 @@ module.exports = {
   devtool: "source-map",
   entry: ["./website/src/app.tsx"],
   performance: {
-    maxEntrypointSize: 500000,
-    maxAssetSize: 500000
+    maxEntrypointSize: 1000000,
+    maxAssetSize: 1000000
   },
   devServer: {
     port: 3000,
@@ -36,8 +36,8 @@ module.exports = {
         use: "awesome-typescript-loader"
       },
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"]
       },
       {
         test: /\.(png|jpg)$/,
