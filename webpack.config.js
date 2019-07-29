@@ -49,10 +49,5 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './website/index.html'
     })
-  ],
-  externals: {
-    "react": "React",
-    "react-dom": "ReactDOM",
-    "axios": "axios"
-  }
+  ]
 };
