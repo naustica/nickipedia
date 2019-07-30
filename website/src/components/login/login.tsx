@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 import './login.scss'
@@ -43,6 +43,9 @@ class Login extends Component<{history:any}, { username?: string, password?: str
             <input className="form-control from-control-lg" type="text" name="username" autoFocus onChange={this.onChange} placeholder="username"/>
           </div>
         </form>
+        <div className="login-info">
+          <Link to="/register" style={{fontSize: "16px"}}>dont have an account?</Link>
+        </div>
       </div>
   )
   }
