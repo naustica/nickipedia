@@ -6,7 +6,7 @@ import './home.scss'
 
 
 class Home extends Component<{ history: any }, { term: string }> {
-  constructor(props) {
+  constructor(props:any) {
     super(props)
     this.state = {
       term: ''
