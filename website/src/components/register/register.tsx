@@ -25,7 +25,6 @@ class Register extends Component<{history:any}, { username?: string, password?: 
     event.preventDefault();
     axios.post('api/user/register', {username: this.state.username, email: this.state.email, password: this.state.password}, {headers: {'Content-Type': 'application/json'}})
       .then((response) => {
-        axios.post('api/auth/login', {username: this.state.username, password: this.state.password}, {headers: {'Content-Type': 'application/json'}})
         this.props.history.push('/login')
       })
       .catch(error => {
