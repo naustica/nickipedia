@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 
 
 import './register.scss'
@@ -24,7 +24,7 @@ class Register extends Component<{history:any}, { username?: string, password?: 
     var form = event.target as HTMLFormElement;
     event.preventDefault();
     axios.post('api/user/register', {username: this.state.username, email: this.state.email, password: this.state.password}, {headers: {'Content-Type': 'application/json'}})
-      .then((response) => {
+      .then(() => {
         this.props.history.push('/login')
       })
       .catch(error => {
@@ -40,6 +40,9 @@ class Register extends Component<{history:any}, { username?: string, password?: 
             <input className="form-control from-control-lg" type="text" name="username" autoFocus onChange={this.onChange} placeholder="username"/>
           </div>
         </form>
+        <div className="register-info">
+          <Link to="/login" style={{fontSize: "16px"}}>already have an account?</Link>
+        </div>
       </div>
   )
   }
