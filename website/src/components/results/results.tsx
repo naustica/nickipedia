@@ -1,37 +1,41 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 import './results.scss'
 
+import Card from './card/card';
 
-class Results extends Component<{match: any}, {}> {
+
+class Results extends Component<{match: any}, {resultComponent: any, errors: boolean}> {
   constructor(props:any) {
     super(props)
+    this.state = {
+      resultComponent: null,
+      errors: false
+    }
   }
   componentDidMount() {
     const {term} = this.props.match.params
-    console.log(term)
+    axios.get('api/search?term=' + term)
+    .then((response) => {
+    this.setState({resultComponent: response.data.map(result => <Card key={result.id} result={result} />)})
+    })
+    .catch(error => {
+      console.log(error)
+      this.setState({errors: true})
+    })
   }
   render() {
+    if (this.state.errors === true) {
+      return (
+        <div>no results :(</div>
+      )
+    } else {
     return (
       <div className="container">
-        <div className="card mb-2" id="result-card">
-          <Link to='/'>
-          <div className="row no-gutters">
-            <div className="col-md-3">
-              <img src="" className="card-img-top" id="card-img-result" alt="..." />
-            </div>
-            <div className="col-md-4">
-              <div className="card-body">
-                <h5 className="card-title">test-title</h5>
-                <p className="card-text">test-text</p>
-              </div>
-            </div>
-          </div>
-          </Link>
-        </div>
+        {this.state.resultComponent}
       </div>
-  )
+  )}
   }
 }
 
