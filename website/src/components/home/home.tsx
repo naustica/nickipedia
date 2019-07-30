@@ -22,7 +22,7 @@ class Home extends Component<{ history: any }, { term: string }> {
     event.preventDefault();
     axios.get('api/search?term=' + this.state.term)
       .then(() => {
-        this.props.history.push('/result' + this.state.term)
+        this.props.history.push('/result/' + this.state.term)
       })
       .catch(error => {
         console.log(error)

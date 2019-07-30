@@ -44,7 +44,7 @@ class App extends Component {
                                   <Route path='/login' component={Login}/>
                                   <Route path='/register' component={Register}/>
                                   <AuthenticatedRoute path='/logout' component={Logout}/>
-                                  <Route path='/result:term' component={Results}/>
+                                  <Route path='/result/:term' component={Results}/>
                                   <Route component={Error}/>
                                 </Switch>
                               </div>
