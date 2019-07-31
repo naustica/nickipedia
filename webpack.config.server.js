@@ -3,7 +3,7 @@ var webpack = require("webpack");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   devtool: "source-map",
   entry: ["./website/src/app.tsx"],
   performance: {
