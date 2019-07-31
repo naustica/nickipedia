@@ -2,7 +2,7 @@ var path = require("path");
 var webpack = require("webpack");
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   devtool: "source-map",
   entry: ["./flask/data/website/static/js/main.tsx"],
   output: {
