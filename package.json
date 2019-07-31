@@ -4,8 +4,9 @@
   "description": "the official nickipedia website",
   "main": "index.js",
   "scripts": {
-    "compile-react": "webpack-dev-server --inline --hot",
-    "compile-sass": "node-sass website/src/app.scss website/src/app.css -w"
+    "compile-react-webserver": "webpack-dev-server --inline --hot --config ./webpack.config.server.js",
+    "compile-sass": "node-sass ./flask/data/website/static/css/main.scss ./flask/data/website/static/css/main.css -w",
+    "compile-react": "webpack --config ./webpack.config.flask.js"
   },
   "repository": {
     "type": "git",
