@@ -27,7 +27,6 @@ class Navbar extends Component {
             </ul>
           </div>
         </nav>
-        <Breadcrumb />
       </header>
     </div>
   )

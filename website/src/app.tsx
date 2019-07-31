@@ -10,6 +10,7 @@ import Login from './components/login/login';
 import Register from './components/register/register';
 import Results from './components/results/results';
 import Logout from './components/logout/logout';
+import Video from './components/video/video';
 import AuthenticatedRoute from './components/authentication/authentication';
 
 
@@ -45,6 +46,7 @@ class App extends Component {
                                   <Route path='/register' component={Register}/>
                                   <AuthenticatedRoute path='/logout' component={Logout}/>
                                   <Route path='/result/:term' component={Results}/>
+                                  <Route path='/watch/:id' component={Video}/>
                                   <Route component={Error}/>
                                 </Switch>
                               </div>
