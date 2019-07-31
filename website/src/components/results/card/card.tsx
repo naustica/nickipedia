@@ -11,10 +11,10 @@ class Card extends Component<{result:any}, {}> {
   render() {
     return (
         <div className="card mb-2" id="result-card">
-          <Link to='/' style={{color: "black"}}>
+          <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
           <div className="row no-gutters">
             <div className="col-md-3">
-              <img src="" className="card-img-top" id="card-img-result" alt="..." />
+              <img src="http://0.0.0.0:8000/default/default_pic_a.jpg" className="card-img-top" id="card-img-result" alt="..." />
             </div>
             <div className="col-md-4">
               <div className="card-body">
