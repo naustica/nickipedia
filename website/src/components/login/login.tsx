@@ -59,6 +59,7 @@ class Login extends Component<{history:any}, { username?: string, password?: str
       }
   }
   render() {
+    const formBorderColor = this.state.error != '' ? {borderColor: 'red'} : {borderColor: 'black'}
     return (
       <div className="container" id="login-container">
         <div className="card" style={{padding: "1.5rem", opacity: 0.95}}>
@@ -69,10 +70,10 @@ class Login extends Component<{history:any}, { username?: string, password?: str
             </div>
             <form onSubmit={this.submitForm}>
               <div className="form-group input-group-lg" style={{padding: "0.8rem"}}>
-                <input className="form-control from-control-lg" type="text" name="username" autoFocus value={this.state.username} onChange={this.onChange} placeholder="username"/>
+                <input className="form-control from-control-lg" style={formBorderColor} type="text" name="username" autoFocus value={this.state.username} onChange={this.onChange} placeholder="username"/>
               </div>
               <div className="form-group input-group-lg" style={{padding: "0.8rem"}}>
-                <input className="form-control from-control-lg" type="password" name="password" value={this.state.password} onChange={this.onChange} placeholder="password"/>
+                <input className="form-control from-control-lg" style={formBorderColor} type="password" name="password" value={this.state.password} onChange={this.onChange} placeholder="password"/>
               </div>
               <div className="form-group input-group-lg" style={{textAlign: "center", padding: "2rem"}}>
                 <Link to="/register" style={{fontSize: "16px"}}>dont have an account?</Link>
