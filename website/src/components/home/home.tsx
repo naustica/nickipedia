@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 
 import './home.scss'
@@ -20,7 +19,7 @@ class Home extends Component<{ history: any }, { term: string }> {
   submitForm(event:React.FormEvent<HTMLFormElement>): any {
     var form = event.target as HTMLFormElement;
     event.preventDefault();
-    axios.get('api/search?term=' + this.state.term)
+    fetch('api/search?term=' + this.state.term)
       .then(() => {
         this.props.history.push('/result/' + this.state.term)
       })

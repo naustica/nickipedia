@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {withRouter, Redirect} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
@@ -11,7 +10,13 @@ class Logout extends Component<{},{}> {
   render() {
     const cookies = new Cookies();
     if (cookies.get('access_token') != undefined) {
-      axios.post('api/auth/logout', {headers: {'Authorization': cookies.get('access_token')}})
+      const access_token = cookies.get('access_token')
+      fetch('api/auth/logout', {
+        method: 'post',
+        headers: new Headers({
+          "Authorization": access_token
+        })
+      })
       cookies.remove('access_token')
       return <Redirect to={{pathname: '/login'}} />
     }

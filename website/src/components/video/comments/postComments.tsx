@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+
 
 import './../video.scss'
 
@@ -19,7 +19,9 @@ class VideoPostComments extends Component<{}, {}> {
   submitForm(event:React.FormEvent<HTMLFormElement>): any {
     var form = event.target as HTMLFormElement;
     event.preventDefault();
-    axios.post('api/comment')
+    fetch('api/comment', {
+      method: 'post'
+    })
       .then((response) => {
 
       })

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {withRouter, Link} from 'react-router-dom';
 
 
@@ -23,7 +22,11 @@ class Register extends Component<{history:any}, { username?: string, password?: 
   submitForm(event:React.FormEvent<HTMLFormElement>): any {
     var form = event.target as HTMLFormElement;
     event.preventDefault();
-    axios.post('api/user/register', {username: this.state.username, email: this.state.email, password: this.state.password}, {headers: {'Content-Type': 'application/json'}})
+    fetch('api/user/register', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({username: this.state.username, email: this.state.email, password: this.state.password})
+    })
       .then(() => {
         this.props.history.push('/login')
       })

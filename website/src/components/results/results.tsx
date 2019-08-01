@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 
 import './results.scss'
 
@@ -16,9 +15,12 @@ class Results extends Component<{match: any}, {resultComponent: any, errors: boo
   }
   componentDidMount() {
     const {term} = this.props.match.params
-    axios.get('api/search?term=' + term)
-    .then((response) => {
-    this.setState({resultComponent: response.data.map(result => <Card key={result.id} result={result} />)})
+    fetch('api/search?term=' + term, {
+      method: 'get',
+    })
+    .then ((response => response.json()))
+    .then((data) => {
+    this.setState({resultComponent: data.map(result => <Card key={result.id} result={result} />)})
     })
     .catch(error => {
       console.log(error)

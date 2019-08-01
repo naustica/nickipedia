@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 
 import './video.scss'
 
@@ -22,12 +21,18 @@ class Video extends Component<{match?: any}, {title: string, description: string
   }
   componentDidMount() {
     const {id} = this.props.match.params
-    axios.get('api/video?video_id=' + id)
-    .then((response) => {
-      this.setState({title: response.data.title, description: response.data.text, author: response.data.author_id})
-      axios.get('api/comment?all=True&video_id=' + id)
-      .then((response) => {
-        this.setState({getCommentsComponent: response.data.map(comment => <VideoGetComments key={comment.id} comment={comment} />)})
+    fetch('api/video?video_id=' + id, {
+      method: 'get'
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      this.setState({title: data.title, description: data.text, author: data.author_id})
+      fetch('api/comment?all=True&video_id=' + id, {
+        method: 'get'
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({getCommentsComponent: data.map(comment => <VideoGetComments key={comment.id} comment={comment} />)})
       })
       .catch(() => {
         this.setState({getCommentsComponent: <div></div>})

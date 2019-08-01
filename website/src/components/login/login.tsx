@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import {withRouter, Link} from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
@@ -23,10 +22,15 @@ class Login extends Component<{history:any}, { username?: string, password?: str
   submitForm(event:React.FormEvent<HTMLFormElement>): any {
     var form = event.target as HTMLFormElement;
     event.preventDefault();
-    axios.post('api/auth/login', {username: this.state.username, password: this.state.password}, {headers: {'Content-Type': 'application/json'}})
-      .then((response) => {
+    fetch('api/auth/login', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({username: this.state.username, password: this.state.password})
+    })
+      .then ((response => response.json()))
+      .then((data) => {
         const cookies = new Cookies();
-        this.setState({access_token: response.data.access_token})
+        this.setState({access_token: data.access_token})
         cookies.set('access_token', this.state.access_token, {path: '/'})
         this.props.history.push('/')
       })
