@@ -1,7 +1,7 @@
 // main.scss
 
 $border-radius: 15px;
-$input-border-radius-lg: 15px;
+// $input-border-radius-lg: 15px;
 $input-font-size-lg: 16px;
 $input-height-lg: 3rem;
 $white: #F5F5F5;
@@ -31,6 +31,7 @@ $input-padding-x-lg: 1.5rem;
 @import "node_modules/bootstrap/scss/buttons";
 @import "node_modules/bootstrap/scss/card";
 @import "node_modules/bootstrap/scss/media";
+@import "node_modules/bootstrap/scss/spinners";
 
 
 :root {
@@ -73,6 +74,7 @@ body, html {
     border-radius: 10px;
     z-index: 1
 }
+/*
 .form-control {
     transition: all 0.3s ease-in-out;
     border-width: 0px;
@@ -86,5 +88,15 @@ body, html {
     outline: none;
     border-color: None;
     box-shadow: 0 0 0 0;
-    opacity: 0.95;
+}
+*/
+.form-control {
+    border-width: 1px;
+    outline: black;
+    border-color: black;
+}
+.form-control:focus {
+    border-width: 1px;
+    border-color: black;
+    box-shadow: 0 0 0 0;
 }
