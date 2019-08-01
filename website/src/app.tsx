@@ -31,7 +31,7 @@ class App extends Component {
     render() {
       return (
           <Router>
-            <Navbar />
+            <Route path={['/', '/home', '/settings', '/about', '/result/:term', '/watch/:id']} exact component={Navbar} />
               <div className="app">
                   <div className="container">
                       <div className="row">
@@ -42,9 +42,9 @@ class App extends Component {
                                   <Route path='/home' exact component={Home}/>
                                   <Route path='/settings' component={Settings}/>
                                   <Route path='/about' component={About}/>
-                                  <Route path='/login' component={Login}/>
-                                  <Route path='/register' component={Register}/>
-                                  <AuthenticatedRoute path='/logout' component={Logout}/>
+                                  <Route path='/login' exact component={Login}/>
+                                  <Route path='/register' exact component={Register}/>
+                                  <AuthenticatedRoute path='/logout' exact component={Logout}/>
                                   <Route path='/result/:term' component={Results}/>
                                   <Route path='/watch/:id' component={Video}/>
                                   <Route component={Error}/>
