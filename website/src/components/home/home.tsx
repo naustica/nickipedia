@@ -34,7 +34,7 @@ class Home extends Component<{ history: any }, { term: string }> {
       <div className="container" id="searchform-container">
         <form method="POST" onSubmit={this.submitForm}>
           <div className="form-group input-group-lg">
-            <input className="form-control from-control-lg" type="text" name="search" onChange={this.getTerm} autoFocus placeholder="search..."/>
+            <input className="form-control from-control-lg" id="form-control-search" type="text" name="search" onChange={this.getTerm} autoFocus placeholder="search..."/>
           </div>
         </form>
       </div>
