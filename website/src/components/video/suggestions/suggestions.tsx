@@ -4,9 +4,21 @@ import {Link} from 'react-router-dom';
 import './../video.scss'
 
 
-class VideoSuggestions extends Component<{}, {}> {
+class VideoSuggestions extends Component<{id?: number}, {data: Array<string>}> {
   constructor(props:any) {
     super(props)
+    this.state = {
+      data: []
+    }
+  }
+  async componentDidMount() {
+    await fetch('api/video?all=True', {
+      method: 'get'
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      this.setState({data: data})
+    })
   }
   render() {
     return (
