@@ -8,13 +8,14 @@ import VideoComments from './comments/comments';
 import VideoSuggestions from './suggestions/suggestions';
 
 
-class Video extends Component<{match?: any}, {title: string, description: string, author: string}> {
+class Video extends Component<{match?: any}, {title: string, description: string, author: string, filename: string}> {
   constructor(props:any) {
     super(props)
     this.state = {
       title: '',
       description: '',
-      author: ''
+      author: '',
+      filename: ''
     }
   }
   async componentDidMount() {
@@ -24,7 +25,7 @@ class Video extends Component<{match?: any}, {title: string, description: string
     })
     .then((response) => response.json())
     .then((data) => {
-      this.setState({title: data.title, description: data.text, author: data.author_id})
+      this.setState({title: data.title, description: data.text, author: data.author_id, filename: data.filename})
     })
     .catch(error => {
       console.log(error)
@@ -36,7 +37,7 @@ class Video extends Component<{match?: any}, {title: string, description: string
       <div className="container">
         <div className="row">
           <div className="col-sm-9">
-            <VideoStream />
+            <VideoStream author={this.state.author} filename={this.state.filename}/>
             <VideoDescription title={this.state.title} description={this.state.description} author={this.state.author}/>
           </div>
           <div className="col-sm-3" style={{backgroundColor: "transparent", opacity: 0.95}}>
