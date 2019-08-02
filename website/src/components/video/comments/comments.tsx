@@ -25,6 +25,9 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
     .then((response) => response.json())
     .then((data) => {
       this.setState({data: data})
+      if (! Array.isArray(this.state.data)) {
+        this.setState({data: []})
+      }
     })
     .catch((error) => {
       console.log(error)
