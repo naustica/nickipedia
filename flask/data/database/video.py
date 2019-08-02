@@ -50,6 +50,7 @@ class VideoSchema(ma.Schema):
     author_id = ma.String(required=True)
     title = ma.String(required=True)
     text = ma.String(required=True)
+    filename = ma.String(required=True)
     timestamp = ma.DateTime(required=False, dump_only=True)
 
     @post_load
