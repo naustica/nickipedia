@@ -1,1 +1,15 @@
-
+#form-control-comment {
+  border-radius: 15px;
+  transition: all 0.3s ease-in-out;
+  border-width: 0px;
+  outline: none;
+  opacity: 0.95;
+}
+#form-control-comment:focus {
+    border-radius: 20px;
+    transition: border-radius 0.3s;
+    border-width: 0px;
+    outline: none;
+    border-color: None;
+    box-shadow: 0 0 0 0;
+}
