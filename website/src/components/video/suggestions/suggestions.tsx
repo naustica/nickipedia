@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import './../video.scss'
 
 
-class VideoSuggestions extends Component<{id?: number}, {data: Array<string>}> {
+class VideoSuggestions extends Component<{id?: number}, {data: Array<any>}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -18,19 +18,22 @@ class VideoSuggestions extends Component<{id?: number}, {data: Array<string>}> {
     .then((response) => response.json())
     .then((data) => {
       this.setState({data: data})
+      const newData = this.state.data.filter(item => item.id !== Number(this.props.id))
+      this.setState({data: newData})
     })
   }
   render() {
-    return (
-      <div className="card" style={{height: "150px", width: "150px", backgroundColor: "transparent", margin: "1rem", borderRadius: "5px"}}>
-        <Link to="/watch/1">
-          <img src="" className="card-img-top" alt="..." style={{borderRadius: "5px"}} />
+    const suggestionsCards= (this.state.data.slice(0, 3).map(suggestion => (
+      <div className="card" key={suggestion.id} style={{height: "10rem", width: "14rem", backgroundColor: "transparent", margin: "1rem", marginBottom: "2rem", borderRadius: "5px"}}>
+        <a href={"/watch/" + suggestion.id}>
+          <img src="http://0.0.0.0:8000/default/default_thumbnail.jpg" className="card-img-top" alt="..." style={{borderRadius: "5px"}} />
           <div className="card-img-overlay">
-            <h5 className="card-title" style={{fontSize: "12px", color: "black"}}>title</h5>
+            <h5 className="card-title" style={{fontSize: "12px", color: "black"}}>{suggestion.title}</h5>
           </div>
-        </Link>
+        </a>
       </div>
-    )
+    )))
+    return suggestionsCards
   }
 }
 
