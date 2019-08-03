@@ -14,7 +14,7 @@ bp = Blueprint('video_api', __name__, url_prefix='/api')
 
 
 @bp.route('/video', methods=['POST'])
-#@permission_needed
+@permission_needed
 def create_video():
     """
     example: POST: host/api/video
@@ -56,7 +56,7 @@ def create_video():
 
 
 @bp.route('/video/add_from_url', methods=['GET'])
-#@permission_needed
+@permission_needed
 def add_video_from_url():
     """
     example: GET: host/api/video?url=nickipedia
@@ -64,15 +64,11 @@ def add_video_from_url():
 
     url = request.args.get('url', default='', type=str)
 
-    """
     access_token = request.headers.get('Authorization')
 
     decoded_token = decode_token(access_token)
 
     author_id = decoded_token['identity']
-    """
-
-    author_id = 'admin'  # for test purpose
 
     path = '{}{}/{}'.format(upload_path, 'videos', author_id)
 
@@ -92,7 +88,7 @@ def add_video_from_url():
 
         new_video = Video(author_id, title, text, path, new_filename)
         new_video.save()
-        return make_response(jsonify(message='video added.')), 201
+        return make_response(video_schema.jsonify(new_video)), 201
 
     except ValueError:
         return make_response(jsonify(message='video url not correct.')), 400
