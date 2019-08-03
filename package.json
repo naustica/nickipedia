@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/naustica/nickipedia#readme",
   "devDependencies": {
-    "@types/axios": "^0.14.0",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.3.4",
