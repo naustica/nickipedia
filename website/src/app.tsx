@@ -11,6 +11,7 @@ import Register from './components/register/register';
 import Results from './components/results/results';
 import Logout from './components/logout/logout';
 import Video from './components/video/video';
+import Upload from './components/upload/upload';
 import AuthenticatedRoute from './components/authentication/authentication';
 
 
@@ -31,7 +32,7 @@ class App extends Component {
     render() {
       return (
           <Router>
-            <Route path={['/', '/home', '/settings', '/about', '/result/:term', '/watch/:id']} exact component={Navbar} />
+            <Route path={['/', '/home', '/settings', '/about', '/result/:term', '/watch/:id', '/upload']} exact component={Navbar} />
               <div className="app">
                   <div className="container">
                       <div className="row">
@@ -44,6 +45,7 @@ class App extends Component {
                                   <Route path='/about' component={About}/>
                                   <Route path='/login' exact component={Login}/>
                                   <Route path='/register' exact component={Register}/>
+                                  <AuthenticatedRoute path='/upload' exact component={Upload}/>
                                   <AuthenticatedRoute path='/logout' exact component={Logout}/>
                                   <Route path='/result/:term' component={Results}/>
                                   <Route path='/watch/:id' component={Video}/>
