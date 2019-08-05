@@ -40,8 +40,8 @@ class Video extends Component<{match?: any}, {title: string, description: string
       <div className="container">
         <div className="row">
           <div className="col-sm-9">
-            <VideoStream author={this.state.author} filename={this.state.filename}/>
-            <VideoDescription title={this.state.title} description={this.state.description} author={this.state.author}/>
+            <VideoStream author={this.state.author} filename={this.state.filename} />
+            <VideoDescription title={this.state.title} description={this.state.description} author={this.state.author} id={id} />
           </div>
           <div className="col-sm-3" style={{backgroundColor: "transparent", opacity: 0.95}}>
             <VideoSuggestions id={id}/>

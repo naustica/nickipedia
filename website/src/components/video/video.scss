@@ -13,3 +13,23 @@
     border-color: None;
     box-shadow: 0 0 0 0;
 }
+#btn-upvote {
+    color: red;
+    background-color: transparent;
+}
+#btn-downvote {
+    color: black;
+    background-color: transparent;
+}
+#btn-upvote:focus, #btn-upvote:active, #btn-upvote:hover {
+    background-color: transparent !important;
+    box-shadow: (none) !important;
+    color: red !important;
+    border: none !important;
+}
+#btn-downvote:focus, #btn-downvote:active, #btn-downvote:hover {
+    background-color: transparent !important;
+    box-shadow: (none) !important;
+    color: black !important;
+    border: none !important;
+}
