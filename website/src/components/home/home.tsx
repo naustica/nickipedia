@@ -4,16 +4,50 @@ import {withRouter, Link} from 'react-router-dom';
 import './home.scss'
 
 
-class Home extends Component<{ history: any }, { term: string, options: Array<any>, suggestions: Array<any>}> {
+class Home extends Component<{ history: any }, { term: string, options: any, suggestions: Array<any>, loading: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
       term: '',
-      options: ['lel', 'kek', 'lul', 'lil', 'l', 'li', 'luk'],
+      options: [],
       suggestions: [],
+      loading: false
     }
     this.getTerm = this.getTerm.bind(this)
     this.submitForm = this.submitForm.bind(this)
+  }
+  componentDidMount() {
+    this.setState({loading: true})
+    fetch('api/video?all=True', {
+    })
+      .then ((response => {
+        const status = response.status
+        const data = response.json()
+        return Promise.all([status, data])
+      }))
+      .then(([status, data]) => {
+        if (status === 200) {
+          let options = new Set([])
+          let words = []
+          var i
+          const results = data.map(result => result.title.split(' '))
+          for (i=0; i < data.length; i++) {
+            words = words.concat(results[i])
+          }
+          for (i=0; i < words.length; i++) {
+            let word = words[i].replace(/[&\/\\,+()$~%.'":*?<>{}]/g, '')
+            options = options.add(word)
+          }
+          this.setState({options: Array.from(options)})
+        }
+        else {
+          this.setState({loading: false})
+          console.log(status)
+        }
+        })
+        .catch(error => {
+          console.log(error)
+        })
   }
   getTerm(event:React.ChangeEvent<HTMLInputElement>): void {
     const value = event.target.value
