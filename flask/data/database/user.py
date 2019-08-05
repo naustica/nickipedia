@@ -12,6 +12,7 @@ class User(db.Model):
     profile_picure = db.Column(db.String(), default=os.getcwd() + '/data/database/files/default/default_pic_a.jpg', nullable=False)
     token = db.relationship('Token', backref='access_token', cascade='all,delete', lazy=True)
     comments = db.relationship('Comment', backref='author', cascade='all,delete', lazy=True)
+    voting = db.relationship('Like', backref='voter', cascade='all,delete', lazy=True)
     videos = db.relationship('Video', backref='owner', cascade='all,delete', lazy=True)
 
     def __init__(self, username, email, password, authenticated=False):

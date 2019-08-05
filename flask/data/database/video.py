@@ -15,6 +15,7 @@ class Video(db.Model):
     thumbnail = db.Column(db.String(), default=os.getcwd() + '/data/database/files/default/default_thumbnail.jpg', nullable=False)
     timestamp = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
     comments = db.relationship('Comment', backref='user', cascade='all,delete', lazy=True)
+    voting = db.relationship('Like', backref='votes', cascade='all,delete', lazy=True)
 
     def __init__(self, author_id, title, text, root=None, filename=None, thumbnail=None):
         self.author_id = author_id
