@@ -50,4 +50,7 @@ def create_app():
     from data.api import comment
     app.register_blueprint(comment.bp)
 
+    from data.api import likes
+    app.register_blueprint(likes.bp)
+
     return app
