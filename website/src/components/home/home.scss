@@ -1,31 +1,30 @@
 #searchform-container {
     width: 50%;
     position: fixed;
-    top: 35%;
+    top: 20%;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%);
 }
 #form-control-search {
     width: 100%;
-    border-radius: 20px;
+    border: 2px solid #505458;
     outline: none;
     opacity: 0.95;
+    background-color: #E8E7E7;
 }
 #form-control-search:focus {
     outline: none;
-    border-color: None;
 }
 input#form-control-search {
-    border: none;
     box-sizing: border-box;
 }
 .search-suggestions {
     opacity: 0.95;
     width: 100%;
-    border-top: 1px solid #ccc;
-    border-bottom-left-radius: 20px !important;
-    border-bottom-right-radius: 20px !important;
+    border: 2px solid #505458;
+    border-bottom-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
     background-color: #F5F5F5;
     list-style-type: none;
     text-align: left;

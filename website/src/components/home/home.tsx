@@ -86,10 +86,10 @@ class Home extends Component<{ history: any }, { term: string, options: any, sug
       })
   }
   render() {
-    const style = this.state.suggestions.length > 0 ? {borderBottomRightRadius: "0px", borderBottomLeftRadius: "0px", borderTop: "0px"} : {}
+    const style = this.state.suggestions.length > 0 ? {borderBottomRightRadius: "0px", borderBottomLeftRadius: "0px", borderBottom: "0.5px solid #505458"} : {}
     return (
       <div className="container" id="searchform-container">
-        <form method="POST" onSubmit={this.submitForm} style={{position: "fixed", width: "100%"}}>
+        <form method="POST" onSubmit={this.submitForm} style={{position: "fixed", width: "100%", left: "50%", transform: "translateX(-50%)"}}>
           <div className="form-group input-group-lg">
             <input className="form-control from-control-lg" id="form-control-search" type="text" name="search" style={style} value={this.state.term} onChange={this.getTerm} autoFocus placeholder="search..."/>
             {this.renderSuggestions()}
