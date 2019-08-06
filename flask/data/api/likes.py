@@ -46,6 +46,7 @@ def get_vote_from_user():
 
 
 @bp.route('/likes', methods=['POST'])
+@permission_needed
 def create_vote():
     """
     example: POST: host/api/likes
@@ -54,9 +55,17 @@ def create_vote():
     if not request.is_json:
         return make_response(jsonify(message='missing json')), 400
 
-    like, errors = like_schema.load(request.get_json())
+    access_token = request.headers.get('Authorization')
+
+    decoded_token = decode_token(access_token)
+
+    author_id = decoded_token['identity']
+
+    like, errors = like_schema.load(request.get_json(), partial=True)
     if errors:
         return make_response(jsonify(errors)), 400
+
+    like.author_id = author_id
 
     like.save()
 
@@ -88,7 +97,6 @@ def update_vote():
 
     data = request.get_json()
     data.pop('id', None)
-    data.pop('author_id', None)
     data.pop('video_id', None)
 
     errors = like_schema.validate(data, partial=True)

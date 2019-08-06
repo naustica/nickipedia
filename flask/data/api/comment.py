@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, make_response, request
 from data.database.comment import Comment, comment_schema, comments_schema
 from data.api.auth import permission_needed
+from flask_jwt_extended import decode_token
 
 
 bp = Blueprint('comment_api', __name__, url_prefix='/api')
@@ -35,17 +36,26 @@ def get_comments():
 
 
 @bp.route('/comment', methods=['POST'])
+@permission_needed
 def create_comment():
     """
     example: POST: host/api/comment
     """
 
+    access_token = request.headers.get('Authorization')
+
+    decoded_token = decode_token(access_token)
+
+    author_id = decoded_token['identity']
+
     if not request.is_json:
         return make_response(jsonify(message='missing json')), 400
 
-    comment, errors = comment_schema.load(request.get_json())
+    comment, errors = comment_schema.load(request.get_json(), partial=True)
     if errors:
         return make_response(jsonify(errors)), 400
+
+    comment.author_id = author_id
 
     comment.save()
 
