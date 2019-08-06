@@ -136,7 +136,7 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
     )
     const formToRender = this.state.uploadStatus === false ? upload : revision
     return (
-      <div className="card" style={{textAlign: "center"}}>
+      <div className="card" style={{textAlign: "center", border: "2px solid #505458", width: "90%", marginTop: "1.5rem", marginLeft: "auto", marginRight: "auto"}}>
         {formToRender}
       </div>
     )

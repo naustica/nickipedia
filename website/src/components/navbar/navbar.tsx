@@ -25,19 +25,8 @@ class Navbar extends Component<{history: any}, {}> {
       <div className="nav-header">
       <header>
         <nav className="navbar navbar-expand-lg navbar-light">
-          <Link to='/' className="navbar-brand">nickipedia</Link>
+          <Link to='/' className="navbar-brand" style={{paddingLeft: "1.5rem"}}>nickipedia</Link>
           <div className="collapse navbar-collapse">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link to='/' className="nav-link">home</Link>
-              </li>
-              <li className="nav-item">
-                <Link to='/settings' className="nav-link">settings</Link>
-              </li>
-              <li className="nav-item">
-                <Link to='/about' className="nav-link">about</Link>
-              </li>
-            </ul>
           </div>
           <form className="form-inline">
             <button type="button" className="btn" id="btn-control" style={{marginRight: "1.5rem", border: "none"}} onClick={this.onClickUpload}>

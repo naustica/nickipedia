@@ -5,7 +5,8 @@
 }
 .nav-header {
     width: 100%;
-    background-color: transparent;
+    background-color: #FDF9F3;
+    border-bottom: 1px solid #D0CDC8;
     position: sticky;
     overflow: hidden;
     z-index: 100;
@@ -13,12 +14,12 @@
     opacity: 0.95;
 }
 #btn-control {
-    color: white;
+    color: #505458;
     background-color: transparent;
 }
 #btn-control:focus, #btn-control:active, #btn-control:hover {
     background-color: transparent !important;
     box-shadow: (none) !important;
-    color: white !important;
+    color: black !important;
     border: none !important;
 }

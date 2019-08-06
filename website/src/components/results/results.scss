@@ -1,15 +1,37 @@
 #result-card {
-  background-color: #F5F5F5;
-  margin: 1.5rem;
-  width: 80%;
-  border-radius: 10px;
-  opacity: 0.95;
-  margin-left: auto;
-  margin-right: auto;
+    background-color: #F5F5F5;
+    margin: 1.5rem;
+    width: 90%;
+    border-radius: 5px;
+    border: 1px solid #505458;
+    opacity: 0.95;
+    margin-left: auto;
+    margin-right: auto;
+}
+#result-play-button {
+    color: black;
+    opacity: 0;
+    top: 30%;
+    text-align: center;
+}
+#result-card:hover {
+  #result-play-button {
+      opacity: 1;
+  }
 }
 #card-img-result {
-  border-radius: 10px;
-  width: 150px;
-  height: 150px;
-  padding: 0.5rem;
+    border-radius: 10px;
+    width: 150px;
+    height: 150px;
+    padding: 0.5rem;
+}
+#filter-card {
+    background-color: #F5F5F5;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #505458;
+    opacity: 0.95;
+    text-align: center;
 }

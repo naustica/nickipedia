@@ -67,7 +67,7 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
       <div className="media" style={{width: "70%"}}>
         <img src="http://0.0.0.0:8000/default/default_pic_a.jpg" className="align-self-start mr-3" id="img-profil" />
         <div className="media-body">
-          <div className="mb-0">
+          <div className="mb-0" style={{paddingLeft: "0.5rem"}}>
             <form onSubmit={this.submitForm}>
               <div className="form-group input-group-lg">
                 <input className="form-control from-control-lg" id="form-control-comment" type="text" name="comment" onChange={this.onChange} placeholder="leave a comment..."/>
@@ -81,7 +81,7 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
     )
     const getComments = this.state.data.length === undefined ? (<div></div>) :
       (this.state.data.map(comment =>
-        <div className="media" id="posts" key={comment.id} style={{opacity: 0.95, border: "2px solid #ccc", width: "70%"}}>
+        <div className="media" id="posts" key={comment.id} style={{opacity: 0.95, border: "2px solid #505458", width: "70%"}}>
           <img src="http://0.0.0.0:8000/default/default_pic_a.jpg" className="align-self-center mr-3" id="img-profil" />
           <div className="media-body" style={{marginLeft: "1rem"}}>
             <div className="mt-0">{comment.author_id} @<Link to="/">{ comment.author_id }</Link></div>
