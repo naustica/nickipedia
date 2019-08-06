@@ -23,3 +23,23 @@
     color: black !important;
     border: none !important;
 }
+.toggle-menu {
+    right: 0;
+    position: fixed;
+    background-color: #FDF9F3;
+    border: 1px solid #D0CDC8;
+}
+.toggle-menu ul {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    list-style-type: none;
+    text-align: center;
+}
+.toggle-menu li {
+    padding: 1.5rem;
+}
+.toggle-menu li:hover {
+    background-color: #FCF5EA;
+    cursor: pointer;
+}
