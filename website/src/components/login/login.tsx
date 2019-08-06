@@ -48,6 +48,7 @@ class Login extends Component<{history:any}, { username?: string, password?: str
           } else {
             this.setState({access_token: data.access_token})
             sessionStorage.setItem('access_token', this.state.access_token)
+            sessionStorage.setItem('username', this.state.username)
             this.setState({loading: false})
             this.props.history.push('/')
           }})

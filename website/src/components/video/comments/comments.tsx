@@ -38,6 +38,7 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
   }
   submitForm(event:React.FormEvent<HTMLFormElement>): any {
     const access_token = sessionStorage.getItem('access_token')
+    const username = sessionStorage.getItem('username')
     var form = event.target as HTMLFormElement;
     event.preventDefault();
     this.setState({loading: true})
@@ -52,7 +53,7 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
       .then((response) => {
         form.reset();
         let date = new Date()
-        this.state.data.push({id: date.getTime(), video_id: this.props.id, author_id: 'kek', content: this.state.comment})
+        this.state.data.push({id: date.getTime(), video_id: this.props.id, author_id: username, content: this.state.comment})
         this.setState({loading: false})
         console.log('success')
       })
