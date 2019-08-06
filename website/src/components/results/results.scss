@@ -7,12 +7,11 @@
     opacity: 0.95;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: 1px 1px 0 1px #ccc;
 }
 #result-play-button {
-    color: black;
+    color: #F5F5F5;
     opacity: 0;
-    top: 30%;
-    text-align: center;
 }
 #result-card:hover {
   #result-play-button {
@@ -34,4 +33,5 @@
     border: 1px solid #505458;
     opacity: 0.95;
     text-align: center;
+    box-shadow: 1px 1px 0 1px #ccc;
 }

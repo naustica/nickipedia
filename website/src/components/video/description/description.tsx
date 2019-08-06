@@ -139,7 +139,7 @@ class VideoDescription extends Component<{id: number, title: string, description
   }
   render() {
     return (
-      <div className="card" style={{marginTop: "0.5rem", opacity: 0.95, backgroundColor: "#F5F5F5", border: "2px solid #505458", borderRadius: "5px"}}>
+      <div className="card" style={{marginTop: "0.5rem", opacity: 0.95, backgroundColor: "#F5F5F5", border: "2px solid #505458", borderRadius: "5px", boxShadow: "1px 1px 0 1px #ccc"}}>
         <div className="card-body">
           <h1 className="card-title" style={{zIndex: 1}}>{this.props.title}</h1>
           <h5 className="card-subtitle"><Link to="/" className="card-link">{this.props.author}</Link></h5>
