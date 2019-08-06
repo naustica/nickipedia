@@ -1,6 +1,6 @@
 // main.scss
 
-$border-radius: 15px;
+$border-radius: 5px;
 // $input-border-radius-lg: 15px;
 $input-font-size-lg: 16px;
 $input-height-lg: 3rem;
@@ -8,6 +8,8 @@ $white: #F5F5F5;
 $input-bg: #F5F5F5;
 $input-padding-y-lg: 1rem;
 $input-padding-x-lg: 1.5rem;
+$navbar-padding-y: 0.2rem;
+$navbar-padding-x: 0.2rem;
 
 // required
 @import "node_modules/bootstrap/scss/functions";
@@ -45,21 +47,9 @@ a, a:link, a:visited, a:active, a:hover {
 }
 body, html {
     font-size: 14px;
-    background-image: url("./images/background.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
 }
 .container {
     padding: 2rem;
-}
-.btn {
-    border-radius: 10px;
-}
-.btn:hover {
-    transform: scale(1.05);
-    transition: 0.25s ease-in-out;
 }
 #img-profil {
     border-radius: 50%;
@@ -71,7 +61,7 @@ body, html {
     background-color: var(--white);
     opacity: 0.9;
     padding: 1rem;
-    border-radius: 10px;
+    border-radius: 5px;
     z-index: 1
 }
 .form-control {
