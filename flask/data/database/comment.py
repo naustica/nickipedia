@@ -11,7 +11,7 @@ class Comment(db.Model):
     content = db.Column(db.Text(), nullable=False)
     timestamp = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
 
-    def __init__(self, author_id, video_id, content):
+    def __init__(self, video_id, content, author_id=''):
         self.content = content
         self.author_id = author_id
         self.video_id = video_id
@@ -36,7 +36,7 @@ class Comment(db.Model):
 class CommentSchema(ma.Schema):
     id = ma.Integer(required=False, dump_only=True)
     video_id = ma.Integer(required=True)
-    author_id = ma.String(required=True)
+    author_id = ma.String(required=True, dump_only=True)
     content = ma.String(required=True)
     timestamp = ma.DateTime(required=False, dump_only=True)
 
