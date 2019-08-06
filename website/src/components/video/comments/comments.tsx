@@ -37,13 +37,17 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
     this.setState({[event.target.name]: event.target.value})
   }
   submitForm(event:React.FormEvent<HTMLFormElement>): any {
+    const access_token = sessionStorage.getItem('access_token')
     var form = event.target as HTMLFormElement;
     event.preventDefault();
     this.setState({loading: true})
     fetch('api/comment', {
       method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({video_id: this.props.id, author_id: 'admin', content: this.state.comment})
+      headers: new Headers({
+        "Authorization": access_token,
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({video_id: this.props.id, content: this.state.comment})
     })
       .then((response) => {
         form.reset();

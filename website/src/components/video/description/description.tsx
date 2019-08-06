@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Octicon, {Heart, Trashcan, Thumbsdown, Thumbsup} from '@primer/octicons-react';
-import Cookies from 'universal-cookie';
 
 import './../video.scss'
 
@@ -18,8 +17,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     this.onClickDislike = this.onClickDislike.bind(this)
   }
   componentDidMount() {
-    const cookies = new Cookies();
-    const access_token = cookies.get('access_token')
+    const access_token = sessionStorage.getItem('access_token')
     fetch('api/likes?v=' + this.props.id, {
       method: 'get',
     })
@@ -53,7 +51,7 @@ class VideoDescription extends Component<{id: number, title: string, description
             "Authorization": access_token,
             'Content-Type': 'application/json'
           }),
-          body: JSON.stringify({video_id: this.props.id, author_id: 'admin'})
+          body: JSON.stringify({video_id: this.props.id})
         })
         .then ((response => {
           const status = response.status
@@ -81,8 +79,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     })
   }
   onClickLike(event:React.MouseEvent<HTMLButtonElement>): any {
-    const cookies = new Cookies();
-    const access_token = cookies.get('access_token')
+    const access_token = sessionStorage.getItem('access_token')
     let likes = this.state.likes
     let dislikes = this.state.dislikes
     if (this.state.userVoting === 'upvoted') {
@@ -112,8 +109,7 @@ class VideoDescription extends Component<{id: number, title: string, description
 
   }
   onClickDislike(event:React.MouseEvent<HTMLButtonElement>): any {
-    const cookies = new Cookies();
-    const access_token = cookies.get('access_token')
+    const access_token = sessionStorage.getItem('access_token')
     let likes = this.state.likes
     let dislikes = this.state.dislikes
     if (this.state.userVoting === 'downvoted') {

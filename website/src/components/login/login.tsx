@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {withRouter, Link} from 'react-router-dom';
-import Cookies from 'universal-cookie';
 
 import './login.scss'
 
@@ -47,9 +46,8 @@ class Login extends Component<{history:any}, { username?: string, password?: str
             this.setState({loading: false, error: '*username or password not correct'})
             form.reset();
           } else {
-            const cookies = new Cookies();
             this.setState({access_token: data.access_token})
-            cookies.set('access_token', this.state.access_token, {path: '/'})
+            sessionStorage.setItem('access_token', this.state.access_token)
             this.setState({loading: false})
             this.props.history.push('/')
           }})

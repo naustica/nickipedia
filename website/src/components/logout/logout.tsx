@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {withRouter, Redirect} from 'react-router-dom';
-import Cookies from 'universal-cookie';
 
 import Loading from './../loading/loading';
 
@@ -14,16 +13,15 @@ class Logout extends Component<{},{loading: boolean, error: string}> {
     }
   }
   componentDidMount() {
-    const cookies = new Cookies();
-    if (cookies.get('access_token') != undefined) {
-      const access_token = cookies.get('access_token')
+    if (sessionStorage.getItem('access_token') != undefined) {
+      const access_token = sessionStorage.getItem('access_token')
       fetch('api/auth/logout', {
         method: 'post',
         headers: new Headers({
           "Authorization": access_token
         })
       })
-      cookies.remove('access_token')
+      sessionStorage.removeItem('access_token')
     } else {
       this.setState({error: 'something went wrong :('})
       console.log('error')

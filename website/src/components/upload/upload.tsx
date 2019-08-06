@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import bsCustomFileInput from 'bs-custom-file-input';
-import Cookies from 'universal-cookie';
 
 import './upload.scss'
 
@@ -35,8 +34,7 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
   }
   submitUploadForm(event:React.FormEvent<HTMLFormElement>): any {
     var form = event.target as HTMLFormElement;
-    const cookies = new Cookies();
-    const access_token = cookies.get('access_token')
+    const access_token = sessionStorage.getItem('access_token')
     event.preventDefault();
     if (this.validateForm()) {
       this.setState({loading: true, urlMessage: ''})
@@ -69,8 +67,7 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
   }
   submitRevisionForm(event:React.FormEvent<HTMLFormElement>): any {
     var form = event.target as HTMLFormElement;
-    const cookies = new Cookies();
-    const access_token = cookies.get('access_token')
+    const access_token = sessionStorage.getItem('access_token')
     event.preventDefault();
     if (this.validateForm()) {
       this.setState({loading: true})
