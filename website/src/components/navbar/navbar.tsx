@@ -35,14 +35,12 @@ class Navbar extends Component<{history: any}, {toggle: boolean}> {
     if (event.target.name !== 'settings' && event.target.tagName.toLowerCase() !== 'path' && event.target.tagName.toLowerCase() !== 'a' && event.target.tagName.toLowerCase() !== 'li' && event.target !== document.querySelector('[aria-label="settings"]')) {
       this.setState({toggle: false})
     }
-    console.log(event.target)
   }
   render() {
     const toggleStyle = this.state.toggle ? {display: "inline"} : {display: "none"}
     return (
       <div className="nav-header">
-      <header>
-        <nav className="navbar navbar-expand-lg navbar-light" style={{padding: 0}}>
+        <nav className="navbar fixed-top navbar-expand-lg navbar-light">
           <Link to='/' className="navbar-brand" style={{paddingLeft: "1.5rem"}}>nickipedia</Link>
           <div className="collapse navbar-collapse">
           </div>
@@ -55,7 +53,6 @@ class Navbar extends Component<{history: any}, {toggle: boolean}> {
           </button>
           </div>
         </nav>
-      </header>
       <div className="toggle-menu" style={toggleStyle}>
         <ul>
           <Link to={'/settings'} style={{color: "black"}}><li>settings</li></Link>

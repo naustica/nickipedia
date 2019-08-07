@@ -1,9 +1,12 @@
 .navbar {
-    position: sticky;
     overflow: hidden;
     z-index: 100;
+    padding: 0;
+    top: 0;
 }
 .nav-header {
+    top: 0;
+    position: sticky;
     width: 100%;
     background-color: #FDF9F3;
     border-bottom: 1px solid #D0CDC8;
@@ -11,7 +14,6 @@
     overflow: hidden;
     z-index: 100;
     transition: all 0.5s linear;
-    opacity: 0.95;
 }
 #btn-control {
     color: #505458;
@@ -28,6 +30,8 @@
     position: fixed;
     background-color: #FDF9F3;
     border: 1px solid #D0CDC8;
+    border-right: none;
+    border-top: none;
 }
 .toggle-menu ul {
     margin: 0;
