@@ -40,7 +40,7 @@ def get_vote_from_user():
     like = Like.query.filter_by(author_id=author_id, video_id=video_id).first()
 
     if not like:
-        return make_response(jsonify(message='vote not found')), 404
+        return make_response(jsonify()), 200
 
     return make_response(like_schema.jsonify(like)), 200
 
