@@ -21,7 +21,7 @@ class Video extends Component<{match?: any}, {title: string, description: string
     }
   }
   componentDidMount() {
-    const {id} = this.props.match.params
+    const id = this.props.match.params.id
     fetch('api/video?video_id=' + id, {
       method: 'get'
     })
@@ -33,6 +33,22 @@ class Video extends Component<{match?: any}, {title: string, description: string
     .catch(error => {
       console.log(error)
     })
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      const id = this.props.match.params.id
+      fetch('api/video?video_id=' + id, {
+        method: 'get'
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({title: data.title, description: data.text, author: data.author_id, filename: data.filename})
+        this.setState({loading: false})
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    }
   }
   render() {
     const {id} = this.props.match.params
