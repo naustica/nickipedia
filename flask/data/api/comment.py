@@ -20,7 +20,7 @@ def get_comments():
     if all:
         all_comments = Comment.query.filter_by(video_id=video_id).all()
         if not all_comments:
-            return make_response(jsonify(message='specify a correct video_id')), 404
+            return make_response(jsonify()), 200
         result = comments_schema.dump(all_comments)
 
         return make_response(jsonify(result.data)), 200
