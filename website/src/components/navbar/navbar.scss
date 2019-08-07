@@ -8,8 +8,8 @@
     top: 0;
     position: sticky;
     width: 100%;
-    background-color: #FDF9F3;
-    border-bottom: 1px solid #D0CDC8;
+    background-color: #FDF9F3 !important;
+    border-bottom: 1px solid #D0CDC8 !important;
     position: sticky;
     overflow: hidden;
     z-index: 100;
@@ -45,5 +45,42 @@
 }
 .toggle-menu li:hover {
     background-color: #FCF5EA;
+    cursor: pointer;
+}
+#form-control-search {
+    width: 100%;
+    outline: none;
+    opacity: 0.95;
+    background-color: #E8E7E7;
+}
+#form-control-search:focus {
+    outline: none;
+}
+input#form-control-search {
+    box-sizing: border-box;
+}
+.search-suggestions {
+    width: 100%;
+    border: none;
+    border-bottom-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    background-color: #F5F5F5;
+    list-style-type: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+}
+.search-suggestions:before {
+    content: "";
+}
+.search-suggestions li {
+    padding-left: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.search-suggestions li:hover {
+    background: #EEEEEE;
     cursor: pointer;
 }
