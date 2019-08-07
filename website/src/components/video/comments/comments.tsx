@@ -19,19 +19,19 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
     this.submitForm = this.submitForm.bind(this)
   }
   async componentDidMount() {
-  await fetch('api/comment?all=True&video_id=' + this.props.id, {
-    method: 'get'
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      this.setState({data: data})
-      if (! Array.isArray(this.state.data)) {
-        this.setState({data: []})
-      }
+    await fetch('api/comment?all=True&video_id=' + this.props.id, {
+      method: 'get'
     })
-    .catch((error) => {
-      console.log(error)
-    })
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState({data: data})
+        if (! Array.isArray(this.state.data)) {
+          this.setState({data: []})
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
   onChange(event:React.ChangeEvent<HTMLInputElement>): void {
     this.setState({[event.target.name]: event.target.value})
@@ -55,7 +55,6 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
         let date = new Date()
         this.state.data.push({id: date.getTime(), video_id: this.props.id, author_id: username, content: this.state.comment})
         this.setState({loading: false})
-        console.log('success')
       })
       .catch(error => {
         console.log('error')

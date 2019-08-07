@@ -44,34 +44,32 @@ class VideoDescription extends Component<{id: number, title: string, description
       return Promise.all([status, data])
     }))
     .then(([status, data]) => {
-      if (status === 404) {
-        fetch('api/likes', {
-          method: 'post',
-          headers: new Headers({
-            "Authorization": access_token,
-            'Content-Type': 'application/json'
-          }),
-          body: JSON.stringify({video_id: this.props.id})
-        })
-        .then ((response => {
-          const status = response.status
-          const data = response.json()
-          return Promise.all([status, data])
-        }))
-        .then(([status, data]) => {
-          this.setState({userVoting: 'unvoted'})
-        })
-        .catch(error => {
-          console.log(error)
-        })
-      }
-      else {
+        if (data.like === undefined || 0 && data.dislike === undefined || 0) {
+          fetch('api/likes', {
+            method: 'post',
+            headers: new Headers({
+              "Authorization": access_token,
+              'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({video_id: this.props.id})
+          })
+          .then ((response => {
+            const status = response.status
+            const data = response.json()
+            return Promise.all([status, data])
+          }))
+          .then(([status, data]) => {
+            this.setState({userVoting: 'unvoted'})
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
         if (data.like === 1) {
           this.setState({userVoting: 'upvoted'})
         }
         if (data.dislike === 1) {
           this.setState({userVoting: 'downvoted'})
-        }
       }
     })
     .catch(error => {
@@ -141,9 +139,10 @@ class VideoDescription extends Component<{id: number, title: string, description
     return (
       <div className="card" style={{marginTop: "0.5rem", opacity: 0.95, backgroundColor: "#F5F5F5", border: "2px solid #505458", borderRadius: "5px", boxShadow: "1px 1px 0 1px #ccc"}}>
         <div className="card-body">
-          <h1 className="card-title" style={{zIndex: 1}}>{this.props.title}</h1>
+          <h1 className="card-title">{this.props.title}</h1>
           <h5 className="card-subtitle"><Link to="/" className="card-link">{this.props.author}</Link></h5>
           <br/>
+          <p><a href="/" style={{backgroundColor: "#6871F0", marginRight: "0.5rem", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#kek</a><a href="/" style={{backgroundColor: "#FF2D80", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#lol</a></p>
           <p className="card-text">{this.props.description}</p>
           <button type="button" className="btn" id="btn-upvote" style={{marginRight: "1.5rem", border: "none"}} onClick={this.onClickLike}>
             <Octicon icon={Heart} size="medium" />
