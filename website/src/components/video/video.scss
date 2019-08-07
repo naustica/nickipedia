@@ -28,3 +28,11 @@
     color: black !important;
     border: none !important;
 }
+#video-overlay {
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    z-index: 1;
+}
