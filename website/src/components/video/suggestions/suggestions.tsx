@@ -25,12 +25,12 @@ class VideoSuggestions extends Component<{id?: number}, {data: Array<any>}> {
   render() {
     const suggestionsCards= (this.state.data.slice(0, 3).map(suggestion => (
       <div className="card" key={suggestion.id} style={{height: "10rem", width: "14rem", backgroundColor: "transparent", margin: "1rem", marginBottom: "2rem", borderRadius: "5px"}}>
-        <a href={"/watch/" + suggestion.id}>
+        <Link to={"/watch/" + suggestion.id}>
           <img src="http://0.0.0.0:8000/default/default_thumbnail.jpg" className="card-img-top" alt="..." style={{borderRadius: "5px"}} />
           <div className="card-img-overlay">
             <h5 className="card-title" style={{fontSize: "12px", color: "black"}}>{suggestion.title}</h5>
           </div>
-        </a>
+        </Link>
       </div>
     )))
     return suggestionsCards
