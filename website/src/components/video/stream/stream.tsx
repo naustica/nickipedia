@@ -32,7 +32,7 @@ class VideoStream extends Component<{author: string, filename: string}, {error: 
     const errorOverlay = this.state.error ? {opacity: 1} : {opacity: 0}
     return (
       <div>
-        <video className="card-img-top" poster={""} id="player" style={{width:"100%", height: "auto", borderRadius: "5px", outline: "none", backgroundColor: "#0A0A0A"}} playsInline controls>
+        <video className="card-img-top" poster={""} id="player" style={{width:"100%", height: "auto", borderRadius: "5px", outline: "none", backgroundColor: "black"}} playsInline controls>
           <source src={'http://0.0.0.0:8000/videos/' + this.props.author + '/' + this.props.filename} type="video/mp4"/>
         </video>
         <div id="video-overlay" style={errorOverlay}>
