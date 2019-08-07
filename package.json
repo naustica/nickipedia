@@ -7,7 +7,7 @@
     "compile-react-webserver": "webpack-dev-server --inline --hot --config ./webpack.config.server.js",
     "compile-sass": "node-sass ./flask/data/website/static/css/main.scss ./flask/data/website/static/css/main.css -w",
     "compile-react": "webpack --config ./webpack.config.flask.js",
-    "local-file-server": "http-server ./flask/data/database/files -p 8000"
+    "local-file-server": "http-server ./flask/data/database/files -p 8000 --cors"
   },
   "repository": {
     "type": "git",
