@@ -18,6 +18,11 @@ module.exports = {
         target: 'http://localhost:5000',
         secure: false
       }
+    },
+    headers: {
+      "Access-Control-Allow-Origin": "http://localhost:8000",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
     }
   },
   output: {
