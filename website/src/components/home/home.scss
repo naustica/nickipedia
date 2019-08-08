@@ -7,13 +7,33 @@
   margin-top: 1rem;
 }
 #front-page-suggestions {
-  height: 200px;
+  height: 230px;
+  width: 220px;
   background-color: #F5F5F5;
-  width: 90%;
-  margin-top: 1rem;
+  margin: 0.5rem;
   border-radius: 5px;
   border: 2px solid #505458;
   box-shadow: 1px 1px 0 1px #ccc;
-  margin-left: auto;
-  margin-right: auto;
+}
+.frontpage-tabs ul{
+    list-style-type: none;
+    text-align: center;
+}
+.frontpage-tabs li {
+    font-size: 16px;
+    font-weight: 500;
+    display: inline;
+    color: black;
+    padding: 0.4rem;
+    border-radius: 5px;
+    background-color: #FEE08A;
+    border: 2px solid #505458;
+    box-shadow: 3px 3px #F3EF95;
+    margin: 1rem;
+}
+.frontpage-tabs li:hover {
+    color: black;
+    background-color: #F3EF95;
+    box-shadow: 3px 3px #FEE08A;
+    border: 2px solid #505458;
 }
