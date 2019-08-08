@@ -17,9 +17,10 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
     }
     this.onChange = this.onChange.bind(this)
     this.submitForm = this.submitForm.bind(this)
+    this.getComments = this.getComments.bind(this)
   }
-  async componentDidMount() {
-    await fetch('api/comment?all=True&video_id=' + this.props.id, {
+  async getComments(id) {
+    await fetch('api/comment?all=True&video_id=' + id, {
       method: 'get'
     })
       .then((response) => response.json())
@@ -32,6 +33,14 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
       .catch((error) => {
         console.log(error)
       })
+  }
+  componentDidMount() {
+    this.getComments(this.props.id)
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      this.getComments(this.props.id)
+    }
   }
   onChange(event:React.ChangeEvent<HTMLInputElement>): void {
     this.setState({[event.target.name]: event.target.value})
