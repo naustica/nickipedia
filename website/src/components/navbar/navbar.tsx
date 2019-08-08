@@ -113,12 +113,12 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
   }
   render() {
     const toggleStyle = this.state.toggle ? {display: "inline"} : {display: "none"}
-    const searchStyle = this.state.suggestions.length > 0 ? {borderBottomRightRadius: "0px", borderBottomLeftRadius: "0px !important", border: "none"} : {border: "none"}
+    const searchStyle = this.state.suggestions.length > 0 ? {borderBottomLeftRadius: "0px !important", borderBottomRightRadius: "0px !important", border: "none"} : {border: "none"}
     return (
       <div className="nav-header" style={{backgroundColor: "#FDF9F3", borderBottom: "1px solid #D0CDC8"}}>
         <nav className="navbar fixed-top navbar-expand-lg navbar-light">
 
-          <Link to='/' className="navbar-brand" style={{paddingLeft: "1.5rem"}}>nickipedia</Link>
+          <Link to='/' className="navbar-brand" style={{paddingLeft: "1.5rem", fontWeight: 500, fontSize: "20px"}}>nickipedia</Link>
 
           <div className="mx-auto" style={{width: "50%"}}>
             <form method="POST" onSubmit={this.submitForm} style={{position: "fixed", width: "50%", top: "0.4rem", left: "auto", right: "auto"}}>
@@ -129,9 +129,7 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
               </form>
           </div>
 
-          <button type="button" className="btn" id="btn-control" style={{marginRight: "1.5rem", border: "none"}} onClick={this.onClickUpload}>
-            <Octicon icon={FileDirectory} size="medium" />
-          </button>
+          <button type="button" className="btn" id="btn-upload" style={{marginRight: "1.5rem"}} onClick={this.onClickUpload}>upload a video</button>
           <div>
           <button type="button" className="btn" id="btn-control" name="settings" style={{marginRight: "1.5rem", border: "none", height: "100%"}} onClick={this.onClickToggleMenu}>
             <Octicon icon={Gear} size="medium" ariaLabel="settings"/>
