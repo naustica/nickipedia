@@ -22,6 +22,7 @@ class Logout extends Component<{},{loading: boolean, error: string}> {
         })
       })
       sessionStorage.removeItem('access_token')
+      sessionStorage.removeItem('username')
     } else {
       this.setState({error: 'something went wrong :('})
       console.log('error')
