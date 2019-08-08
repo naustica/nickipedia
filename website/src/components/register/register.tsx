@@ -56,7 +56,7 @@ class Register extends Component<{history:any}, { username?: string, password?: 
   }
   render() {
     return (
-      <div className="container" id="register-container">
+      <div className="container" id="register-container" style={{padding: "2rem"}}>
         <div className="card" style={{padding: "1.5rem", opacity: 0.95, border: "1px solid #505458", backgroundColor: "#FDF9F3"}}>
           <div className="card-body">
             <h5 className="card-title" style={{textAlign: "center", padding: "2rem"}}>registration</h5>
