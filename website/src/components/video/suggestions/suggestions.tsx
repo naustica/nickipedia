@@ -10,17 +10,26 @@ class VideoSuggestions extends Component<{id?: number}, {data: Array<any>}> {
     this.state = {
       data: []
     }
+    this.getSuggestions = this.getSuggestions.bind(this)
   }
-  async componentDidMount() {
+  async getSuggestions(id) {
     await fetch('api/video?all=True', {
       method: 'get'
     })
     .then((response) => response.json())
     .then((data) => {
       this.setState({data: data})
-      const newData = this.state.data.filter(item => item.id !== Number(this.props.id))
+      const newData = this.state.data.filter(item => item.id !== Number(id))
       this.setState({data: newData})
     })
+  }
+  componentDidMount() {
+    this.getSuggestions(this.props.id)
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      this.getSuggestions(this.props.id)
+    }
   }
   render() {
     const suggestionsCards= (this.state.data.slice(0, 3).map(suggestion => (

@@ -15,10 +15,12 @@ class VideoDescription extends Component<{id: number, title: string, description
     }
     this.onClickLike = this.onClickLike.bind(this)
     this.onClickDislike = this.onClickDislike.bind(this)
+    this.getLikesFromAPI = this.getLikesFromAPI.bind(this)
   }
-  componentDidMount() {
+
+  async getLikesFromAPI(id) {
     const access_token = sessionStorage.getItem('access_token')
-    fetch('api/likes?v=' + this.props.id, {
+    await fetch('api/likes?v=' + id, {
       method: 'get',
     })
     .then ((response => {
@@ -32,7 +34,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     .catch(error => {
       console.log(error)
     })
-    fetch('api/likes/user?v=' + this.props.id, {
+    fetch('api/likes/user?v=' + id, {
       method: 'get',
       headers: new Headers({
         "Authorization": access_token
@@ -76,6 +78,17 @@ class VideoDescription extends Component<{id: number, title: string, description
       console.log(error)
     })
   }
+
+  componentDidMount() {
+    this.getLikesFromAPI(this.props.id)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      this.getLikesFromAPI(this.props.id)
+    }
+  }
+
   onClickLike(event:React.MouseEvent<HTMLButtonElement>): any {
     const access_token = sessionStorage.getItem('access_token')
     let likes = this.state.likes
