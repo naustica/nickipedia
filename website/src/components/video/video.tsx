@@ -9,10 +9,11 @@ import VideoSuggestions from './suggestions/suggestions';
 import Loading from './../loading/loading';
 
 
-class Video extends Component<{match?: any}, {title: string, description: string, author: string, filename: string, loading: boolean}> {
+class Video extends Component<{match?: any}, {id: number, title: string, description: string, author: string, filename: string, loading: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
+      id : 0,
       title: '',
       description: '',
       author: '',
@@ -27,7 +28,7 @@ class Video extends Component<{match?: any}, {title: string, description: string
     })
     .then((response) => response.json())
     .then((data) => {
-      this.setState({title: data.title, description: data.text, author: data.author_id, filename: data.filename})
+      this.setState({id: id, title: data.title, description: data.text, author: data.author_id, filename: data.filename})
       this.setState({loading: false})
     })
     .catch(error => {
@@ -42,7 +43,7 @@ class Video extends Component<{match?: any}, {title: string, description: string
       })
       .then((response) => response.json())
       .then((data) => {
-        this.setState({title: data.title, description: data.text, author: data.author_id, filename: data.filename})
+        this.setState({id: id, title: data.title, description: data.text, author: data.author_id, filename: data.filename})
         this.setState({loading: false})
       })
       .catch(error => {
@@ -51,21 +52,20 @@ class Video extends Component<{match?: any}, {title: string, description: string
     }
   }
   render() {
-    const {id} = this.props.match.params
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
-      <div className="container">
+      <div className="container" style={{padding: "2rem"}}>
         <div className="row">
           <div className="col-sm-9">
             <VideoStream author={this.state.author} filename={this.state.filename} />
-            <VideoDescription title={this.state.title} description={this.state.description} author={this.state.author} id={id} />
+            <VideoDescription title={this.state.title} description={this.state.description} author={this.state.author} id={this.state.id} />
           </div>
           <div className="col-sm-3" style={{backgroundColor: "transparent", opacity: 0.95}}>
-            <VideoSuggestions id={id}/>
+            <VideoSuggestions id={this.state.id}/>
           </div>
         </div>
         <div className="row">
-          <div className="container">
-            <VideoComments id={id}/>
+          <div className="container" style={{padding: "2rem"}}>
+            <VideoComments id={this.state.id}/>
           </div>
         </div>
       </div>
