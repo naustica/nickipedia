@@ -58,6 +58,8 @@
 }
 input#form-control-search {
     box-sizing: border-box;
+    border-top-right-radius: 5px !important;
+    border-top-left-radius: 5px !important;
 }
 .search-suggestions {
     width: 100%;
