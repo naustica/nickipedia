@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactPlayer from 'react-player';
 
 import './../video.scss'
 
@@ -32,9 +33,8 @@ class VideoStream extends Component<{author: string, filename: string}, {error: 
     const errorOverlay = this.state.error ? {opacity: 1} : {opacity: 0}
     return (
       <div>
-        <video className="card-img-top" poster={""} id="player" style={{width:"100%", height: "auto", borderRadius: "5px", outline: "none", backgroundColor: "black"}} playsInline controls>
-          <source src={'http://0.0.0.0:8000/videos/' + this.props.author + '/' + this.props.filename} type="video/mp4"/>
-        </video>
+        <ReactPlayer className="video-player" url={'http://0.0.0.0:8000/videos/' + this.props.author + '/' + this.props.filename}
+          controls={true} pip={true} width="100%" height="auto" playsinline={true} />
         <div id="video-overlay" style={errorOverlay}>
           <h3>video not found.</h3>
         </div>
