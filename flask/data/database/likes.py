@@ -28,7 +28,7 @@ class Like(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return 'Comment: {}'.format(self.id)
+        return 'Like: {}'.format(self.id)
 
 
 class LikeSchema(ma.Schema):
@@ -39,7 +39,7 @@ class LikeSchema(ma.Schema):
     dislike = ma.Integer(required=True, dump_only=True)
 
     @post_load
-    def load_comment(self, data):
+    def load_like(self, data):
         return Like(**data)
 
 
