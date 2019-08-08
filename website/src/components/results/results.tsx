@@ -49,7 +49,7 @@ class Results extends Component<{match: any}, {resultComponent: any, errors: boo
   }
   render() {
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
-      <div className="container">
+      <div className="container" style={{paddingTop: "2rem"}}>
         <div className="row">
           <div className="col-3" style={{padding: 0}}>
             <div className="card" id="filter-card">
@@ -58,17 +58,17 @@ class Results extends Component<{match: any}, {resultComponent: any, errors: boo
                 <h5 className="card-subtitle" style={{padding: "1rem"}}>{this.state.term}</h5>
                 <h6 className="card-subtitle" style={{padding: "2rem"}}><b>FILTER</b></h6>
                 <Octicon icon={Settings} size="medium" />
-                  <ul style={{listStyleType: "none", textAlign: "center", margin: 0, padding: 0, paddingTop: "1rem"}}>
-                    <li>date</li>
-                    <li>view count</li>
-                    <li>rating</li>
-                    <li>video</li>
-                    <li>pooper</li>
+                  <ul className="list-group" style={{listStyleType: "none", textAlign: "center", margin: 0, padding: 0, paddingTop: "1rem"}}>
+                    <li className="list-group-item">date</li>
+                    <li className="list-group-item">view count</li>
+                    <li className="list-group-item">rating</li>
+                    <li className="list-group-item">video</li>
+                    <li className="list-group-item">pooper</li>
                   </ul>
                 </div>
               </div>
             </div>
-            <div className="col-9" style={{padding: 0}}>
+            <div className="col-9" style={{padding: 0, paddingBottom: "2rem"}}>
               {this.state.resultComponent}
             </div>
           </div>
