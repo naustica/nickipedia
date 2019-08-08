@@ -2,6 +2,8 @@ from data import db, ma
 from marshmallow import post_load
 from sqlalchemy import func
 import os
+from data.database.likes import LikeSchema
+from data.database.comment import CommentSchema
 
 
 class Video(db.Model):
@@ -53,6 +55,8 @@ class VideoSchema(ma.Schema):
     text = ma.String(required=True)
     filename = ma.String(required=True)
     timestamp = ma.DateTime(required=False, dump_only=True)
+    voting = ma.Nested(LikeSchema, many=True, only=('id', 'like', 'dislike'))
+    comments = ma.Nested(CommentSchema, many=True, only=('id', 'content', 'timestamp'))
 
     @post_load
     def load_video(self, data):
