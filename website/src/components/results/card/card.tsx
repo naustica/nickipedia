@@ -19,7 +19,7 @@ class Card extends Component<{result:any}, {maxLength: number}> {
           <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
           <div className="row no-gutters">
             <div className="col-md-3">
-              <img src="http://0.0.0.0:8000/default/default_pic_a.jpg" className="card-img-top" id="card-img-result" alt="..." />
+              <img src="http://0.0.0.0:8000/default/default_thumbnail.jpg" className="card-img-top" id="card-img-result" alt="..." />
               <div className="card-img-overlay" id="result-play-button">
                 <Octicon icon={TriangleRight} size="medium"/>
               </div>
