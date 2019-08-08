@@ -5,11 +5,38 @@ import Octicon, {Heart, CommentDiscussion} from '@primer/octicons-react';
 import './../home.scss'
 
 
-class Card extends Component<{result: any}, {}> {
+class Card extends Component<{result: any}, {likes: number, comments: number}> {
   constructor(props:any) {
     super(props)
     this.state = {
+      likes: 0,
+      comments: 0
     }
+    this.computeLikes = this.computeLikes.bind(this)
+    this.computeComments = this.computeComments.bind(this)
+  }
+  computeLikes() {
+    var i
+    let likes = 0
+    for (i=0; i < this.props.result.voting.length; i++) {
+      if (this.props.result.voting[i].like === 1) {
+        likes++
+      }
+      this.setState({likes: likes})
+    }
+  }
+  computeComments() {
+    var i
+    let comments = 0
+    for (i=0; i < this.props.result.comments.length; i++) {
+        comments++
+      }
+      this.setState({comments: comments})
+  }
+
+  componentDidMount() {
+    this.computeLikes()
+    this.computeComments()
   }
   render() {
     return (
@@ -23,13 +50,13 @@ class Card extends Component<{result: any}, {}> {
                 <Octicon icon={Heart} size="small" />
               </div>
               <div style={{display:"inline"}}>
-                2
+                {this.state.likes}
               </div>
               <div style={{color: "#88AEDC", display:"inline", paddingLeft: "0.5rem", paddingTop: 0, paddingRight: "0.5rem", paddingBottom: 0}}>
                 <Octicon icon={CommentDiscussion} size="small" />
               </div>
               <div style={{display:"inline"}}>
-                3
+                {this.state.comments}
               </div>
             </div>
           </div>
