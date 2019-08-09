@@ -1,18 +1,22 @@
 var path = require("path");
 var webpack = require("webpack");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 module.exports = {
   mode: "development",
   devtool: "source-map",
   entry: ["./website/src/app.tsx"],
   performance: {
-    maxEntrypointSize: 1000000,
-    maxAssetSize: 1000000
+    maxEntrypointSize: 700000,
+    maxAssetSize: 700000
   },
   devServer: {
     port: 3000,
+    compress: false,
     historyApiFallback: true,
+    contentBase: path.join(__dirname, 'dist'),
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
@@ -26,7 +30,7 @@ module.exports = {
     }
   },
   output: {
-    path: path.resolve(__dirname, "./website"),
+    path: path.resolve(__dirname, "./website/dist"),
     filename: "bundle.js"
   },
   watch: true,
@@ -52,7 +56,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './website/index.html'
-    })
+      template: './website/dist/index.html',
+    }),
   ]
 };
