@@ -33,6 +33,7 @@
     padding-left: 0.4rem;
     padding-right: 0.4rem;
     font-weight: 600;
+    border-radius: 5px;
     background-color: #66E2D5 !important;
     border: 2px solid black !important;
 }
@@ -64,17 +65,21 @@
     cursor: pointer;
 }
 #form-control-search {
+    border: none;
     width: 100%;
     outline: none;
     background-color: #E8E7E7;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 #form-control-search:focus {
     outline: none;
 }
 input#form-control-search {
-    box-sizing: border-box;
     border-top-right-radius: 5px !important;
     border-top-left-radius: 5px !important;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 .search-suggestions {
     width: 100%;

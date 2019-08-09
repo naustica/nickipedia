@@ -113,7 +113,7 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
   }
   render() {
     const toggleStyle = this.state.toggle ? {display: "inline"} : {display: "none"}
-    const searchStyle = this.state.suggestions.length > 0 ? {borderBottomLeftRadius: "0px !important", borderBottomRightRadius: "0px !important", border: "none"} : {border: "none"}
+    const searchStyle = this.state.suggestions.length > 0 ? {borderBottomLeftRadius: "0", borderBottomRightRadius: "0"} : {borderBottomLeftRadius: "5px", borderBottomRightRadius: "5px"}
     return (
       <div className="nav-header" style={{backgroundColor: "#FDF9F3", borderBottom: "1px solid #D0CDC8"}}>
         <nav className="navbar fixed-top navbar-expand-lg navbar-light">
@@ -123,7 +123,7 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
           <div className="mx-auto" style={{width: "50%"}}>
             <form method="POST" onSubmit={this.submitForm} style={{position: "fixed", width: "50%", top: "0.4rem", left: "auto", right: "auto"}}>
               <div className="form-group input-group">
-                <input className="form-control from-control" id="form-control-search" type="text" name="search" style={searchStyle} value={this.state.term} onChange={this.getTerm} autoFocus placeholder="search"/>
+                <input className="form-control from-control" id="form-control-search" style={searchStyle} type="text" name="search" value={this.state.term} onChange={this.getTerm} autoFocus placeholder="search"/>
                 {this.renderSuggestions()}
               </div>
               </form>
