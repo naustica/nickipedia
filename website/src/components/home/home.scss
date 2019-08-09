@@ -1,19 +1,64 @@
 #trends-card {
-  background-color: #F5F5F5;
-  width: 100%;
-  border-radius: 5px;
-  border: 2px solid #505458;
-  box-shadow: 1px 1px 0 1px #ccc;
-  margin-top: 1rem;
+    background-color: #F5F5F5;
+    width: 100%;
+    border-radius: 5px;
+    border: 2px solid #505458;
+    box-shadow: 1px 1px 0 1px #ccc;
+    margin-top: 1rem;
+}
+#trends-card ul {
+    list-style-type: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    padding-top: 1rem;
+}
+#trends-card li {
+    margin-left: 0 - 1.25rem;
+    margin-right: 0 - 1.25rem;
+    padding-left: 1.25rem;
+    font-size: 16px;
+    font-weight: 500;
+}
+#trends-card li:hover {
+    background-color: #E8E7E7;
+}
+#links-card {
+    background-color: #F5F5F5;
+    width: 100%;
+    border-radius: 5px;
+    border: 2px solid #505458;
+    box-shadow: 1px 1px 0 1px #ccc;
+    margin-top: 1rem;
+}
+#links-card ul {
+    list-style-type: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    padding-top: 1rem;
+}
+#links-card li {
+    margin-left: 0 - 1.25rem;
+    margin-right: 0 - 1.25rem;
+    padding-left: 1.25rem;
+    font-size: 16px;
+    font-weight: 500;
+}
+#links-card li:hover {
+    background-color: #E8E7E7;
 }
 #front-page-suggestions {
-  height: 230px;
-  width: 220px;
-  background-color: #F5F5F5;
-  margin: 0.5rem;
-  border-radius: 5px;
-  border: 2px solid #505458;
-  box-shadow: 1px 1px 0 1px #ccc;
+    height: 230px;
+    width: 220px;
+    background-color: #F5F5F5;
+    margin: 0.5rem;
+    border-radius: 5px;
+    border: 2px solid #505458;
+    box-shadow: 1px 1px 0 1px #ccc;
+}
+#front-page-suggestions:hover {
+    transform: scale(1.05);
 }
 .frontpage-tabs ul{
     list-style-type: none;
@@ -36,4 +81,25 @@
     background-color: #F3EF95;
     box-shadow: 3px 3px #FEE08A;
     border: 2px solid #505458;
+}
+.frontpage-suggestions-h {
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+    padding: 0.4rem;
+    border-radius: 5px;
+    background-color: #D5DCFE;
+    border: 2px solid #6871F0;
+    box-shadow: 3px 3px #6871F0;
+}
+.frontpage-suggestions-h:hover {
+    color: white;
+    background-color: #6871F0;
+    border: 2px solid #D5DCFE;
+    box-shadow: 3px 3px #D5DCFE;
+    cursor: pointer;
 }

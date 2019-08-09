@@ -46,7 +46,7 @@ class Card extends Component<{result: any}, {likes: number, comments: number}> {
           <div className="card-body" style={{borderTop: "2px solid #505458", padding: "0.1rem"}}>
             <p className="card-text" style={{textAlign: "left", fontSize: "13px", fontWeight: 500, position: "relative", margin: 0}}>{this.props.result.title}</p>
             <div style={{margin: 0, paddingLeft: "0.5rem", paddingTop: 0, paddingRight: "0.5rem", paddingBottom: 0, position: "absolute", bottom: 0}}>
-              <div style={{color: "red", display:"inline", paddingLeft: "0.5rem", paddingTop: 0, paddingRight: "0.5rem", paddingBottom: 0}}>
+              <div style={{color: "#E0235F", display:"inline", paddingLeft: "0.5rem", paddingTop: 0, paddingRight: "0.5rem", paddingBottom: 0}}>
                 <Octicon icon={Heart} size="small" />
               </div>
               <div style={{display:"inline"}}>
