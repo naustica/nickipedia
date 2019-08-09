@@ -1,6 +1,6 @@
 // main.scss
 
-$border-radius: 5px;
+$border-radius: 0;
 // $input-border-radius-lg: 15px;
 $input-font-size-lg: 16px;
 $input-height-lg: 3rem;
@@ -43,6 +43,7 @@ $navbar-padding-x: 0.2rem;
 }
 a, a:link, a:visited, a:active, a:hover {
     text-decoration: none;
+    color: black;
 }
 #result-link {
     color: black;
