@@ -16,9 +16,10 @@ class Results extends Component<{match: any}, {resultComponent: any, errors: boo
       term: '',
       loading: true
     }
+    this.getResults = this.getResults.bind(this)
   }
-  componentDidMount() {
-    const term = this.props.match.params.term
+  getResults(term) {
+    this.setState({errors: false})
     fetch('api/search?term=' + term, {
       method: 'get',
     })
@@ -31,20 +32,14 @@ class Results extends Component<{match: any}, {resultComponent: any, errors: boo
       this.setState({errors: true})
     })
   }
+  componentDidMount() {
+    const term = this.props.match.params.term
+    this.getResults(term)
+  }
   componentDidUpdate(prevProps) {
     if (this.props.match.params.term != prevProps.match.params.term) {
       const term = this.props.match.params.term
-      fetch('api/search?term=' + term, {
-        method: 'get',
-      })
-      .then ((response => response.json()))
-      .then((data) => {
-      this.setState({resultComponent: data.map(result => <Card key={result.id} result={result} />), term: term, loading: false})
-      })
-      .catch(error => {
-        console.log(error)
-        this.setState({errors: true})
-      })
+      this.getResults(term)
     }
   }
   render() {
@@ -76,7 +71,7 @@ class Results extends Component<{match: any}, {resultComponent: any, errors: boo
     )
     if (this.state.errors === true) {
       return (
-        <div>no results :(</div>
+        <div style={{textAlign: "center", left: "auto", right: "auto", padding: "10rem"}}><h2>no results :(</h2></div>
       )
     } else {
     return (
