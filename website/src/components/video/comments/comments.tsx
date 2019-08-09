@@ -72,7 +72,7 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
   }
   render() {
     const postForm = (
-      <div className="media" style={{width: "70%"}}>
+      <div className="media" style={{width: "70%", paddingBottom: "1rem"}}>
         <img src="http://0.0.0.0:8000/default/default_pic_a.jpg" className="align-self-start mr-3" id="img-profil" />
         <div className="media-body">
           <div className="mb-0" style={{paddingLeft: "0.5rem"}}>
