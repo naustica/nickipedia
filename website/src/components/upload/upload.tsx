@@ -104,7 +104,7 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
 
   render() {
     const upload = (
-      <div className="card-body" style={{opacity: 0.95}}>
+      <div className="card-body">
         <h5 className="card-title">upload</h5>
         <div style={{padding: "1rem", fontSize: "18px"}}>{this.state.urlMessage}</div>
         <p className="card-text">upload a video on nickipedia.</p>
@@ -118,7 +118,7 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
       </div>
     )
     const revision = (
-      <div className="card-body" style={{opacity: 0.95}}>
+      <div className="card-body">
         <h5 className="card-title">upload</h5>
         <div style={{padding: "2rem", fontSize: "18px"}}>{this.state.urlMessage}</div>
         <p className="card-text" style={{paddingTop: "2rem"}}>are all fields correct?</p>
@@ -136,7 +136,7 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
     )
     const formToRender = this.state.uploadStatus === false ? upload : revision
     return (
-      <div className="card" style={{textAlign: "center", border: "2px solid #505458", width: "90%", marginTop: "1.5rem", marginLeft: "auto", marginRight: "auto"}}>
+      <div className="card" style={{textAlign: "center", border: "2px solid #505458", width: "90%", marginTop: "1.5rem", marginLeft: "auto", marginRight: "auto", boxShadow: "1px 1px 0 1px #ccc"}}>
         {formToRender}
       </div>
     )
