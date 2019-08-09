@@ -1,0 +1,12 @@
+{
+  "short_name": "nickipedia",
+  "name": "nickipedia",
+  "icons": [
+    {}
+  ],
+  "start_url": "/",
+  "background_color": "#A06F85",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#A06F85"
+}
