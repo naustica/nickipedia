@@ -4,9 +4,9 @@
   "description": "the official nickipedia website",
   "main": "index.js",
   "scripts": {
-    "compile-react-webserver": "webpack-dev-server --inline --hot --config ./webpack.config.server.js",
+    "build": "webpack-dev-server --inline --hot --config ./webpack.config.development.js",
     "compile-sass": "node-sass ./flask/data/website/static/css/main.scss ./flask/data/website/static/css/main.css -w",
-    "compile-react": "webpack --config ./webpack.config.flask.js",
+    "production": "webpack-dev-server --inline --hot --config ./webpack.config.production.js",
     "local-file-server": "http-server ./flask/data/database/files -p 8000 --cors"
   },
   "repository": {
@@ -27,8 +27,11 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.3.4",
     "awesome-typescript-loader": "^5.2.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "compression-webpack-plugin": "^3.0.0",
     "connect-history-api-fallback": "^1.6.0",
     "css-loader": "^3.1.0",
+    "html-webpack-change-assets-extension-plugin": "^1.2.0",
     "html-webpack-plugin": "^3.2.0",
     "http-server": "^0.11.1",
     "node-sass": "^4.12.0",
@@ -39,6 +42,7 @@
     "typescript": "^3.5.3",
     "url-loader": "^2.1.0",
     "webpack": "^4.36.1",
+    "webpack-bundle-analyzer": "^3.4.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2"
   },
