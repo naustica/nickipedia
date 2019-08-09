@@ -4,6 +4,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var {CleanWebpackPlugin} = require('clean-webpack-plugin');
 var CompressionPlugin = require('compression-webpack-plugin');
+var {GenerateSW} = require('workbox-webpack-plugin');
 
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
     port: 3000,
     compress: true,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, './website/dist'),
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
@@ -79,5 +80,13 @@ module.exports = {
       minRatio: 0.8,
       deleteOriginalAssets: false
     }),
+    new GenerateSW({
+      runtimeCaching: [
+        {
+          urlPattern: /.*/,
+          handler: 'CacheFirst'
+        }
+      ]
+    })
   ]
 };
