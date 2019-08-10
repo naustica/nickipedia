@@ -46,7 +46,7 @@ class VideoDescription extends Component<{id: number, title: string, description
       return Promise.all([status, data])
     }))
     .then(([status, data]) => {
-        if (data.like === undefined || 0 && data.dislike === undefined || 0) {
+        if (data.like === undefined && data.dislike === undefined) {
           fetch('api/likes', {
             method: 'post',
             headers: new Headers({
