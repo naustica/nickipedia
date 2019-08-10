@@ -4,6 +4,7 @@ from data.database.token import Token
 from flask_jwt_extended import create_access_token, decode_token
 from data import bcrypt, db
 from functools import wraps
+from datetime import timedelta
 
 
 bp = Blueprint('auth_api', __name__, url_prefix='/api/auth')
@@ -62,7 +63,8 @@ def login():
         if bcrypt.check_password_hash(user.password, password):
             user.authenticated = True
             db.session.commit()
-            access_token = create_access_token(identity=username)
+            expires = timedelta(days=1)
+            access_token = create_access_token(identity=username, expires_delta=expires)
             Token(access_token, user.username).save()
             return make_response(jsonify(status='success', access_token=access_token)), 200
         else:
