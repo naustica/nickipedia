@@ -9,7 +9,7 @@ class Comment(db.Model):
     author_id = db.Column(db.String(), db.ForeignKey('users.username'), nullable=False)
     video_id = db.Column(db.Integer(), db.ForeignKey('videos.id'), nullable=False)
     content = db.Column(db.Text(), nullable=False)
-    timestamp = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
+    timestamp = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
 
     def __init__(self, video_id, content, author_id=''):
         self.content = content

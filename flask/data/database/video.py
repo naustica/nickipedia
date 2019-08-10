@@ -15,7 +15,7 @@ class Video(db.Model):
     title = db.Column(db.String(128), nullable=False)
     text = db.Column(db.Text(), nullable=True)
     thumbnail = db.Column(db.String(), default=os.getcwd() + '/data/database/files/default/default_thumbnail.jpg', nullable=False)
-    timestamp = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
+    timestamp = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
     comments = db.relationship('Comment', backref='user', cascade='all,delete', lazy=True)
     voting = db.relationship('Like', backref='votes', cascade='all,delete', lazy=True)
 
