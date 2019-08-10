@@ -9,6 +9,7 @@
     position: sticky;
     width: 100%;
     background-color: #A06F85 !important;
+    //background-color: #F5F5F5 !important;
     border-bottom: 2px solid #505458 !important;
     box-shadow: 0px 0.5px 0 0.5px #ccc;
     position: sticky;
@@ -34,16 +35,20 @@
     padding-right: 0.4rem;
     font-weight: 600;
     border-radius: 5px;
+    outline: none !important;
     background-color: #66E2D5 !important;
     border: 2px solid black !important;
 }
-#btn-upload:hover {
+#btn-upload:focus, #btn-upload:active, #btn-upload:hover {
     background-color: #7ee7dc !important;
+    box-shadow: (none) !important;
+    color: black !important;
 }
 .toggle-menu {
     right: 0;
     position: fixed;
     background-color: #A06F85;
+    //background-color: #F5F5F5;
     border: 2px solid #505458;
     border-right: none;
     border-top: none;
@@ -62,6 +67,7 @@
 }
 .toggle-menu li:hover {
     background-color: #af8397;
+    //background-color: #E8E7E7;
     cursor: pointer;
 }
 #form-control-search {
