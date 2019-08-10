@@ -11,6 +11,7 @@ import Register from './components/register/register';
 import Results from './components/results/results';
 import Logout from './components/logout/logout';
 import Video from './components/video/video';
+import Footer from './components/footer/footer';
 import Upload from './components/upload/upload';
 import AuthenticatedRoute from './components/authentication/authentication';
 
@@ -33,7 +34,7 @@ class App extends Component {
       return (
           <Router>
             <Route path={['/', '/home', '/settings', '/about', '/result/:term', '/watch/:id', '/upload']} exact component={Navbar} />
-              <div className="app" style={{height: "100%"}}>
+              <div className="app">
                   <Switch>
                     <AuthenticatedRoute path='/' exact component={Home}/>
                     <Route path='/home' exact component={Home}/>
@@ -48,6 +49,8 @@ class App extends Component {
                     <Route component={Error}/>
                   </Switch>
                 </div>
+              <Route component={Footer}/>
+
           </Router>
       )
     }

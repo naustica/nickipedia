@@ -37,9 +37,9 @@ $navbar-padding-x: 0.2rem;
 @import "node_modules/bootstrap/scss/utilities/spacing";
 
 
-
-:root {
-    --white: #F5F5F5;
+* {
+    margin: 0;
+    padding: 0;
 }
 a, a:link, a:visited, a:active, a:hover {
     text-decoration: none;
@@ -48,8 +48,16 @@ a, a:link, a:visited, a:active, a:hover {
 #result-link {
     color: black;
 }
-body, html {
+html {
+    position: relative;
+    min-height: 100%;
     font-size: 14px;
+}
+body {
+    margin-bottom: 2rem;
+}
+.app {
+    padding-bottom: 2rem;
 }
 #img-profil {
     border-radius: 50%;
@@ -58,7 +66,7 @@ body, html {
 }
 #posts {
     margin-bottom: 1.5rem;
-    background-color: var(--white);
+    background-color: $white;
     opacity: 0.9;
     padding: 1rem;
     border-radius: 5px;
