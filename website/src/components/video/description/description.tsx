@@ -5,7 +5,7 @@ import Octicon, {Heart, Trashcan, Thumbsdown, Thumbsup} from '@primer/octicons-r
 import './../video.scss'
 
 
-class VideoDescription extends Component<{id: number, title: string, description: string, author: string}, {likes: number, dislikes: number, userVoting: string}> {
+class VideoDescription extends Component<{id: number, title: string, description: string, author: string, timestamp: any}, {likes: number, dislikes: number, userVoting: string}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -148,12 +148,19 @@ class VideoDescription extends Component<{id: number, title: string, description
       })
     }
   }
+  convertVideoTimestamp(date) {
+    let d = new Date(date)
+    return d.getDate() + ' ' + d.toLocaleString('default', {month: 'short'}) + ' ' + d.getFullYear()
+
+  }
   render() {
+    const videoTimestamp = this.convertVideoTimestamp(this.props.timestamp)
     return (
       <div className="card" style={{marginTop: "0.5rem", opacity: 0.95, backgroundColor: "#F5F5F5", border: "2px solid #505458", borderRadius: "5px", boxShadow: "1px 1px 0 1px #ccc"}}>
         <div className="card-body">
           <h1 className="card-title">{this.props.title}</h1>
           <h5 className="card-subtitle"><Link to="/" className="card-link">{this.props.author}</Link></h5>
+          <p style={{fontSize: "13px", color: "#757D85"}}>{"published on " +  videoTimestamp}</p>
           <br/>
           <p><a href="/" style={{backgroundColor: "#6871F0", marginRight: "0.5rem", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#kek</a><a href="/" style={{backgroundColor: "#FF2D80", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#lol</a></p>
           <p className="card-text">{this.props.description}</p>
