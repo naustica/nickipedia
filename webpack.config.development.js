@@ -16,7 +16,7 @@ module.exports = {
     port: 3000,
     compress: false,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, './website/dist'),
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
