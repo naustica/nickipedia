@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import './../video.scss'
 
 import Loading from './../../loading/loading';
+import ConvertTime from './../../../utils/datetime';
 
 
 class VideoComments extends Component<{id: number}, {data?: any, comment?: string, loading?: boolean}> {
@@ -25,6 +26,7 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
     })
       .then((response) => response.json())
       .then((data) => {
+        ConvertTime(data)
         this.setState({data: data})
         if (! Array.isArray(this.state.data)) {
           this.setState({data: []})
@@ -61,12 +63,14 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
     })
       .then((response) => {
         form.reset();
-        let date = new Date()
-        this.state.data.push({id: date.getTime(), video_id: this.props.id, author_id: username, content: this.state.comment})
+        let date:any = new Date()
+        let toConvertedDate = [{timestamp: date}]
+        ConvertTime(toConvertedDate)
+        this.state.data.push({id: date.getTime(), video_id: this.props.id, author_id: username, content: this.state.comment, timestamp: toConvertedDate[0].timestamp})
         this.setState({loading: false})
       })
       .catch(error => {
-        console.log('error')
+        console.log(error)
         form.reset();
       })
   }
@@ -88,12 +92,11 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
       </div>
     )
     const getComments = this.state.data.length === undefined ? (<div></div>) :
-      (this.state.data.map(comment =>
+      (this.state.data.sort((a, b) => b.id - a.id).map(comment =>
         <div className="media" id="posts" key={comment.id} style={{opacity: 0.95, border: "2px solid #505458", width: "70%", boxShadow: "1px 1px 0 1px #ccc"}}>
           <img src="http://0.0.0.0:8000/default/default_pic_a.jpg" className="align-self-center mr-3" id="img-profil" />
           <div className="media-body" style={{marginLeft: "1rem"}}>
-            <div className="mt-0">{comment.author_id} @<Link to="/">{ comment.author_id }</Link></div>
-            <div className="mb-0">{comment.timestamp}</div>
+            <div className="mt-0">{comment.author_id} @<Link to="/">{ comment.author_id }</Link><a style={{paddingLeft: "0.5rem", color: "#757D85"}}>{comment.timestamp}</a></div>
             <div className="mb-0">{comment.content}</div>
           </div>
         </div>
