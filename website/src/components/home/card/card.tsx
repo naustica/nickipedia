@@ -54,6 +54,7 @@ class Card extends Component<{result: any}, {likes: number, comments: number, ti
     const loadingState = this.state.loading ? (<div className="card" id="front-page-suggestions"><Loading loading={this.state.loading}/></div>) : (
       <div className="card" id="front-page-suggestions">
         <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
+        <div style={{height: "100%", position: "absolute"}}>
           <img className="card-img-top" src="http://0.0.0.0:8000/default/default_thumbnail.jpg" style={{objectFit: "cover"}} alt="..." />
           <div className="card-body" style={{borderTop: "2px solid #505458", padding: "0.1rem"}}>
             <p className="card-text" style={{textAlign: "left", fontSize: "13px", fontWeight: 500, position: "relative", margin: 0}}>{this.props.result.title}</p>
@@ -76,6 +77,7 @@ class Card extends Component<{result: any}, {likes: number, comments: number, ti
                 {this.state.timestamp}
               </div>
             </div>
+          </div>
           </div>
         </Link>
       </div>
