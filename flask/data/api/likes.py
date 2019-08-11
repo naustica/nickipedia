@@ -61,49 +61,21 @@ def create_vote():
 
     author_id = decoded_token['identity']
 
-    like, errors = like_schema.load(request.get_json(), partial=True)
+    data = request.get_json()
+
+    like, errors = like_schema.load(data, partial=True)
     if errors:
         return make_response(jsonify(errors)), 400
 
-    like.author_id = author_id
+    vote_exist = Like.query.filter_by(author_id=author_id, video_id=like.video_id).first()
 
-    like.save()
+    if not vote_exist:
+        like.author_id = author_id
+        like.save()
+
+    if vote_exist:
+        data.pop('id', None)
+        data.pop('video_id', None)
+        vote_exist.update(**data)
 
     return make_response(jsonify(status='success')), 200
-
-
-@bp.route('/likes', methods=['PUT'])
-@permission_needed
-def update_vote():
-    """
-    example: PUT: host/api/likes?v=1
-    """
-
-    if not request.is_json:
-        return make_response(jsonify(message='missing json')), 400
-
-    video_id = request.args.get('v', default=0, type=int)
-
-    access_token = request.headers.get('Authorization')
-
-    decoded_token = decode_token(access_token)
-
-    author_id = decoded_token['identity']
-
-    like = Like.query.filter_by(author_id=author_id, video_id=video_id).first()
-
-    if not like:
-        return make_response(jsonify(message='no vote found')), 404
-
-    data = request.get_json()
-    data.pop('id', None)
-    data.pop('video_id', None)
-
-    errors = like_schema.validate(data, partial=True)
-
-    if errors:
-        return make_response(jsonify(errors)), 400
-
-    like.update(**data)
-
-    return make_response(jsonify(message='vote updated')), 200
