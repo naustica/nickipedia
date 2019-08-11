@@ -45,6 +45,10 @@ a, a:link, a:visited, a:active, a:hover {
     text-decoration: none;
     color: black;
 }
+hr {
+    border-top: 1px solid #ccc;
+    width: 100%;
+}
 #result-link {
     color: black;
 }
