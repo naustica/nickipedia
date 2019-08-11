@@ -1,20 +1,20 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_dropzone import Dropzone
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 from flask_login import LoginManager
 from flask_jwt_extended import JWTManager
+from flask_mail import Mail
 import os
 
 
 db = SQLAlchemy()
 ma = Marshmallow()
 bcrypt = Bcrypt()
-dropzone = Dropzone()
 login_manager = LoginManager()
 jwt = JWTManager()
+mail = Mail()
 
 
 def create_app():
@@ -27,8 +27,8 @@ def create_app():
     db.init_app(app)
     ma.init_app(app)
     bcrypt.init_app(app)
-    dropzone.init_app(app)
     jwt.init_app(app)
+    mail.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'main.login'
 
