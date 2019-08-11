@@ -24,7 +24,7 @@ class Home extends Component<{},{loading: boolean, resultComponent: any, errors:
     .then ((response => response.json()))
     .then((data) => {
       data = data.slice(0, 6)
-      this.setState({resultComponent: data.map(result => <Card key={result.id} result={result} />), loading: false})
+      this.setState({resultComponent: data.sort((a, b) => a.id - b.id).map(result => <Card key={result.id} result={result} />), loading: false})
     })
     .catch(error => {
       console.log(error)
