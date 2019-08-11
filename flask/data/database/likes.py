@@ -10,9 +10,11 @@ class Like(db.Model):
     like = db.Column(db.Integer(), nullable=False, default=0)
     dislike = db.Column(db.Integer(), nullable=False, default=0)
 
-    def __init__(self, video_id, author_id=''):
+    def __init__(self, video_id, author_id='', like=0, dislike=0):
         self.video_id = video_id
         self.author_id = author_id
+        self.like = like
+        self.dislike = dislike
 
     def save(self):
         db.session.add(self)
@@ -35,8 +37,8 @@ class LikeSchema(ma.Schema):
     id = ma.Integer(required=False, dump_only=True)
     video_id = ma.Integer(required=True)
     author_id = ma.String(required=True, dump_only=True)
-    like = ma.Integer(required=True, dump_only=True)
-    dislike = ma.Integer(required=True, dump_only=True)
+    like = ma.Integer(required=True)
+    dislike = ma.Integer(required=True)
 
     @post_load
     def load_like(self, data):
