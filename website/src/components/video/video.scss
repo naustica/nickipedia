@@ -9,23 +9,31 @@
     outline: none;
 }
 #btn-upvote {
-    color: #E0235F;
+    color: black;
     background-color: transparent;
+    margin-right: 1.5rem;
+    border: none;
 }
 #btn-downvote {
     color: black;
     background-color: transparent;
+    margin-right: 1.5rem;
+    border: none;
 }
-#btn-upvote:focus, #btn-upvote:active, #btn-upvote:hover {
+#btn-upvote:hover {
     background-color: transparent !important;
     box-shadow: (none) !important;
-    color: red !important;
+    color: #E0235F !important;
     border: none !important;
 }
-#btn-downvote:focus, #btn-downvote:active, #btn-downvote:hover {
+#btn-upvote:focus, #btn-upvote:active, #btn-downvote:focus, #btn-downvote:active {
+    box-shadow: (none) !important;
+    border: none !important;
+}
+#btn-downvote:hover {
     background-color: transparent !important;
     box-shadow: (none) !important;
-    color: black !important;
+    color: #5975CC !important;
     border: none !important;
 }
 #video-overlay {

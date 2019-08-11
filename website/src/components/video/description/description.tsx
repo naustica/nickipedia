@@ -3,15 +3,17 @@ import {Link} from 'react-router-dom';
 import Octicon, {Heart, Trashcan, Thumbsdown, Thumbsup} from '@primer/octicons-react';
 
 import './../video.scss'
+import Loading from './../../loading/loading'
 
 
-class VideoDescription extends Component<{id: number, title: string, description: string, author: string, timestamp: any}, {likes: number, dislikes: number, userVoting: string}> {
+class VideoDescription extends Component<{id: number, title: string, description: string, author: string, timestamp: any}, {likes: number, dislikes: number, userVoting: string, loading: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
       likes: 0,
       dislikes: 0,
-      userVoting: 'unvoted'
+      userVoting: 'unvoted',
+      loading: false
     }
     this.onClickLike = this.onClickLike.bind(this)
     this.onClickDislike = this.onClickDislike.bind(this)
@@ -19,6 +21,7 @@ class VideoDescription extends Component<{id: number, title: string, description
   }
 
   async getLikesFromAPI(id) {
+    this.setState({loading: true})
     const access_token = sessionStorage.getItem('access_token')
     await fetch('api/likes?v=' + id, {
       method: 'get',
@@ -65,6 +68,7 @@ class VideoDescription extends Component<{id: number, title: string, description
           })
           .catch(error => {
             console.log(error)
+            this.setState({loading: false})
           })
         }
         if (data.like === 1) {
@@ -72,11 +76,16 @@ class VideoDescription extends Component<{id: number, title: string, description
         }
         if (data.dislike === 1) {
           this.setState({userVoting: 'downvoted'})
+        if (data.like === 0 && data.dislike === 0) {
+          this.setState({userVoting: 'unvoted'})
+        }
       }
     })
     .catch(error => {
       console.log(error)
+      this.setState({loading: false})
     })
+    this.setState({loading: false})
   }
 
   componentDidMount() {
@@ -85,6 +94,7 @@ class VideoDescription extends Component<{id: number, title: string, description
 
   componentDidUpdate(prevProps) {
     if (this.props.id !== prevProps.id) {
+      this.setState({likes: 0, dislikes: 0, userVoting: 'unvoted'})
       this.getLikesFromAPI(this.props.id)
     }
   }
@@ -155,7 +165,9 @@ class VideoDescription extends Component<{id: number, title: string, description
   }
   render() {
     const videoTimestamp = this.convertVideoTimestamp(this.props.timestamp)
-    return (
+    const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "black"}
+    const downvoteButtonStyle = this.state.userVoting === 'downvoted' ? {color: "#5975CC"} : {color: "black"}
+    const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
       <div className="card" style={{marginTop: "0.5rem", opacity: 0.95, backgroundColor: "#F5F5F5", border: "2px solid #505458", borderRadius: "5px", boxShadow: "1px 1px 0 1px #ccc"}}>
         <div className="card-body">
           <h1 className="card-title">{this.props.title}</h1>
@@ -164,17 +176,18 @@ class VideoDescription extends Component<{id: number, title: string, description
           <br/>
           <p><a href="/" style={{backgroundColor: "#6871F0", marginRight: "0.5rem", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#kek</a><a href="/" style={{backgroundColor: "#FF2D80", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#lol</a></p>
           <p className="card-text">{this.props.description}</p>
-          <button type="button" className="btn" id="btn-upvote" style={{marginRight: "1.5rem", border: "none"}} onClick={this.onClickLike}>
+          <button type="button" className="btn" id="btn-upvote" style={upvoteButtonStyle} onClick={this.onClickLike}>
             <Octicon icon={Heart} size="medium" />
             <div>{this.state.likes}</div>
           </button>
-          <button type="button" className="btn" id="btn-downvote" style={{marginRight: "1.5rem", border: "none"}} onClick={this.onClickDislike}>
+          <button type="button" className="btn" id="btn-downvote" style={downvoteButtonStyle} onClick={this.onClickDislike}>
             <Octicon icon={Trashcan} size="medium" />
             <div>{this.state.dislikes}</div>
           </button>
         </div>
       </div>
     )
+    return loadingState
   }
 }
 
