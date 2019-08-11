@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, make_response
+from flask import Blueprint, jsonify, request, make_response, render_template
 from data.database.user import User, user_schema, users_schema
 from data.api.auth import permission_needed
 from werkzeug import secure_filename
@@ -6,9 +6,13 @@ import os
 from data.config import upload_path
 from fnmatch import fnmatch
 from datetime import datetime
+from flask_mail import Message
+from data import mail
+from flask_jwt_extended import create_access_token
+from datetime import timedelta
 
 
-bp = Blueprint('user_api', __name__, url_prefix='/api')
+bp = Blueprint('user_api', __name__, url_prefix='/api', template_folder='./templates')
 
 
 @bp.route('/user', methods=['GET'])
@@ -36,7 +40,7 @@ def get_user():
 
 
 @bp.route('/user/register', methods=['POST'])
-def add_user():
+def register_user():
     """
     example: POST: host/api/user
     """
@@ -47,6 +51,12 @@ def add_user():
     user, errors = user_schema.load(request.get_json())
     if errors:
         return make_response(jsonify(errors)), 400
+
+    expires = timedelta(days=1)
+    confirmation_token = create_access_token(identity=user.username, expires_delta=expires)
+    msg = Message('confirm your account', recipients=[user.email])
+    msg.html = render_template('confirm.html', username=user.username, confirmation_token=confirmation_token)
+    mail.send(msg)
 
     user.save()
 

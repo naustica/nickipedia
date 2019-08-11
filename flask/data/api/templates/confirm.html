@@ -1,0 +1,8 @@
+<p>hello {{username}}, </p>
+
+
+<p>welcome to nickipedia.</p>
+
+
+<p>to confirm your account please click on the following link:</p>
+<p>{{ url_for('auth_api.confirm', confirmation_token=confirmation_token, _external=True) }}</p>
