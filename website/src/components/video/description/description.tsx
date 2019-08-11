@@ -6,7 +6,7 @@ import './../video.scss'
 import Loading from './../../loading/loading'
 
 
-class VideoDescription extends Component<{id: number, title: string, description: string, author: string, timestamp: any}, {likes: number, dislikes: number, userVoting: string, loading: boolean}> {
+class VideoDescription extends Component<{id: number, title: string, description: string, author: string, timestamp: any, views: number}, {likes: number, dislikes: number, userVoting: string, loading: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -37,6 +37,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     .catch(error => {
       console.log(error)
     })
+
     fetch('api/likes/user?v=' + id, {
       method: 'get',
       headers: new Headers({
@@ -49,41 +50,18 @@ class VideoDescription extends Component<{id: number, title: string, description
       return Promise.all([status, data])
     }))
     .then(([status, data]) => {
-        if (data.like === undefined && data.dislike === undefined) {
-          fetch('api/likes', {
-            method: 'post',
-            headers: new Headers({
-              "Authorization": access_token,
-              'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({video_id: this.props.id})
-          })
-          .then ((response => {
-            const status = response.status
-            const data = response.json()
-            return Promise.all([status, data])
-          }))
-          .then(([status, data]) => {
-            this.setState({userVoting: 'unvoted'})
-          })
-          .catch(error => {
-            console.log(error)
-            this.setState({loading: false})
-          })
-        }
-        if (data.like === 1) {
-          this.setState({userVoting: 'upvoted'})
-        }
-        if (data.dislike === 1) {
-          this.setState({userVoting: 'downvoted'})
-        if (data.like === 0 && data.dislike === 0) {
-          this.setState({userVoting: 'unvoted'})
-        }
+      if (data.like === 0 && data.dislike === 0) {
+        this.setState({userVoting: 'unvoted'})
+      }
+      if (data.like === 1) {
+        this.setState({userVoting: 'upvoted'})
+      }
+      if (data.dislike === 1) {
+        this.setState({userVoting: 'downvoted'})
       }
     })
     .catch(error => {
       console.log(error)
-      this.setState({loading: false})
     })
     this.setState({loading: false})
   }
@@ -103,66 +81,79 @@ class VideoDescription extends Component<{id: number, title: string, description
     const access_token = sessionStorage.getItem('access_token')
     let likes = this.state.likes
     let dislikes = this.state.dislikes
-    if (this.state.userVoting === 'upvoted') {
-      this.setState({likes: likes - 1, userVoting: 'unvoted'})
-      fetch('api/likes?v=' + this.props.id, {
-        method: 'put',
-        headers: {'Content-Type': 'application/json', "Authorization": access_token,},
-        body: JSON.stringify({like: 0, dislike: 0})
-      })
-    }
-    if (this.state.userVoting === 'downvoted') {
-      this.setState({likes: likes + 1, dislikes: dislikes - 1, userVoting: 'upvoted'})
-      fetch('api/likes?v=' + this.props.id, {
-        method: 'put',
-        headers: {'Content-Type': 'application/json', "Authorization": access_token,},
-        body: JSON.stringify({like: 1, dislike: 0})
-      })
-    }
-    if (this.state.userVoting === 'unvoted') {
-      this.setState({likes: likes + 1, userVoting: 'upvoted'})
-      fetch('api/likes?v=' + this.props.id, {
-        method: 'put',
-        headers: {'Content-Type': 'application/json', "Authorization": access_token,},
-        body: JSON.stringify({like: 1, dislike: 0})
-      })
-    }
 
+    switch (true) {
+
+      case this.state.userVoting === 'upvoted':
+        this.setState({likes: likes - 1, userVoting: 'unvoted'})
+        fetch('api/likes', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json', "Authorization": access_token,},
+          body: JSON.stringify({like: 0, dislike: 0, video_id: this.props.id})
+        })
+        break
+
+      case this.state.userVoting === 'downvoted':
+        this.setState({likes: likes + 1, dislikes: dislikes - 1, userVoting: 'upvoted'})
+        fetch('api/likes', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json', "Authorization": access_token,},
+          body: JSON.stringify({like: 1, dislike: 0, video_id: this.props.id})
+        })
+        break
+
+      case this.state.userVoting === 'unvoted':
+        this.setState({likes: likes + 1, userVoting: 'upvoted'})
+        fetch('api/likes', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json', "Authorization": access_token,},
+          body: JSON.stringify({like: 1, dislike: 0, video_id: this.props.id})
+        })
+        break
+    }
   }
+
   onClickDislike(event:React.MouseEvent<HTMLButtonElement>): any {
     const access_token = sessionStorage.getItem('access_token')
     let likes = this.state.likes
     let dislikes = this.state.dislikes
-    if (this.state.userVoting === 'downvoted') {
-      this.setState({dislikes: dislikes - 1, userVoting: 'unvoted'})
-      fetch('api/likes?v=' + this.props.id, {
-        method: 'put',
-        headers: {'Content-Type': 'application/json', "Authorization": access_token,},
-        body: JSON.stringify({like: 0, dislike: 0})
-      })
-    }
-    if (this.state.userVoting === 'upvoted') {
-      this.setState({likes: likes - 1, dislikes: dislikes + 1, userVoting: 'downvoted'})
-      fetch('api/likes?v=' + this.props.id, {
-        method: 'put',
-        headers: {'Content-Type': 'application/json', "Authorization": access_token,},
-        body: JSON.stringify({like: 0, dislike: 1})
-      })
-    }
-    if (this.state.userVoting === 'unvoted') {
-      this.setState({dislikes: dislikes + 1, userVoting: 'downvoted'})
-      fetch('api/likes?v=' + this.props.id, {
-        method: 'put',
-        headers: {'Content-Type': 'application/json', "Authorization": access_token,},
-        body: JSON.stringify({like: 0, dislike: 1})
-      })
+
+    switch (true) {
+
+      case this.state.userVoting === 'downvoted':
+        this.setState({dislikes: dislikes - 1, userVoting: 'unvoted'})
+        fetch('api/likes', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json', "Authorization": access_token,},
+          body: JSON.stringify({like: 0, dislike: 0, video_id: this.props.id})
+        })
+        break
+
+      case this.state.userVoting === 'upvoted':
+        this.setState({likes: likes - 1, dislikes: dislikes + 1, userVoting: 'downvoted'})
+        fetch('api/likes', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json', "Authorization": access_token,},
+          body: JSON.stringify({like: 0, dislike: 1, video_id: this.props.id})
+        })
+        break
+
+      case this.state.userVoting === 'unvoted':
+        this.setState({dislikes: dislikes + 1, userVoting: 'downvoted'})
+        fetch('api/likes', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json', "Authorization": access_token,},
+          body: JSON.stringify({like: 0, dislike: 1, video_id: this.props.id})
+        })
+        break
     }
   }
+
   convertVideoTimestamp(date) {
     let d = new Date(date)
     return d.getDate() + ' ' + d.toLocaleString('default', {month: 'short'}) + ' ' + d.getFullYear()
-
   }
+
   render() {
     const videoTimestamp = this.convertVideoTimestamp(this.props.timestamp)
     const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "black"}
@@ -170,7 +161,9 @@ class VideoDescription extends Component<{id: number, title: string, description
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
       <div className="card" style={{marginTop: "0.5rem", opacity: 0.95, backgroundColor: "#F5F5F5", border: "2px solid #505458", borderRadius: "5px", boxShadow: "1px 1px 0 1px #ccc"}}>
         <div className="card-body">
-          <h1 className="card-title">{this.props.title}</h1>
+          <h3 className="card-title">{this.props.title}</h3>
+          <p style={{fontSize: "15px", color: "#6D6D6D"}}>{this.props.views + ' views'}</p>
+          <hr/>
           <h5 className="card-subtitle"><Link to="/" className="card-link">{this.props.author}</Link></h5>
           <p style={{fontSize: "13px", color: "#757D85"}}>{"published on " +  videoTimestamp}</p>
           <br/>
