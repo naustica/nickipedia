@@ -61,7 +61,8 @@ def login():
 
     try:
         if bcrypt.check_password_hash(user.password, password):
-            user.authenticated = True
+            if not user.authenticated:
+                return make_response(jsonify(status='fail', message='accout not confirmed yet.')), 400
             db.session.commit()
             expires = timedelta(days=1)
             access_token = create_access_token(identity=username, expires_delta=expires)
@@ -99,8 +100,33 @@ def logout():
 
     token.delete()
 
-    user.authenticated = False
-
     db.session.commit()
 
     return make_response(jsonify(message='successfully logged out.')), 200
+
+
+@bp.route('/confirm/<confirmation_token>', methods=['GET'])
+def confirm(confirmation_token):
+    """
+    example: GET: host/api/auth/confirm/XXXXXXXXXXXXXXXXXXXXXXX
+    """
+    try:
+        decoded_token = decode_token(confirmation_token)
+
+        username = decoded_token['identity']
+
+        user = User.query.get(username)
+
+        if not user:
+            return make_response(jsonify(message='user not found')), 400
+
+        if user.authenticated:
+            return make_response(jsonify(message='already authenticated.')), 200
+
+        if not user.authenticated:
+            user.authenticated = True
+            db.session.commit()
+            return make_response(jsonify(message='you have confirmed your account.')), 200
+
+    except Exception:
+        return make_response(jsonify(message='the confirmation link is invalid or has expired.')), 400
