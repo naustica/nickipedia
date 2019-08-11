@@ -9,7 +9,7 @@ import VideoSuggestions from './suggestions/suggestions';
 import Loading from './../loading/loading';
 
 
-class Video extends Component<{match?: any}, {id: number, title: string, description: string, author: string, timestamp: any, filename: string, loading: boolean}> {
+class Video extends Component<{match?: any}, {id: number, title: string, description: string, author: string, timestamp: any, filename: string, views: number, loading: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -19,6 +19,7 @@ class Video extends Component<{match?: any}, {id: number, title: string, descrip
       author: '',
       filename: '',
       timestamp: '',
+      views: 0,
       loading: true
     }
     this.getVideoData = this.getVideoData.bind(this)
@@ -29,11 +30,23 @@ class Video extends Component<{match?: any}, {id: number, title: string, descrip
     })
     .then((response) => response.json())
     .then((data) => {
-      this.setState({id: id, title: data.title, description: data.text, author: data.author_id, filename: data.filename, timestamp: data.timestamp})
+      this.setState({id: id, title: data.title, description: data.text, author: data.author_id, filename: data.filename, timestamp: data.timestamp, views: data.views})
+      this.updateViewCounter(id)
       this.setState({loading: false})
     })
     .catch(error => {
       console.log(error)
+    })
+  }
+  updateViewCounter(id) {
+    const access_token = sessionStorage.getItem('access_token')
+    fetch('api/video?video_id=' + id, {
+      method: 'put',
+      headers: new Headers({
+        "Authorization": access_token,
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({views: this.state.views +1})
     })
   }
   componentDidMount() {
@@ -52,7 +65,7 @@ class Video extends Component<{match?: any}, {id: number, title: string, descrip
         <div className="row">
           <div className="col-sm-9">
             <VideoStream author={this.state.author} filename={this.state.filename} />
-            <VideoDescription title={this.state.title} description={this.state.description} author={this.state.author} timestamp={this.state.timestamp} id={this.state.id} />
+            <VideoDescription title={this.state.title} description={this.state.description} author={this.state.author} timestamp={this.state.timestamp} views={this.state.views} id={this.state.id} />
           </div>
           <div className="col-sm-3" style={{backgroundColor: "transparent", opacity: 0.95}}>
             <VideoSuggestions id={this.state.id}/>
