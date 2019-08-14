@@ -1,13 +1,21 @@
 import React, {Component} from 'react';
 import {withRouter, Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import './home.scss'
 
 import Card from './card/card';
 import Loading from './../loading/loading';
 
+import {fetchVideo, fetchVideoStart, addView} from './../../store/actions/videoActions';
 
-class Home extends Component<{},{loading: boolean, resultComponent: any, errors: boolean}> {
+
+@(connect((store: any) => {
+  return {
+    video: store.video
+  }
+}) as any)
+class Home extends Component<{dispatch?: any, video?: any},{loading: boolean, resultComponent: any, errors: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -15,6 +23,14 @@ class Home extends Component<{},{loading: boolean, resultComponent: any, errors:
       resultComponent: null,
       errors: false
     }
+  }
+  componentWillMount() {
+    // redux test 
+    Promise.all([
+      this.props.dispatch(fetchVideoStart()),
+      this.props.dispatch(fetchVideo(1))
+    ]).then(() => {
+      this.props.dispatch(addView(1, this.props.video.views))})
   }
   componentDidMount() {
     this.setState({loading: true})
@@ -25,7 +41,9 @@ class Home extends Component<{},{loading: boolean, resultComponent: any, errors:
     .then((data) => {
       let suggestions = []
       for (var i=0; i < 6; i++) {
-        suggestions.push(data[Math.floor(Math.random() * Object.keys(data).length)])
+        let index = Math.floor(Math.random() * Object.keys(data).length)
+        suggestions.push(data[index])
+        data.splice(index, 1)
       }
       this.setState({resultComponent: suggestions.map(result => <Card key={result.id} result={result} />), loading: false})
     })
