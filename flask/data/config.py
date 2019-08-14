@@ -22,7 +22,7 @@ class BaseConfig:
     MAIL_SUPRESS_SEND = False
     MAIL_ASCII_ATTACHMENTS = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    MAX_CONTENT_LENGTH = 100 * 1024 * 1024
+    MAX_CONTENT_LENGTH = 200 * 1024 * 1024
 
 
 class DevelopementConfig(BaseConfig):
