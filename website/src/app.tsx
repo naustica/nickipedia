@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {Provider} from 'react-redux';
 
 import './app.scss';
+import store from './store/store';
 
 import Navbar from './components/navbar/navbar';
 import Home from './components/home/home';
@@ -57,4 +59,4 @@ class App extends Component {
 }
 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
