@@ -7,15 +7,15 @@
     margin-left: auto;
     margin-right: auto;
     box-shadow: 1px 1px 0 1px #ccc;
+    &:hover {
+      #result-play-button {
+          opacity: 1;
+      }
+    }
 }
 #result-play-button {
     color: #F5F5F5;
     opacity: 0;
-}
-#result-card:hover {
-  #result-play-button {
-      opacity: 1;
-  }
 }
 #card-img-result {
     border-radius: 10px;
@@ -34,4 +34,14 @@
     opacity: 0.95;
     text-align: center;
     box-shadow: 1px 1px 0 1px #ccc;
+    li:hover {
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+}
+#chanel-link {
+    color: #6D6D6D;
+    &:hover {
+      color: black;
+    }
 }
