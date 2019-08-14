@@ -52,8 +52,6 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
           if (status === 201) {
             this.setState({loading: false, urlMessage: 'video successfully uploaded', title: data.title, description: data.text, id: data.id, uploadStatus: true})
             form.reset()
-            console.log('success')
-            console.log(data)
           }
           else {
             this.setState({loading: false, urlMessage: 'api call error'})
@@ -88,8 +86,6 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
           if (status === 201) {
             this.setState({loading: false, uploadStatus: false, urlMessage: 'video successfully updated', url: ''})
             form.reset()
-            console.log('success')
-            console.log(data)
           }
           else {
             this.setState({loading: false, urlMessage: 'api call error'})
@@ -97,6 +93,7 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
           }
           })
           .catch(error => {
+            this.setState({loading: false})
             console.log(error)
           })
       }
