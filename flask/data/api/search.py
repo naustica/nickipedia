@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, make_response, request
-from data.database.video import Video
+from data.database.video import Video, videos_schema
 
 
 bp = Blueprint('search_api', __name__, url_prefix='/api')
@@ -8,20 +8,21 @@ bp = Blueprint('search_api', __name__, url_prefix='/api')
 @bp.route('/search', methods=['GET'])
 def get_results():
     """
-    example: GET: host/api/search?term=nickipedia
+    example: GET: host/api/search?term=nickipedia&table=video
     """
 
     term = request.args.get('term', default='', type=str)
 
-    search = Video.query.filter(Video.title.ilike('{}{}{}'.format('%', term, '%'))).all()
+    table = request.args.get('table', default='video', type=str)
 
-    if not search:
-        return make_response(jsonify(message='no results')), 404
+    if table == 'video':
 
-    data = []
+        results = Video.query.filter(Video.title.ilike('{}{}{}'.format('%', term, '%'))).all()
 
-    for result in search:
-        result = {'id': int(result.id), 'properties': {'title': str(result.title), 'text': str(result.text)}}
-        data.append(result)
+        if not results:
+            return make_response(jsonify(message='no results')), 200
 
-    return make_response(jsonify(data)), 200
+        return make_response(videos_schema.jsonify(results)), 200
+
+    else:
+        return make_response(jsonify(message='no results')), 200
