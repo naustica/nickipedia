@@ -7,10 +7,11 @@ import Loading from './../../loading/loading';
 import ConvertTime from './../../../utils/datetime';
 
 
-class Card extends Component<{result: any}, {likes: number, comments: number, timestamp: string, loading: boolean}> {
+class Card extends Component<{result: any}, {maxLength: number, likes: number, comments: number, timestamp: string, loading: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
+      maxLength: 55,
       likes: 0,
       comments: 0,
       timestamp: null,
@@ -51,13 +52,14 @@ class Card extends Component<{result: any}, {likes: number, comments: number, ti
     this.setState({loading: false})
   }
   render() {
+    const checkLengthTitle = this.props.result.title.length > this.state.maxLength ? this.props.result.title.substring(0, this.state.maxLength) + '...' : this.props.result.title
     const loadingState = this.state.loading ? (<div className="card" id="front-page-suggestions"><Loading loading={this.state.loading}/></div>) : (
       <div className="card" id="front-page-suggestions">
         <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
         <div style={{height: "100%", position: "absolute"}}>
           <img className="card-img-top" src="http://0.0.0.0:8000/default/default_thumbnail.jpg" style={{objectFit: "cover"}} alt="..." />
           <div className="card-body" style={{borderTop: "2px solid #505458", padding: "0.1rem"}}>
-            <p className="card-text" style={{textAlign: "left", fontSize: "13px", fontWeight: 500, position: "relative", margin: 0}}>{this.props.result.title}</p>
+            <p className="card-text" style={{textAlign: "left", fontSize: "13px", fontWeight: 500, position: "relative", margin: 0}}>{checkLengthTitle}</p>
             <div style={{margin: 0, paddingLeft: "0.5rem", paddingTop: 0, paddingRight: "0.5rem", paddingBottom: 0, position: "absolute", bottom: 0, left: 0}}>
               <div style={{color: "#E0235F", display:"inline", paddingLeft: "0.5rem", paddingTop: 0, paddingRight: "0.5rem", paddingBottom: 0}}>
                 <Octicon icon={Heart} size="small" />
