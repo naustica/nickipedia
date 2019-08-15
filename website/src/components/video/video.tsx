@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-import './video.scss'
+import './video.scss';
+import {fetchVideo, fetchVideoStart, addView, getVideoSuggestions, getVideoSuggestionsStart} from './../../store/actions/videoActions';
 
 import VideoStream from './stream/stream';
 import VideoDescription from './description/description';
@@ -9,76 +11,53 @@ import VideoSuggestions from './suggestions/suggestions';
 import Loading from './../loading/loading';
 
 
-class Video extends Component<{match?: any}, {id: number, title: string, description: string, author: string, timestamp: any, filename: string, views: number, loading: boolean}> {
+@(connect((store: any) => {
+  return {
+    video: store.video
+  }
+}) as any)
+class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
   constructor(props:any) {
     super(props)
-    this.state = {
-      id : 0,
-      title: '',
-      description: '',
-      author: '',
-      filename: '',
-      timestamp: '',
-      views: 0,
-      loading: true
-    }
-    this.getVideoData = this.getVideoData.bind(this)
+    this.props.video.fetching = true
   }
-  getVideoData(id) {
-    fetch('api/video?video_id=' + id, {
-      method: 'get'
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      this.setState({id: id, title: data.title, description: data.text, author: data.author_id, filename: data.filename, timestamp: data.timestamp, views: data.views})
-      this.updateViewCounter(id)
-      this.setState({loading: false})
-    })
-    .catch(error => {
-      console.log(error)
-    })
-  }
-  updateViewCounter(id) {
-    const access_token = sessionStorage.getItem('access_token')
-    fetch('api/video?video_id=' + id, {
-      method: 'put',
-      headers: new Headers({
-        "Authorization": access_token,
-        'Content-Type': 'application/json'
-      }),
-      body: JSON.stringify({views: this.state.views +1})
-    })
-  }
-  componentDidMount() {
+  componentWillMount() {
     const id = this.props.match.params.id
     this.getVideoData(id)
   }
-  componentDidUpdate(prevProps) {
+  getVideoData(id: number) {
+    Promise.all([
+      this.props.dispatch(fetchVideoStart()),
+      this.props.dispatch(getVideoSuggestionsStart()),
+      this.props.dispatch(fetchVideo(id))
+    ]).then(() => {
+      this.props.dispatch(addView(id, this.props.video.data.views))
+      this.props.dispatch(getVideoSuggestions(id, 12))
+    })
+  }
+  componentDidUpdate(prevProps: any) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
       const id = this.props.match.params.id
       this.getVideoData(id)
     }
   }
   render() {
-    const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
+    return (
       <div className="container" style={{padding: "2rem"}}>
         <div className="row">
-          <div className="col-sm-9">
-            <VideoStream author={this.state.author} filename={this.state.filename} />
-            <VideoDescription title={this.state.title} description={this.state.description} author={this.state.author} timestamp={this.state.timestamp} views={this.state.views} id={this.state.id} />
+          <div className="col-9">
+            <VideoStream author={this.props.video.data.author_id} filename={this.props.video.data.filename} />
+            <VideoDescription title={this.props.video.data.title} description={this.props.video.data.description} author={this.props.video.data.author} timestamp={this.props.video.data.timestamp} views={this.props.video.data.views} id={this.props.video.data.id} />
+            <div className="container">
+              <VideoComments id={this.props.video.data.id}/>
+            </div>
           </div>
-          <div className="col-sm-3" style={{backgroundColor: "transparent", opacity: 0.95}}>
-            <VideoSuggestions id={this.state.id}/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="container" style={{padding: "2rem"}}>
-            <VideoComments id={this.state.id}/>
+          <div className="col-3">
+            <VideoSuggestions suggestions={this.props.video.suggestions} loading={this.props.video.changing}/>
           </div>
         </div>
       </div>
     )
-    return loadingState
   }
 }
 

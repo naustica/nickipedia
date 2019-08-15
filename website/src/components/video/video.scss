@@ -1,9 +1,12 @@
 #form-control-comment {
-  border: 2px solid #505458;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #505458;
   transition: all 0.3s ease-in-out;
   outline: none;
-  opacity: 0.95;
-  box-shadow: 1px 1px 0 1px #ccc;
+  width: 90%;
+  box-shadow: none;
+  margin-bottom: 2rem;
 }
 #form-control-comment:focus {
     outline: none;
@@ -45,7 +48,6 @@
     z-index: 1;
 }
 video {
-  border-radius: 5px;
   outline: none !important;
   border: none !important;
   box-shadow: none !important;
