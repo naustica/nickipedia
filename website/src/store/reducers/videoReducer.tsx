@@ -1,20 +1,28 @@
-const videoReducer = (state = {
+interface StateTypes {
+  fetching: boolean,
+  fetched: boolean,
+  error: any,
+  data: any,
+  suggestions: Array<any>,
+  changing: boolean,
+  changed: boolean
+}
+
+const videoReducer = (state: StateTypes = {
   fetching: false,
   fetched: false,
   error: null,
-  id : 0,
-  title: '',
-  description: '',
-  author: '',
-  filename: '',
-  timestamp: '',
-  views: 0,
+  data: {} || [],
+  suggestions: [],
+  changing: false,
+  changed : false,
 }, action: any) => {
   switch (action.type) {
     case 'fetch_video_start':
       state = {
         ...state,
-        fetching: true
+        fetching: true,
+        fetched: false
       }
       break
     case 'receive_video':
@@ -22,19 +30,16 @@ const videoReducer = (state = {
         ...state,
         fetching: false,
         fetched: true,
-        id: action.payload.id,
-        title: action.payload.title,
-        description: action.payload.description,
-        author: action.payload.author,
-        filename: action.payload.filename,
-        timestamp: action.payload.timestamp,
-        views: action.payload.views
+        data: action.payload.data
       }
       break
     case 'videoViewsIncrement':
       state = {
         ...state,
-        views: state.views + 1
+        data: {
+          ...state.data,
+          ['views']: state.data.views + 1
+        }
       }
       break
     case 'fetch_video_error':
@@ -43,6 +48,25 @@ const videoReducer = (state = {
         fetching: false,
         error: action.payload
       }
+      break
+    case 'get_video_suggestions_start':
+      state = {
+        ...state,
+        changing: true,
+        changed: false
+      }
+      break
+    case 'get_video_suggestions':
+      if (action.payload.page === 'home') {
+
+      }
+      state = {
+        ...state,
+        suggestions: action.payload.suggestions,
+        changing: false,
+        changed: true
+      }
+      break
   }
   return state
 }
