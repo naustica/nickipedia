@@ -1,14 +1,14 @@
 #result-card {
     background-color: #F5F5F5;
     margin: 1rem;
-    width: 90%;
-    border-radius: 5px;
-    border: 2px solid #505458;
+    width: 95%;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 1px 1px 0 1px #ccc;
+    border: none;
     &:hover {
       #result-play-button {
+          left: 1%;
+          top: 3%;
           opacity: 1;
       }
     }
@@ -18,22 +18,18 @@
     opacity: 0;
 }
 #card-img-result {
-    border-radius: 10px;
-    width: 150px;
+    width: 180px;
     height: 150px;
     padding: 0.5rem;
     object-fit: cover;
 }
 #filter-card {
     background-color: #F5F5F5;
+    border: none;
     margin-top: 1.5rem;
     padding: 1rem;
     width: 100%;
-    border-radius: 5px;
-    border: 2px solid #505458;
-    opacity: 0.95;
     text-align: center;
-    box-shadow: 1px 1px 0 1px #ccc;
     li:hover {
       transform: scale(1.05);
       cursor: pointer;

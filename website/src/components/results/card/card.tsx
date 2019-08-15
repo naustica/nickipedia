@@ -56,13 +56,13 @@ class Card extends Component<{result:any}, {maxLength: number, likes: number, co
         <div className="card mb-2" id="result-card">
           <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
           <div className="row no-gutters">
-            <div className="col-md-3">
+            <div className="col-3">
               <img src="http://0.0.0.0:8000/default/default_thumbnail.jpg" className="card-img-top" id="card-img-result" alt="..." />
               <div className="card-img-overlay" id="result-play-button">
                 <Octicon icon={TriangleRight} size="medium"/>
               </div>
             </div>
-            <div className="col-md-9">
+            <div className="col-9">
               <div className="card-body">
                 <h6 className="card-title" style={{marginBottom: "0.5rem", fontSize: "16px"}}>{this.props.result.title}</h6>
                 <p style={{fontSize: "12px", color: "#6D6D6D", marginBottom: "0.5rem"}}>{this.props.result.author_id} • {this.props.result.views + ' views'} • {this.state.timestamp}</p>
