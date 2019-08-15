@@ -107,7 +107,7 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
         <p className="card-text">upload a video on nickipedia.</p>
         <form onSubmit={this.submitUploadForm}>
           <div className="form-group input-group-lg" style={{padding: "3rem"}}>
-            <input className="form-control from-control-lg" type="text" name="url" style={{border: "2px solid #505458"}} autoFocus value={this.state.url} onChange={this.onChange} placeholder="url"/>
+            <input className="form-control from-control-lg" type="text" name="url" style={{border: "1px solid #505458"}} autoFocus value={this.state.url} onChange={this.onChange} placeholder="url"/>
           </div>
           <button type="submit" style={{display: "none"}}></button>
           <Loading loading={this.state.loading}/>
@@ -121,10 +121,10 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
         <p className="card-text" style={{paddingTop: "2rem"}}>are all fields correct?</p>
         <form onSubmit={this.submitRevisionForm}>
           <div className="form-group input-group-lg" style={{padding: "3rem"}}>
-            <input className="form-control from-control-lg" type="text" name="title" style={{border: "2px solid #505458"}} autoFocus value={this.state.title} onChange={this.onChange} placeholder="title"/>
+            <input className="form-control from-control-lg" type="text" name="title" style={{border: "1px solid #505458"}} autoFocus value={this.state.title} onChange={this.onChange} placeholder="title"/>
           </div>
           <div className="form-group input-group-lg" style={{padding: "3rem"}}>
-            <input className="form-control from-control-lg" type="text" name="description" style={{border: "2px solid #505458"}} value={this.state.description} onChange={this.onChange} placeholder="description"/>
+            <input className="form-control from-control-lg" type="text" name="description" style={{border: "1px solid #505458"}} value={this.state.description} onChange={this.onChange} placeholder="description"/>
           </div>
           <button type="submit" style={{display: "none"}}></button>
           <Loading loading={this.state.loading}/>
@@ -133,7 +133,7 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
     )
     const formToRender = this.state.uploadStatus === false ? upload : revision
     return (
-      <div className="card" style={{textAlign: "center", border: "2px solid #505458", borderRadius: "5px", width: "80%", marginTop: "1.5rem", marginLeft: "auto", marginRight: "auto", boxShadow: "1px 1px 0 1px #ccc"}}>
+      <div className="card" style={{textAlign: "center", width: "80%", marginTop: "1.5rem", marginLeft: "auto", marginRight: "auto", border: "none"}}>
         {formToRender}
       </div>
     )
