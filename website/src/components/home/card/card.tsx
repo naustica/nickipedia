@@ -7,11 +7,11 @@ import Loading from './../../loading/loading';
 import ConvertTime from './../../../utils/datetime';
 
 
-class Card extends Component<{result: any}, {maxLength: number, likes: number, comments: number, timestamp: string, loading: boolean}> {
+class Card extends Component<{result: any, loading}, {maxLength: number, likes: number, comments: number, timestamp: string, loading: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
-      maxLength: 55,
+      maxLength: 100,
       likes: 0,
       comments: 0,
       timestamp: null,
@@ -53,13 +53,15 @@ class Card extends Component<{result: any}, {maxLength: number, likes: number, c
   }
   render() {
     const checkLengthTitle = this.props.result.title.length > this.state.maxLength ? this.props.result.title.substring(0, this.state.maxLength) + '...' : this.props.result.title
-    const loadingState = this.state.loading ? (<div className="card" id="front-page-suggestions"><Loading loading={this.state.loading}/></div>) : (
+    const loadingState = this.props.loading ? (<div className="col-3"><div className="card" id="front-page-suggestions" style={{backgroundColor: "#E0DFDF"}}></div></div>) : (
+      <div className="col-3">
       <div className="card" id="front-page-suggestions">
         <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
         <div style={{height: "100%", position: "absolute"}}>
-          <img className="card-img-top" src="http://0.0.0.0:8000/default/default_thumbnail.jpg" style={{objectFit: "cover"}} alt="..." />
-          <div className="card-body" style={{borderTop: "2px solid #505458", padding: "0.1rem"}}>
-            <p className="card-text" style={{textAlign: "left", fontSize: "13px", fontWeight: 500, position: "relative", margin: 0}}>{checkLengthTitle}</p>
+          <img className="card-img-top" src="http://0.0.0.0:8000/default/default_thumbnail.jpg" style={{objectFit: "cover", height: "50%"}} alt="..." />
+          <div className="card-body" style={{borderTop: "1px solid #505458", padding: "0.1rem"}}>
+            <p className="card-text" style={{textAlign: "left", fontSize: "14px", fontWeight: 500, position: "relative", margin: 0, height: "auto"}}>{checkLengthTitle}</p>
+            <p className="card-text" style={{textAlign: "left", fontSize: "14px", fontWeight: 500, color: "#6D6D6D", position: "relative", height: "auto", paddingTop: "0.5rem"}}>{this.props.result.views + " views"}</p>
             <div style={{margin: 0, paddingLeft: "0.5rem", paddingTop: 0, paddingRight: "0.5rem", paddingBottom: 0, position: "absolute", bottom: 0, left: 0}}>
               <div style={{color: "#E0235F", display:"inline", paddingLeft: "0.5rem", paddingTop: 0, paddingRight: "0.5rem", paddingBottom: 0}}>
                 <Octicon icon={Heart} size="small" />
@@ -82,6 +84,7 @@ class Card extends Component<{result: any}, {maxLength: number, likes: number, c
           </div>
           </div>
         </Link>
+      </div>
       </div>
     )
     return loadingState

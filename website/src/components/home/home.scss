@@ -1,86 +1,95 @@
+#home-container {
+    padding-top: 2rem;
+    width: 100%;
+}
 #trends-card {
     background-color: #F5F5F5;
     width: 100%;
-    border-radius: 5px;
-    border: 2px solid #505458;
-    box-shadow: 1px 1px 0 1px #ccc;
-    margin-top: 1rem;
-}
-#trends-card ul {
-    list-style-type: none;
-    text-align: left;
-    margin: 0;
-    padding: 0;
-    padding-top: 1rem;
-}
-#trends-card li {
-    margin-left: 0 - 1.25rem;
-    margin-right: 0 - 1.25rem;
-    padding-left: 1.25rem;
-    font-size: 16px;
-    font-weight: 500;
-}
-#trends-card li:hover {
-    background-color: #E8E7E7;
+    border: none;
+    margin-top: 0.5rem;
+    h3 {
+      font-weight: 500;
+    }
+    ul {
+      list-style-type: none;
+      text-align: left;
+      margin: 0;
+      padding: 0;
+      padding-top: 1rem;
+    }
+    li {
+      margin-left: 0 - 1.25rem;
+      margin-right: 0 - 1.25rem;
+      padding-left: 1.25rem;
+      font-size: 16px;
+      font-weight: 400;
+    }
+    li:hover {
+      background-color: #E8E7E7;
+    }
 }
 #links-card {
     background-color: #F5F5F5;
     width: 100%;
-    border-radius: 5px;
-    border: 2px solid #505458;
-    box-shadow: 1px 1px 0 1px #ccc;
-    margin-top: 1rem;
-}
-#links-card ul {
-    list-style-type: none;
-    text-align: left;
-    margin: 0;
-    padding: 0;
-    padding-top: 1rem;
-}
-#links-card li {
-    margin-left: 0 - 1.25rem;
-    margin-right: 0 - 1.25rem;
-    padding-left: 1.25rem;
-    font-size: 16px;
-    font-weight: 500;
-}
-#links-card li:hover {
-    background-color: #E8E7E7;
+    border: none;
+    margin-top: 0.5rem;
+    h4 {
+      font-weight: 500
+    }
+    ul {
+      list-style-type: none;
+      text-align: left;
+      margin: 0;
+      padding: 0;
+      padding-top: 1rem;
+    }
+    li {
+      margin-left: 0 - 1.25rem;
+      margin-right: 0 - 1.25rem;
+      padding-left: 1.25rem;
+      font-size: 16px;
+      font-weight: 400;
+    }
+    li:hover {
+      background-color: #E8E7E7;
+    }
 }
 #front-page-suggestions {
+    border: none;
     height: 230px;
-    width: 220px;
-    background-color: #F5F5F5;
+    width: 210px;
     margin: 0.5rem;
-    border-radius: 5px;
-    border: 2px solid #505458;
-    box-shadow: 1px 1px 0 1px #ccc;
+    margin-bottom: 2rem;
+    padding: 0.25rem;
+    &:hover {
+      transform: scale(1.05);
+    }
 }
-#front-page-suggestions:hover {
-    transform: scale(1.05);
-}
-.frontpage-tabs ul{
-    list-style-type: none;
-    text-align: center;
-}
-.frontpage-tabs li {
-    font-size: 16px;
-    font-weight: 500;
-    display: inline;
-    color: black;
-    padding: 0.4rem;
-    border-radius: 5px;
-    background-color: #FEE08A;
-    border: 2px solid #505458;
-    box-shadow: 3px 3px #F3EF95;
-    margin: 1rem;
-}
-.frontpage-tabs li:hover {
-    color: black;
-    background-color: #F3EF95;
-    box-shadow: 3px 3px #FEE08A;
-    border: 2px solid #505458;
+.frontpage-tabs {
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    ul {
+      list-style-type: none;
+      text-align: center;
+    }
+    li {
+      font-size: 16px;
+      font-weight: 500;
+      display: inline;
+      color: black;
+      padding: 0.4rem;
+      border-radius: 5px;
+      background-color: #FEE08A;
+      border: 1.3px solid #505458;
+      box-shadow: 3px 3px #F3EF95;
+      margin: 1rem;
+    }
+    li:hover {
+      color: black;
+      background-color: #F3EF95;
+      box-shadow: 3px 3px #FEE08A;
+      border: 1.3px solid #505458;
+    }
 }
 .frontpage-suggestions-h {
     width: 30%;
@@ -90,16 +99,17 @@
     font-size: 16px;
     font-weight: 500;
     color: black;
+    margin-bottom: 2rem;
     padding: 0.4rem;
     border-radius: 5px;
     background-color: #D5DCFE;
-    border: 2px solid #6871F0;
+    border: 1.3px solid #6871F0;
     box-shadow: 3px 3px #6871F0;
 }
 .frontpage-suggestions-h:hover {
     color: white;
     background-color: #6871F0;
-    border: 2px solid #D5DCFE;
+    border: 1.3px solid #D5DCFE;
     box-shadow: 3px 3px #D5DCFE;
     cursor: pointer;
 }
