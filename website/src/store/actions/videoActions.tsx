@@ -12,7 +12,22 @@ export function fetchVideo(id: number) {
       method: 'get'
     })
     const data = await response.json()
-      dispatch({type: 'receive_video', payload: {id: id, title: data.title, description: data.text, author: data.author_id, filename: data.filename, timestamp: data.timestamp, views: data.views, fetching: false, fetched: true}})
+      dispatch({type: 'receive_video', payload: {data: data, fetching: false, fetched: true}})
+    }
+    catch (error) {
+      dispatch({error: error})
+    }
+  }
+}
+
+export function fetchVideos() {
+  return async function(dispatch: any) {
+    try {
+    const response = await fetch('api/video?all=True', {
+      method: 'get'
+    })
+    const data = await response.json()
+      dispatch({type: 'receive_video', payload: {data: data, fetching: false, fetched: true}})
     }
     catch (error) {
       dispatch({error: error})
@@ -32,7 +47,39 @@ export function addView(id: number, views: number) {
       }),
       body: JSON.stringify({views: views +1})
     })
-    dispatch({type: 'videoViewsIncrement', payload: {}})
+    dispatch({type: 'videoViewsIncrement', payload: {id: id}})
+    }
+    catch (error) {
+      dispatch({error: error})
+    }
+  }
+}
+
+export function getVideoSuggestionsStart() {
+  return {
+    type: 'get_video_suggestions_start',
+    payload: {}
+  }
+}
+
+export function getVideoSuggestions(id: number, limit: number) {
+  return async function(dispatch: any) {
+    try {
+      const response = await fetch('api/video?all=True', {
+        method: 'get'
+      })
+      const data = await response.json()
+      let suggestions = []
+      for (var i=0; suggestions.length < limit; i++) {
+        let index = Math.floor(Math.random() * Object.keys(data).length)
+        if (data[index].id === Number(id) || suggestions.find(x => x.id === data[index].id)) {
+          continue
+        }
+        else {
+          suggestions.push(data[index])
+        }
+      }
+      dispatch({type: 'get_video_suggestions', payload: {suggestions: suggestions}})
     }
     catch (error) {
       dispatch({error: error})
