@@ -22,6 +22,7 @@ class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
     this.props.video.fetching = true
   }
   componentWillMount() {
+    window.scrollTo(0, 0)
     const id = this.props.match.params.id
     this.getVideoData(id)
   }
@@ -37,6 +38,7 @@ class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
   }
   componentDidUpdate(prevProps: any) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
+      window.scrollTo(0, 0)
       const id = this.props.match.params.id
       this.getVideoData(id)
     }
@@ -47,7 +49,7 @@ class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
         <div className="row">
           <div className="col-9">
             <VideoStream author={this.props.video.data.author_id} filename={this.props.video.data.filename} />
-            <VideoDescription title={this.props.video.data.title} description={this.props.video.data.description} author={this.props.video.data.author} timestamp={this.props.video.data.timestamp} views={this.props.video.data.views} id={this.props.video.data.id} />
+            <VideoDescription title={this.props.video.data.title} description={this.props.video.data.text} author={this.props.video.data.author_id} timestamp={this.props.video.data.timestamp} views={this.props.video.data.views} id={this.props.video.data.id} />
             <div className="container">
               <VideoComments id={this.props.video.data.id}/>
             </div>
