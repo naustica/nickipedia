@@ -57,15 +57,14 @@
 #front-page-suggestions {
     border: none;
     height: 230px;
-    width: 210px;
-    margin: 0.5rem;
+    width: 100%;
     margin-bottom: 2rem;
-    padding: 0.25rem;
     &:hover {
       transform: scale(1.05);
     }
 }
 .frontpage-tabs {
+    width: 100%;
     margin-top: 0.5rem;
     margin-bottom: 2rem;
     ul {

@@ -19,6 +19,7 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
     super(props)
   }
   componentWillMount() {
+    window.scrollTo(0, 0)
     Promise.all([
       this.props.dispatch(fetchVideoStart()),
       this.props.dispatch(getVideoSuggestionsStart()),
