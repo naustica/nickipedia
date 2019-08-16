@@ -2,13 +2,14 @@
     background-color: #F5F5F5;
     margin: 1rem;
     width: 95%;
+    height: 150px;
     margin-left: auto;
     margin-right: auto;
     border: none;
     &:hover {
       #result-play-button {
-          left: 1%;
-          top: 3%;
+          left: 3%;
+          top: 7%;
           opacity: 1;
       }
     }
@@ -16,6 +17,7 @@
 #result-play-button {
     color: #F5F5F5;
     opacity: 0;
+    padding: 0;
 }
 #card-img-result {
     width: 180px;
@@ -26,7 +28,6 @@
 #filter-card {
     background-color: #F5F5F5;
     border: none;
-    margin-top: 1.5rem;
     padding: 1rem;
     width: 100%;
     text-align: center;

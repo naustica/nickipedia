@@ -6,7 +6,7 @@ import './../results.scss';
 import ConvertTime from './../../../utils/datetime';
 
 
-class Card extends Component<{result:any}, {maxLength: number, likes: number, comments: number, timestamp: any, loading: boolean}> {
+class Card extends Component<{result:any, fetching: boolean}, {maxLength: number, likes: number, comments: number, timestamp: any, loading: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -52,10 +52,10 @@ class Card extends Component<{result:any}, {maxLength: number, likes: number, co
   }
   render() {
     const checkLengthDescription = this.props.result.text.length > this.state.maxLength ? this.props.result.text.substring(0, this.state.maxLength) + '...' : this.props.result.text
+    const loadingStyles = this.props.fetching ? {backgroundColor: "#E0DFDF", color: "transparent", boxShadow: "none", border: "none"} : {}
     return (
         <div className="card mb-2" id="result-card">
           <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
-          <div className="row no-gutters">
             <div className="col-3">
               <img src="http://0.0.0.0:8000/default/default_thumbnail.jpg" className="card-img-top" id="card-img-result" alt="..." />
               <div className="card-img-overlay" id="result-play-button">
@@ -69,7 +69,6 @@ class Card extends Component<{result:any}, {maxLength: number, likes: number, co
                 <p className="card-text" style={{fontSize: "12px"}}>{checkLengthDescription}</p>
               </div>
             </div>
-          </div>
           </Link>
         </div>
   )
