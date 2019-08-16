@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import Octicon, {FileDirectory, Bell, Gear} from '@primer/octicons-react';
+import Octicon, {Gear} from '@primer/octicons-react';
 
 import './navbar.scss';
-
-import Breadcrumb from './../breadcrumb/breadcrumb';
 
 
 class Navbar extends Component<{history: any}, {toggle: boolean, term: string, options: any, suggestions: Array<any>, loading: boolean}> {
@@ -38,12 +36,11 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
         if (status === 200) {
           let options = new Set([])
           let words = []
-          var i
           const results = data.map(result => result.title.split(' '))
-          for (i=0; i < data.length; i++) {
+          for (var i=0; i < data.length; i++) {
             words = words.concat(results[i])
           }
-          for (i=0; i < words.length; i++) {
+          for (var i=0; i < words.length; i++) {
             let word = words[i].replace(/[&\/\\,+()$~%.'":*?<>{}]/g, '')
             options = options.add(word)
           }
@@ -117,7 +114,11 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
     return (
       <div className="nav-header" style={{backgroundColor: "#FDF9F3", borderBottom: "1px solid #D0CDC8"}}>
         <nav className="navbar fixed-top navbar-expand-lg navbar-light">
-
+          <div style={{display: "inline-block", cursor: "pointer", paddingLeft: "1rem"}}>
+            <div style={{width: "25px", height: "2px", backgroundColor: "#333", margin: "6px 0", transition: "0.4s"}}></div>
+            <div style={{width: "25px", height: "2px", backgroundColor: "#333", margin: "6px 0", transition: "0.4s"}}></div>
+            <div style={{width: "25px", height: "2px", backgroundColor: "#333", margin: "6px 0", transition: "0.4s"}}></div>
+          </div>
           <Link to='/' className="navbar-brand" style={{paddingLeft: "1.5rem", fontWeight: 500, fontSize: "20px"}}>nickipedia</Link>
 
           <div className="mx-auto" style={{width: "50%"}}>

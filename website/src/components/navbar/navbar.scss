@@ -20,13 +20,19 @@
 }
 #btn-control {
     color: black;
+    overflow: hidden;
     background-color: transparent;
-}
-#btn-control:focus, #btn-control:active, #btn-control:hover {
-    background-color: transparent !important;
-    box-shadow: (none) !important;
-    color: black !important;
-    border: none !important;
+    transition-duration: 0.4s;
+    transition-property: transform;
+    &:focus, &:active, &:hover {
+      background-color: transparent !important;
+      box-shadow: (none) !important;
+      color: black !important;
+      border: none !important;
+    }
+    &:focus {
+      transform: rotate(60deg);
+    }
 }
 #btn-upload {
     color: black;
