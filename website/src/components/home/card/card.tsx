@@ -11,7 +11,7 @@ class Card extends Component<{result: any, loading}, {maxLength: number, likes: 
   constructor(props:any) {
     super(props)
     this.state = {
-      maxLength: 100,
+      maxLength: 60,
       likes: 0,
       comments: 0,
       timestamp: null,
@@ -57,7 +57,7 @@ class Card extends Component<{result: any, loading}, {maxLength: number, likes: 
       <div className="col-3">
       <div className="card" id="front-page-suggestions">
         <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
-        <div style={{height: "100%", position: "absolute"}}>
+        <div style={{height: "100%", position: "absolute", margin: "0.5rem"}}>
           <img className="card-img-top" src="http://0.0.0.0:8000/default/default_thumbnail.jpg" style={{objectFit: "cover", height: "50%"}} alt="..." />
           <div className="card-body" style={{borderTop: "1px solid #505458", padding: "0.1rem"}}>
             <p className="card-text" style={{textAlign: "left", fontSize: "14px", fontWeight: 500, position: "relative", margin: 0, height: "auto"}}>{checkLengthTitle}</p>
