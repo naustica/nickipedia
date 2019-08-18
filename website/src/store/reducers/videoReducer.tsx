@@ -57,9 +57,6 @@ const videoReducer = (state: StateTypes = {
       }
       break
     case 'get_video_suggestions':
-      if (action.payload.page === 'home') {
-
-      }
       state = {
         ...state,
         suggestions: action.payload.suggestions,
