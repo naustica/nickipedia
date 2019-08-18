@@ -9,7 +9,7 @@ var {GenerateSW} = require('workbox-webpack-plugin');
 
 module.exports = {
   mode: "production",
-  devtool: "source-map",
+  devtool: "none",
   entry: ["./website/src/app.tsx"],
   performance: {
     maxEntrypointSize: 700000,
