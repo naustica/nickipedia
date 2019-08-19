@@ -16,7 +16,7 @@ def register():
     registrationform = RegistrationForm()
     if registrationform.validate_on_submit():
         data = {'username': registrationform.username.data, 'email': 'lul@kek.de', 'password': 'test'}
-        r = requests.post(local_server_adress + url_for('user_api.add_user'), json=data).json()
+        r = requests.post(local_server_adress + url_for('user_api.register_user'), json=data).json()
         if r['status'] == 'success':
             r = requests.post(local_server_adress + url_for('auth_api.login'), json=data).json()
             if r['status'] == 'success':
