@@ -12,5 +12,5 @@ db_start.py
 *.map
 upload_videos/*
 *.temp
-flask/data/website/static/js/bundle.js
 website/src/bundle.js
+migrations/
