@@ -14,3 +14,5 @@ upload_videos/*
 *.temp
 website/src/bundle.js
 migrations/
+*.env
+postgres-data/
