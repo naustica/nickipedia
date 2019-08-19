@@ -10,7 +10,7 @@ var {GenerateSW} = require('workbox-webpack-plugin');
 module.exports = {
   mode: "production",
   devtool: "none",
-  entry: ["./website/src/app.tsx"],
+  entry: ["./src/app.tsx"],
   performance: {
     maxEntrypointSize: 700000,
     maxAssetSize: 700000
@@ -19,7 +19,7 @@ module.exports = {
     port: 3000,
     compress: true,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, './website/dist'),
+    contentBase: path.join(__dirname, './dist'),
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
@@ -33,7 +33,7 @@ module.exports = {
     }
   },
   output: {
-    path: path.resolve(__dirname, "./website/dist"),
+    path: path.resolve(__dirname, "./dist"),
     filename: "bundle.js"
   },
   watch: true,
@@ -65,7 +65,7 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new HtmlWebpackPlugin({
-      template: './website/dist/index.html',
+      template: './dist/index.html',
       minify: {
         removeAttributeQuotes: true,
         collapseWhitespace: true,
