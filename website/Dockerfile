@@ -1,13 +1,8 @@
 FROM node:alpine
 
-WORKDIR /website
-
-ADD ./package.json ./
-ADD ./webpack.config.development.js ./
+COPY ./ ./
 
 RUN npm install
-
-COPY ./ ./
 
 EXPOSE 3000
 
