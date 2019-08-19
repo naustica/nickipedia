@@ -2,12 +2,12 @@
   "name": "nickipedia",
   "version": "0.0.1",
   "description": "the official nickipedia website",
-  "main": "index.js",
+  "main": "bundle.js",
   "scripts": {
     "build": "webpack-dev-server --inline --hot --config ./webpack.config.development.js",
     "compile-sass": "node-sass ./flask/data/website/static/css/main.scss ./flask/data/website/static/css/main.css -w",
     "production": "webpack-dev-server --inline --hot --config ./webpack.config.production.js",
-    "local-file-server": "http-server ./flask/data/database/files -p 8000 --cors"
+    "local-file-server": "http-server ./../flask/data/database/files -p 8000 --cors"
   },
   "repository": {
     "type": "git",
