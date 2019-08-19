@@ -16,3 +16,5 @@ pafy
 youtube_dl
 requests
 flask-mail
+flask-migrate
+flask-script
