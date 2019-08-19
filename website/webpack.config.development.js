@@ -7,7 +7,7 @@ var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlug
 module.exports = {
   mode: "development",
   devtool: "source-map",
-  entry: ["./website/src/app.tsx"],
+  entry: ["./src/app.tsx"],
   performance: {
     maxEntrypointSize: 700000,
     maxAssetSize: 700000
@@ -16,7 +16,7 @@ module.exports = {
     port: 3000,
     compress: false,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, './website/dist'),
+    contentBase: path.join(__dirname, './dist'),
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
@@ -30,7 +30,7 @@ module.exports = {
     }
   },
   output: {
-    path: path.resolve(__dirname, "./website/dist"),
+    path: path.resolve(__dirname, "./dist"),
     filename: "bundle.js"
   },
   watch: true,
@@ -56,7 +56,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './website/dist/index.html',
+      template: './dist/index.html',
     }),
   ]
 };
