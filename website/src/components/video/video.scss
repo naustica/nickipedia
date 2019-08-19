@@ -52,4 +52,7 @@ video {
   border: none !important;
   box-shadow: none !important;
   background-color: black !important;
+  &:hover {
+    cursor: pointer;
+  }
 }
