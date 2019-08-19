@@ -6,6 +6,8 @@ from flask_marshmallow import Marshmallow
 from flask_login import LoginManager
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 import os
 
 
@@ -29,11 +31,12 @@ def create_app():
     bcrypt.init_app(app)
     jwt.init_app(app)
     mail.init_app(app)
+
     login_manager.init_app(app)
     login_manager.login_view = 'main.login'
 
-    from data.website.views import main as website_main_blueprint
-    app.register_blueprint(website_main_blueprint)
+    # from data.website.views import main as website_main_blueprint
+    # app.register_blueprint(website_main_blueprint)
 
     from data.api import search
     app.register_blueprint(search.bp)
@@ -54,3 +57,16 @@ def create_app():
     app.register_blueprint(likes.bp)
 
     return app
+
+
+def create_manager():
+
+    app = create_app()
+
+    Migrate(app, db)
+
+    manager = Manager(app)
+
+    manager.add_command('db', MigrateCommand)
+
+    return manager
