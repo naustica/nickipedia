@@ -7,7 +7,8 @@
     "build": "webpack-dev-server --inline --hot --config ./webpack.config.development.js",
     "compile-sass": "node-sass ./flask/data/website/static/css/main.scss ./flask/data/website/static/css/main.css -w",
     "production": "webpack-dev-server --inline --hot --config ./webpack.config.production.js",
-    "local-file-server": "http-server ./../flask/data/database/files -p 8000 --cors"
+    "local-file-server": "http-server ./../flask/data/database/files -p 8000 --cors",
+    "docker": "webpack --config ./webpack.config.docker.js"
   },
   "repository": {
     "type": "git",
