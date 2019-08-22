@@ -10,7 +10,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
-      - ./nickipedia/postgres-data/postgres:/var/lib/postgresql/data
+      - postgres_volume:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
@@ -29,10 +29,8 @@ services:
       - MAIL_PASSWORD=${MAIL_PASSWORD}
       - MAIL_DEFAULT_SENDER=${MAIL_DEFAULT_SENDER}
       - APP_SETTINGS=${APP_SETTINGS}
-    volumes:
-      - ./nickipedia:/flask
     expose:
-      - 5000
+      - 8080
     depends_on:
       - postgres
     networks:
@@ -42,18 +40,17 @@ services:
   frontend:
     build: ./website
     container_name: frontend
-    restart: always
     volumes:
-      - ./nickipedia:/website
+      - frontend_volume:/dist
 
   nginx:
     build: ./nginx
     container_name: nginx
     restart: always
     ports:
-      - "5000:5000"
+      - "8080:8080"
     volumes:
-      - ./nickipedia:/website
+      - frontend_volume:/dist
     depends_on:
       - flask
       - frontend
@@ -68,3 +65,4 @@ networks:
 
 volumes:
   postgres_volume:
+  frontend_volume:
