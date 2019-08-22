@@ -107,6 +107,9 @@ def get_videos():
 
         all_videos = Video.get_all()
 
+        if not all_videos:
+            return make_response(jsonify(message='no video was found.')), 404
+
         result = videos_schema.dump(all_videos)
 
         return make_response(jsonify(result.data)), 200
