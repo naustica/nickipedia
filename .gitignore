@@ -12,7 +12,10 @@ db_start.py
 *.map
 upload_videos/*
 *.temp
-website/src/bundle.js
 migrations/
 *.env
 postgres-data/
+bundle.js
+bundle.js.gz
+precache-*
+service-worker.js
