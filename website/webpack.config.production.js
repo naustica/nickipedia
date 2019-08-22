@@ -1,7 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var {CleanWebpackPlugin} = require('clean-webpack-plugin');
 var CompressionPlugin = require('compression-webpack-plugin');
 var {GenerateSW} = require('workbox-webpack-plugin');
@@ -67,6 +66,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './dist/index.html',
+      inject: false,
       minify: {
         removeAttributeQuotes: true,
         collapseWhitespace: true,
