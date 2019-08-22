@@ -4,4 +4,4 @@ COPY ./ ./
 
 RUN npm install
 
-CMD npm run docker
+RUN npm run docker
