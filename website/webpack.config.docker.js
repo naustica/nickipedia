@@ -40,12 +40,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin({
-      dry: true,
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
     new HtmlWebpackPlugin({
       template: './dist/index.html',
       inject: false,
