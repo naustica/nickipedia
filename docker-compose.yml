@@ -41,7 +41,7 @@ services:
     build: ./website
     container_name: frontend
     volumes:
-      - frontend_volume:/dist
+      - frontend_volume:/webapp/dist
 
   nginx:
     build: ./nginx
@@ -50,7 +50,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - frontend_volume:/dist
+      - frontend_volume:/webapp/dist
     depends_on:
       - flask
       - frontend
