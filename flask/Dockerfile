@@ -1,13 +1,14 @@
-FROM python:3.7.2-stretch
+FROM python:3.7.1-stretch
 
-RUN pip install -U pip
+WORKDIR /backend
 
-COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -U pip
 
-RUN pip install -r requirements.txt
+COPY requirements.txt .
 
-COPY . /app
-WORKDIR /app
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
 
 EXPOSE 8080
 
