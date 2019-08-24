@@ -70,6 +70,9 @@ export function getVideoSuggestions(id: number, limit: number) {
       })
       const data = await response.json()
       let suggestions = []
+      if (limit > Object.keys(data).length) {
+        limit = Object.keys(data).length - 1
+      }
       for (var i=0; suggestions.length < limit; i++) {
         let index = Math.floor(Math.random() * Object.keys(data).length)
         if (data[index].id === Number(id) || suggestions.find(x => x.id === data[index].id)) {
