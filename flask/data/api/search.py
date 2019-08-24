@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, make_response, request
 from data.database.video import Video, videos_schema
 from data import db
 from sqlalchemy import func
+from math import ceil
 
 
 bp = Blueprint('search_api', __name__, url_prefix='/api')
@@ -29,7 +30,7 @@ def get_results():
 
         page = int(page)
 
-        page_limit = round(all_rows / stop)
+        page_limit = int(ceil(all_rows / stop))
 
         if page <= page_limit:
 
