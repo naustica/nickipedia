@@ -29,7 +29,7 @@ def get_results():
 
         page = int(page)
 
-        page_limit = all_rows / stop
+        page_limit = round(all_rows / stop)
 
         if page <= page_limit:
 
