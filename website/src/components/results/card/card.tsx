@@ -57,7 +57,7 @@ class Card extends Component<{result:any, fetching: boolean}, {maxLength: number
         <div className="card mb-2" id="result-card">
           <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
             <div className="col-3">
-              <img src="http://0.0.0.0:8000/default/default_thumbnail.jpg" className="card-img-top" id="card-img-result" alt="..." />
+              <img src="media/default/default_thumbnail.jpg" className="card-img-top" id="card-img-result" alt="..." />
               <div className="card-img-overlay" id="result-play-button">
                 <Octicon icon={TriangleRight} size="medium"/>
               </div>

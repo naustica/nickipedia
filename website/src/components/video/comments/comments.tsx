@@ -77,7 +77,7 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
   render() {
     const postForm = (
       <div className="media" style={{width: "100%", paddingBottom: "1rem"}}>
-        <img src="http://0.0.0.0:8000/default/default_pic_a.jpg" className="align-self-start mr-3" id="img-profil" />
+        <img src="media/default/default_pic_a.jpg" className="align-self-start mr-3" id="img-profil" />
         <div className="media-body">
           <div className="mb-0" style={{paddingLeft: "0.5rem"}}>
             <form onSubmit={this.submitForm}>
@@ -94,7 +94,7 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
     const getComments = this.state.data.length === undefined ? (<div></div>) :
       (this.state.data.sort((a, b) => b.id - a.id).map(comment =>
         <div className="media" id="posts" key={comment.id} style={{border: "none", width: "100%"}}>
-          <img src="http://0.0.0.0:8000/default/default_pic_a.jpg" className="align-self-center mr-3" id="img-profil" />
+          <img src="media/default/default_pic_a.jpg" className="align-self-center mr-3" id="img-profil" />
           <div className="media-body" style={{marginLeft: "1rem"}}>
             <div className="mt-0">{comment.author_id} @<Link to="/">{ comment.author_id }</Link><a style={{paddingLeft: "0.5rem", color: "#757D85"}}>{comment.timestamp}</a></div>
             <div className="mb-0">{comment.content}</div>
