@@ -8,6 +8,8 @@ local_server_adress = 'http://127.0.0.1:5000'
 
 
 class BaseConfig:
+    DEBUG = False
+    TESTING = False
     HOST = '0.0.0.0'
     SECRET_KEY = os.environ['SECRET_KEY']
     JWT_SECRET_KEY = os.environ['SECRET_KEY']
@@ -28,4 +30,8 @@ class BaseConfig:
 class DevelopementConfig(BaseConfig):
     DEBUG = True
     DEVELOPMENT = True
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+
+
+class ProductionConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
