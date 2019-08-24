@@ -22,12 +22,13 @@ module.exports = {
       '/api': {
         target: 'http://localhost:5000',
         secure: false
+      },
+      '/media': {
+        target: 'http://localhost:8000',
+        pathRewrite: { '^/media': '' },
+        secure: false,
+        changeOrigin: true
       }
-    },
-    headers: {
-      "Access-Control-Allow-Origin": "http://localhost:8000",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS, HEAD",
-      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
     }
   },
   output: {
