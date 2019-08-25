@@ -53,6 +53,7 @@ class Login extends Component<{history:any}, { username?: string, password?: str
             this.props.history.push('/')
           }})
           .catch(error => {
+            this.setState({loading: false})
             console.log(error)
           })
       }

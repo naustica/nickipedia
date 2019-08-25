@@ -34,6 +34,7 @@ class Register extends Component<{history:any}, { username?: string, password?: 
     var form = event.target as HTMLFormElement;
     event.preventDefault();
     if (this.validateForm()) {
+      this.setState({loading: true})
       fetch('api/user/register', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
@@ -49,6 +50,7 @@ class Register extends Component<{history:any}, { username?: string, password?: 
           }
         })
         .catch(error => {
+          this.setState({loading: false})
           console.log(error)
           form.reset();
         })
