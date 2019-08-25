@@ -10,6 +10,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+RUN cd data/database/files && chmod -R o+rw .*
+
 EXPOSE 8080
 
 CMD gunicorn -b 0.0.0.0:8080 run
