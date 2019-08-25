@@ -31,6 +31,8 @@ services:
       - LOCAL_FILES_PATH=${LOCAL_FILES_PATH}
       - LOCAL_SERVER_ADRESS=${LOCAL_SERVER_ADRESS}
       - APP_SETTINGS=${APP_SETTINGS}
+    volumes:
+      - media_volume:/webapp/backend/data/database/files
     expose:
       - 8080
     depends_on:
@@ -43,7 +45,7 @@ services:
     build: ./website
     container_name: frontend
     volumes:
-      - frontend_volume:/webapp/dist
+      - frontend_volume:/webapp/frontend/dist
 
   nginx:
     build: ./nginx
@@ -52,7 +54,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - frontend_volume:/webapp/dist
+      - frontend_volume:/webapp/frontend/dist
+      - media_volume:/webapp/backend/data/database/files
     depends_on:
       - flask
       - frontend
@@ -68,3 +71,4 @@ networks:
 volumes:
   postgres_volume:
   frontend_volume:
+  media_volume:
