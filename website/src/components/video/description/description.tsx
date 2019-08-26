@@ -22,7 +22,7 @@ class VideoDescription extends Component<{id: number, title: string, description
 
   async getLikesFromAPI(id) {
     this.setState({loading: true})
-    const access_token = sessionStorage.getItem('access_token')
+    const access_token = localStorage.getItem('access_token')
     await fetch('api/likes?v=' + id, {
       method: 'get',
     })
@@ -78,7 +78,7 @@ class VideoDescription extends Component<{id: number, title: string, description
   }
 
   onClickLike(event:React.MouseEvent<HTMLButtonElement>): any {
-    const access_token = sessionStorage.getItem('access_token')
+    const access_token = localStorage.getItem('access_token')
     let likes = this.state.likes
     let dislikes = this.state.dislikes
 
@@ -114,7 +114,7 @@ class VideoDescription extends Component<{id: number, title: string, description
   }
 
   onClickDislike(event:React.MouseEvent<HTMLButtonElement>): any {
-    const access_token = sessionStorage.getItem('access_token')
+    const access_token = localStorage.getItem('access_token')
     let likes = this.state.likes
     let dislikes = this.state.dislikes
 

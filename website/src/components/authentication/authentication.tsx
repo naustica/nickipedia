@@ -5,7 +5,7 @@ import {Route, Redirect} from 'react-router-dom';
 class AuthenticatedRoute extends Component<{component: any, path: string, exact?: boolean},{}> {
   render() {
     const {component: Component, ...rest} = this.props;
-    if (sessionStorage.getItem('access_token') != undefined) {
+    if (localStorage.getItem('access_token') != undefined) {
       return <Route {...rest} render={(props) => <Component {...props} />} />
     } else {
       return <Route {...rest} render={() => <Redirect to={{pathname: '/login'}} />} />

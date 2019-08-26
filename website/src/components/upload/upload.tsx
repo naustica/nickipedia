@@ -34,7 +34,7 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
   }
   submitUploadForm(event:React.FormEvent<HTMLFormElement>): any {
     var form = event.target as HTMLFormElement;
-    const access_token = sessionStorage.getItem('access_token')
+    const access_token = localStorage.getItem('access_token')
     event.preventDefault();
     if (this.validateForm()) {
       this.setState({loading: true, urlMessage: ''})

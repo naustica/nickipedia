@@ -38,7 +38,7 @@ export function fetchVideos() {
 export function addView(id: number, views: number) {
   return async function(dispatch: any) {
     try {
-    const access_token = sessionStorage.getItem('access_token')
+    const access_token = localStorage.getItem('access_token')
     const response = await fetch('api/video?video_id=' + id, {
       method: 'put',
       headers: new Headers({

@@ -49,7 +49,7 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
   }
   submitForm(event:React.FormEvent<HTMLFormElement>): any {
     const access_token = sessionStorage.getItem('access_token')
-    const username = sessionStorage.getItem('username')
+    const username = localStorage.getItem('username')
     var form = event.target as HTMLFormElement;
     event.preventDefault();
     this.setState({loading: true})

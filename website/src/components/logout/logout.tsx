@@ -13,16 +13,16 @@ class Logout extends Component<{},{loading: boolean, error: string}> {
     }
   }
   componentDidMount() {
-    if (sessionStorage.getItem('access_token') != undefined) {
-      const access_token = sessionStorage.getItem('access_token')
+    if (localStorage.getItem('access_token') != undefined) {
+      const access_token = localStorage.getItem('access_token')
       fetch('api/auth/logout', {
         method: 'post',
         headers: new Headers({
           "Authorization": access_token
         })
       })
-      sessionStorage.removeItem('access_token')
-      sessionStorage.removeItem('username')
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('username')
     } else {
       this.setState({error: 'something went wrong :('})
       console.log('error')
