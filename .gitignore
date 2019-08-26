@@ -6,7 +6,6 @@ __pycache__/
 *.icloud
 typings/
 node_modules/
-package-lock.json
 .sass-cache/
 db_start.py
 *.map
