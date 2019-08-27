@@ -89,3 +89,28 @@ export function getVideoSuggestions(id: number, limit: number) {
     }
   }
 }
+
+export function uploadVideoFromUrl(url: string) {
+  return async function(dispatch: any) {
+    const access_token = localStorage.getItem('access_token')
+    try {
+      const response = await fetch('api/video/add_from_url?url=' + url, {
+        headers: {"Authorization": access_token}
+      })
+      const data = await response.json()
+      const status = await response.status
+      if (status === 201) {
+        dispatch({type: 'upload_video_from_url', payload: {fetching: false, fetched: true, message: 'video successfully uploaded', uploadData: {title: data.title, description: data.text, id: data.id}, uploadStatus: true}})
+        // form.reset()
+      }
+      else {
+        dispatch({error: 'api call error'})
+        console.log(status)
+      }
+    }
+    catch (error) {
+      dispatch({error: error})
+      console.log(error)
+    }
+  }
+}
