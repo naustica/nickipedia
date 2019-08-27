@@ -5,11 +5,13 @@ import promise from 'redux-promise-middleware';
 
 import videoReducer from './reducers/videoReducer';
 import searchReducer from './reducers/searchReducer';
+import authenticationReducer from './reducers/authenticationReducer';
 
 
 const reducers = combineReducers({
   video: videoReducer,
-  search: searchReducer
+  search: searchReducer,
+  authentication: authenticationReducer
 })
 const middleware = applyMiddleware(promise, thunk, logger)
 
