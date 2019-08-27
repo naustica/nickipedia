@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player';
 import './../video.scss'
 
 
-class VideoStream extends Component<{author: string, filename: string}, {error: boolean}> {
+class VideoStream extends Component<{author: string, filename: string, loading: boolean}, {error: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -29,17 +29,21 @@ class VideoStream extends Component<{author: string, filename: string}, {error: 
       console.log('[nickipedia] file server didnt respond')
     }
   }
-  render() {
+  renderPlayer(loading: boolean, error: boolean) {
     const errorOverlay = this.state.error ? {opacity: 1} : {opacity: 0}
-    return (
+    const Player =  (
       <div>
         <ReactPlayer className="video-player" url={'media/videos/' + this.props.author + '/' + this.props.filename}
-          controls={true} pip={true} width="100%" height="auto" playsinline={true} />
+          controls={true} pip={true} width="100%" height="auto" playsinline={true}/>
         <div id="video-overlay" style={errorOverlay}>
           <h3>video not found.</h3>
         </div>
       </div>
     )
+    return Player
+  }
+  render() {
+    return this.renderPlayer(this.props.loading, this.state.error)
   }
 }
 
