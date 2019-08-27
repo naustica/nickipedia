@@ -5,7 +5,10 @@ interface StateTypes {
   data: any,
   suggestions: Array<any>,
   changing: boolean,
-  changed: boolean
+  changed: boolean,
+  message: string,
+  uploadStatus: boolean,
+  uploadData: any
 }
 
 const videoReducer = (state: StateTypes = {
@@ -16,6 +19,9 @@ const videoReducer = (state: StateTypes = {
   suggestions: [],
   changing: false,
   changed : false,
+  message: '',
+  uploadStatus: false,
+  uploadData: {}
 }, action: any) => {
   switch (action.type) {
     case 'fetch_video_start':
@@ -64,6 +70,15 @@ const videoReducer = (state: StateTypes = {
         changed: true
       }
       break
+    case 'upload_video_from_url':
+      state = {
+        ...state,
+        fetching: false,
+        fetched: true,
+        uploadStatus: action.payload.uploadStatus,
+        message: action.payload.message,
+        uploadData: action.payload.uploadData
+      }
   }
   return state
 }
