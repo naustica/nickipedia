@@ -15,12 +15,9 @@ import Logout from './components/logout/logout';
 import Video from './components/video/video';
 import Footer from './components/footer/footer';
 import Upload from './components/upload/upload';
+import Settings from './components/settings/settings';
 import AuthenticatedRoute from './components/authentication/authentication';
 
-
-function Settings() {
-  return <h2>settings</h2>
-}
 
 function About() {
   return <h2>about</h2>
