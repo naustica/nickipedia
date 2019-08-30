@@ -4,8 +4,8 @@ $border-radius: 0;
 // $input-border-radius-lg: 15px;
 $input-font-size-lg: 16px;
 $input-height-lg: 3rem;
-$white: #F5F5F5;
-$input-bg: #F5F5F5;
+$white: transparent;
+$input-bg: transparent;
 $input-padding-y-lg: 1rem;
 $input-padding-x-lg: 1.5rem;
 $navbar-padding-y: 0.2rem;
@@ -58,6 +58,7 @@ html {
     font-size: 14px;
 }
 body {
+    background-color: #F5F5F5;
     margin-bottom: 1rem;
 }
 .app {
@@ -82,6 +83,36 @@ body {
     padding: 1rem;
     border-radius: 5px;
     z-index: 1
+}
+.slider {
+    position: relative;
+    -webkit-appearance: none;
+    width: 50px;
+    height: 26px;
+    background-color: #E8E7E7;
+    border: 0.5px solid black;
+    outline: none;
+    transition: 0.4s;
+    border-radius: 30px;
+    cursor: pointer;
+
+    &:checked {
+      background-color: #F1DA66;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 20px;
+      top: 5%;
+      left: 5%;
+      background-color: black;
+      transition: 0.4s;
+    }
+    &:checked:before {
+      left: 25px;
+    }
 }
 .form-control {
     border-width: 1px;
