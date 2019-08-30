@@ -1,6 +1,5 @@
 function ConvertTime(data) {
-  var i
-  for (i=0; i<data.length; i++) {
+  for (var i=0; i<data.length; i++) {
     let currentDate:any = new Date()
     let date:any = new Date(data[i].timestamp)
 
