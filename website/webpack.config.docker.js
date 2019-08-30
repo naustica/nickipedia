@@ -1,5 +1,5 @@
-var path = require("path");
-var webpack = require("webpack");
+var path = require('path');
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var {CleanWebpackPlugin} = require('clean-webpack-plugin');
 var CompressionPlugin = require('compression-webpack-plugin');
@@ -7,35 +7,35 @@ var {GenerateSW} = require('workbox-webpack-plugin');
 
 
 module.exports = {
-  mode: "production",
-  devtool: "none",
-  entry: ["./src/app.tsx"],
+  mode: 'production',
+  devtool: 'none',
+  entry: ['./src/app.tsx'],
   performance: {
     maxEntrypointSize: 700000,
     maxAssetSize: 700000
   },
   output: {
-    path: path.resolve(__dirname, "./dist"),
-    filename: "bundle.js"
+    path: path.resolve(__dirname, './dist'),
+    filename: 'bundle.js'
   },
   watch: false,
   resolve: {
-    extensions: [".tsx", ".ts", ".js", "json"]
+    extensions: ['.tsx', '.ts', '.js', 'json']
   },
   module: {
     rules: [
       {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        use: "awesome-typescript-loader"
+        use: 'awesome-typescript-loader'
       },
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(png|jpg)$/,
-        use: "url-loader"
+        use: 'url-loader'
       }
     ]
   },
@@ -50,8 +50,8 @@ module.exports = {
       }
     }),
     new CompressionPlugin({
-      filename: "[path].gz[query]",
-      algorithm: "gzip",
+      filename: '[path].gz[query]',
+      algorithm: 'gzip',
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0.8,

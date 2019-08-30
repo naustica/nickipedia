@@ -1,13 +1,13 @@
-var path = require("path");
-var webpack = require("webpack");
+var path = require('path');
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
 module.exports = {
-  mode: "development",
-  devtool: "source-map",
-  entry: ["./src/app.tsx"],
+  mode: 'development',
+  devtool: 'source-map',
+  entry: ['./src/app.tsx'],
   performance: {
     maxEntrypointSize: 700000,
     maxAssetSize: 700000
@@ -32,27 +32,27 @@ module.exports = {
     }
   },
   output: {
-    path: path.resolve(__dirname, "./dist"),
-    filename: "bundle.js"
+    path: path.resolve(__dirname, './dist'),
+    filename: 'bundle.js'
   },
   watch: true,
   resolve: {
-    extensions: [".tsx", ".ts", ".js", "json"]
+    extensions: ['.tsx', '.ts', '.js', 'json']
   },
   module: {
     rules: [
       {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        use: "awesome-typescript-loader"
+        use: 'awesome-typescript-loader'
       },
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(png|jpg)$/,
-        use: "url-loader"
+        use: 'url-loader'
       }
     ]
   },
