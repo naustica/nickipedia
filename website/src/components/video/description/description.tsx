@@ -159,7 +159,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "black"}
     const downvoteButtonStyle = this.state.userVoting === 'downvoted' ? {color: "#5975CC"} : {color: "black"}
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
-      <div className="card" style={{marginTop: "0.5rem", backgroundColor: "#F5F5F5", border: "none", borderRadius: "0"}}>
+      <div className="card" style={{marginTop: "0.5rem", backgroundColor: "transparent", border: "none", borderRadius: "0"}}>
         <div className="card-body">
           <h3 className="card-title">{this.props.title}</h3>
           <p style={{fontSize: "15px", color: "#6D6D6D"}}>{this.props.views + ' views'}</p>
