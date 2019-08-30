@@ -7,37 +7,41 @@
   width: 90%;
   box-shadow: none;
   margin-bottom: 2rem;
-}
-#form-control-comment:focus {
+  &:focus {
     outline: none;
+  }
 }
 #btn-upvote {
     color: black;
     background-color: transparent;
     margin-right: 1.5rem;
     border: none;
+    &:hover {
+      background-color: transparent !important;
+      box-shadow: (none) !important;
+      color: #E0235F !important;
+      border: none !important;
+    }
+    &:focus, &:active {
+      box-shadow: (none) !important;
+      border: none !important;
+    }
 }
 #btn-downvote {
     color: black;
     background-color: transparent;
     margin-right: 1.5rem;
     border: none;
-}
-#btn-upvote:hover {
-    background-color: transparent !important;
-    box-shadow: (none) !important;
-    color: #E0235F !important;
-    border: none !important;
-}
-#btn-upvote:focus, #btn-upvote:active, #btn-downvote:focus, #btn-downvote:active {
-    box-shadow: (none) !important;
-    border: none !important;
-}
-#btn-downvote:hover {
-    background-color: transparent !important;
-    box-shadow: (none) !important;
-    color: #5975CC !important;
-    border: none !important;
+    &:hover {
+      background-color: transparent !important;
+      box-shadow: (none) !important;
+      color: #5975CC !important;
+      border: none !important;
+    }
+    &:focus, &:active {
+      box-shadow: (none) !important;
+      border: none !important;
+    }
 }
 #video-overlay {
     position: absolute;
