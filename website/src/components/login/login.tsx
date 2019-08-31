@@ -59,7 +59,7 @@ class Login extends Component<{history:any}, { username?: string, password?: str
       }
   }
   render() {
-    const formBorderColor = this.state.error != '' ? {borderColor: 'red'} : {borderColor: 'black'}
+    const formBorderColor = this.state.error != '' ? {borderColor: 'red', backgroundColor: "#F5F5F5"} : {borderColor: 'black', backgroundColor: "#F5F5F5"}
     return (
       <div className="container" id="login-container" style={{padding: "2rem"}}>
         <div className="card" style={{padding: "1.5rem", opacity: 0.95, border: "1px solid #505458", backgroundColor: "#FDF9F3"}}>

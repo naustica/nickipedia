@@ -67,13 +67,13 @@ class Register extends Component<{history:any}, { username?: string, password?: 
             </div>
             <form onSubmit={this.submitForm}>
               <div className="form-group input-group-lg" style={{padding: "0.8rem"}}>
-                <input className="form-control from-control-lg" type="text" name="username" autoFocus value={this.state.username} onChange={this.onChange} placeholder="username"/>
+                <input className="form-control from-control-lg" type="text" style={{backgroundColor: "#F5F5F5"}} name="username" autoFocus value={this.state.username} onChange={this.onChange} placeholder="username"/>
               </div>
               <div className="form-group input-group-lg" style={{padding: "0.8rem"}}>
-                <input className="form-control from-control-lg" type="email" name="email" value={this.state.email} onChange={this.onChange} placeholder="email"/>
+                <input className="form-control from-control-lg" type="email" style={{backgroundColor: "#F5F5F5"}} name="email" value={this.state.email} onChange={this.onChange} placeholder="email"/>
               </div>
               <div className="form-group input-group-lg" style={{padding: "0.8rem"}}>
-                <input className="form-control from-control-lg" type="password" name="password" value={this.state.password} onChange={this.onChange} placeholder="password"/>
+                <input className="form-control from-control-lg" type="password" style={{backgroundColor: "#F5F5F5"}} name="password" value={this.state.password} onChange={this.onChange} placeholder="password"/>
               </div>
               <div className="form-group input-group-lg" style={{textAlign: "center", padding: "2rem"}}>
                 <Link to="/login" style={{fontSize: "16px"}}>already have an account?</Link>
