@@ -1,26 +1,47 @@
 import React, {Component} from 'react';
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import {connect} from 'react-redux';
 
 import './settings.scss';
+import {fetchAuthenticationStart, fetchUser} from './../../store/actions/authenticationActions';
 
 
-class Settings extends Component<{}, {darkmode: boolean}> {
+@(connect((store: any) => {
+  return {
+    user: store.authentication
+  }
+}) as any)
+class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolean, hiddenAudio: any}> {
   constructor(props:any) {
     super(props)
     this.state = {
+      hiddenAudio: new Audio('/media/default/song.mp3'),
       darkmode: false
     }
     this.handleDarkmode = this.handleDarkmode.bind(this)
   }
-  handleDarkmode(event: any):void {
+  componentWillMount() {
+    window.scrollTo(0, 0)
+    const username = localStorage.getItem('username')
+    this.getUserData(username)
+  }
+  getUserData(username: string) {
+    Promise.all([
+      this.props.dispatch(fetchAuthenticationStart()),
+      this.props.dispatch(fetchUser(username))
+    ])
+  }
+  handleDarkmode(event: any): void {
     this.setState({darkmode: event.target.checked})
     if (event.target.checked === true) {
-      document.body.style.background = "black"
-      document.body.style.color = "white"
+      this.state.hiddenAudio.play()
+      //document.body.style.background = "black"
+      //document.body.style.color = "white"
     }
     else {
-      document.body.style.background = "#F5F5F5"
-      document.body.style.color = "black"
+      //document.body.style.background = "#F5F5F5"
+      //document.body.style.color = "black"
+      this.state.hiddenAudio.pause()
     }
   }
   render() {
@@ -37,11 +58,32 @@ class Settings extends Component<{}, {darkmode: boolean}> {
           </div>
           <div className="col-9">
           <TabPanel>
-            <h3>account</h3>
+            <h3 style={{paddingBottom: "2rem"}}>account</h3>
+            <div className="container">
+              <div className="col-8">
+                <p>
+                  <b>username</b>
+                  <br />
+                  {this.props.user.data.username}
+                </p>
+                <p>
+                  <b>email</b>
+                  <br />
+                  {this.props.user.data.email}
+                </p>
+                <div style={{paddingTop: "5rem"}}>
+                <button className="btn" id="btn-profile">update profile</button>
+                </div>
+              </div>
+              <div className="col-4">
+                <p style={{fontWeight: 600}}>profil picture</p>
+                <img src="media/default/default_pic_a.jpg" id="img-profil-settings" />
+              </div>
+            </div>
           </TabPanel>
           <TabPanel>
             <h3 style={{paddingBottom: "2rem"}}>advanced settings</h3>
-            <div>
+            <div className="container">
               <div className="row">
                 <div className="col-3">
                   <input className="slider" type="checkbox" name="" onChange={this.handleDarkmode}/>
