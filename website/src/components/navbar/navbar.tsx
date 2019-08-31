@@ -96,7 +96,7 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
         form.reset();
       })
   }
-  onClickToggleMenu(event:React.MouseEvent<HTMLButtonElement>): any {
+  onClickToggleMenu(event:any): any {
     const toggle = this.state.toggle
     this.setState({toggle: !toggle})
   }
@@ -140,8 +140,8 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
         </nav>
       <div className="toggle-menu" style={toggleStyle}>
         <ul>
-          <Link to={'/settings'} style={{color: "black"}}><li>settings</li></Link>
-          <Link to={'/logout'} style={{color: "black"}}><li>logout</li></Link>
+          <Link to={'/settings'} style={{color: "black"}} onClick={this.onClickToggleMenu}><li>settings</li></Link>
+          <Link to={'/logout'} style={{color: "black"}} onClick={this.onClickToggleMenu}><li>logout</li></Link>
         </ul>
       </div>
     </div>
