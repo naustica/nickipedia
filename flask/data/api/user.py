@@ -5,11 +5,10 @@ from werkzeug import secure_filename
 import os
 from data.config import upload_path
 from fnmatch import fnmatch
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask_mail import Message
 from data import mail
 from flask_jwt_extended import create_access_token
-from datetime import timedelta
 
 
 bp = Blueprint('user_api', __name__, url_prefix='/api', template_folder='./templates')
