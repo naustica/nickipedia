@@ -76,6 +76,12 @@ body {
     height: 50px;
     width: 50px;
 }
+#img-profil-settings {
+    border-radius: 5%;
+    height:150px;
+    width: 150px;
+    cursor: pointer;
+}
 #posts {
     margin-bottom: 1.5rem;
     background-color: $white;
@@ -87,8 +93,8 @@ body {
 .slider {
     position: relative;
     -webkit-appearance: none;
-    width: 50px;
-    height: 26px;
+    width: 40px;
+    height: 22px;
     background-color: #E8E7E7;
     border: 0.5px solid black;
     outline: none;
@@ -102,16 +108,16 @@ body {
     &:before {
       content: "";
       position: absolute;
-      width: 22px;
-      height: 22px;
+      width: 18px;
+      height: 18px;
       border-radius: 20px;
       top: 5%;
-      left: 5%;
+      left: 6%;
       background-color: black;
       transition: 0.4s;
     }
     &:checked:before {
-      left: 25px;
+      left: 19px;
     }
 }
 .form-control {
