@@ -1,12 +1,14 @@
 interface StateTypes {
   fetching: boolean,
   fetched: boolean,
+  data: any
   error: any,
 }
 
 const authenticationReducer = (state: StateTypes = {
   fetching: false,
   fetched: false,
+  data: [],
   error: null,
 }, action: any) => {
   switch (action.type) {
@@ -30,6 +32,14 @@ const authenticationReducer = (state: StateTypes = {
         ...state,
         fetching: false,
         fetched: true,
+      }
+      break
+    case 'fetch_user':
+      state = {
+        ...state,
+        fetching: false,
+        fetched: true,
+        data: action.payload.data
       }
   }
   return state
