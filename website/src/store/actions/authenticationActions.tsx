@@ -78,3 +78,18 @@ export function fetchAuthenticationRegister(username: string, email: string, pas
     }
   }
 }
+
+export function fetchUser(username: string) {
+  return async function(dispatch: any) {
+    try {
+      const response = await fetch('api/user?username=' + username, {
+        method: 'get'
+      })
+      const data = await response.json()
+      dispatch({type: 'fetch_user', payload: {data: data}})
+    }
+    catch (error) {
+      dispatch({error: error})
+    }
+  }
+}
