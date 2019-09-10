@@ -115,9 +115,9 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
       <div className="nav-header" style={{backgroundColor: "#FDF9F3", borderBottom: "1px solid #D0CDC8"}}>
         <nav className="navbar fixed-top navbar-expand-lg navbar-light">
           <div style={{display: "inline-block", cursor: "pointer", paddingLeft: "1rem"}}>
-            <div style={{width: "25px", height: "2px", backgroundColor: "#333", margin: "6px 0", transition: "0.4s"}}></div>
-            <div style={{width: "25px", height: "2px", backgroundColor: "#333", margin: "6px 0", transition: "0.4s"}}></div>
-            <div style={{width: "25px", height: "2px", backgroundColor: "#333", margin: "6px 0", transition: "0.4s"}}></div>
+            <div style={{width: "20px", height: "2px", backgroundColor: "#333", margin: "4px 0", transition: "0.4s"}}></div>
+            <div style={{width: "20px", height: "2px", backgroundColor: "#333", margin: "4px 0", transition: "0.4s"}}></div>
+            <div style={{width: "20px", height: "2px", backgroundColor: "#333", margin: "4px 0", transition: "0.4s"}}></div>
           </div>
           <Link to='/' className="navbar-brand" style={{paddingLeft: "1.5rem", fontWeight: 500, fontSize: "20px"}}>nickipedia</Link>
 
