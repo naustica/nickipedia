@@ -45,7 +45,7 @@ class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
   }
   render() {
     return (
-      <div className="container" style={{padding: "2rem"}}>
+      <div className="container" style={{padding: "1.5rem"}}>
         <div className="row">
           <div className="col-9">
             <VideoStream author={this.props.video.data.author_id} filename={this.props.video.data.filename} loading={this.props.video.changing}/>
@@ -54,7 +54,7 @@ class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
               <VideoComments id={this.props.video.data.id}/>
             </div>
           </div>
-          <div className="col-3">
+          <div className="col-3" style={{paddingLeft: "1rem"}}>
             <VideoSuggestions suggestions={this.props.video.suggestions} loading={this.props.video.changing}/>
           </div>
         </div>
