@@ -66,7 +66,7 @@ video {
     box-shadow: none !important;
     background-color: black !important;
     &:hover {
-      cursor: pointer;
+      //cursor: pointer;
     }
 }
 .video-controls {
@@ -83,33 +83,64 @@ video {
     color: #FFFFFF !important;
     outline: none !important;
     padding-left: 1.2rem;
-    padding-top: 0.3rem;
     padding-bottom: 0.6rem;
+    padding-top: 0rem;
     &:active,&:focus, &:hover {
       box-shadow: (none) !important;
     }
 }
 .video-expand {
-    position: absolute;
     right: 0;
 }
 #video-expand-button {
     color: #FFFFFF !important;
     outline: none !important;
     padding-right: 1.2rem;
-    padding-top: 0.5rem;
+    padding-bottom: 0.6rem;
+    padding-top: 0rem;
     &:active,&:focus, &:hover {
       box-shadow: (none) !important;
     }
 }
 .video-timebar {
-    height: 3px;
-    top: 0;
+    cursor: pointer;
     width: 97%;
     margin: auto;
-    background-color: #A19FA1;
+    &:hover, &:focus, &:active {
+      .video-timebar-progress, .video-timebar-line {
+        height: 5px;
+      }
+      .video-timebar-progress {
+        background-color: #A19FA1;
+      }
+      .video-timebar-progress::-webkit-slider-thumb {
+        transition: all 0.1s;
+        opacity: 1;
+      }
+    }
 }
-.video-timebar-line {
-    height: 3px;
-    background-color: #F2F2F2;
+.video-timebar-progress {
+    -webkit-appearance: none;
+    width: 100%;
+    cursor: pointer;
+    &::-webkit-slider-runnable-track {
+        height: 3px;
+        background-color: #A19FA1;
+        border: none;
+        border-radius: 3px;
+    }
+    &::-webkit-slider-thumb {
+        opacity: 0;
+        -webkit-appearance: none;
+        border: none;
+        height: 13px;
+        width: 13px;
+        border-radius: 50%;
+        background-color: #F2F2F2;
+        margin-top: -4.5px;
+    }
+    &:focus, &:focus::-webkit-slider-runnable-track {
+        outline: none;
+        background-color: #A19FA1;
+    }
 }

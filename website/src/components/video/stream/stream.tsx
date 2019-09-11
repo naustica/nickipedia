@@ -6,71 +6,74 @@ import {IconContext} from "react-icons";
 
 import './../video.scss'
 
-class VideoStream extends Component<{author: string, filename: string, loading: boolean}, {error: boolean, playing: boolean}> {
+class VideoStream extends Component<{author: string, filename: string, loading: boolean}, {error: boolean, playing: boolean, played: number, volume: number, loaded: number, seeking: boolean, duration: number}> {
+  player: any
   constructor(props:any) {
     super(props)
     this.state = {
       error: false,
-      playing: true
-    }
-    this.togglePlayPause = this.togglePlayPause.bind(this)
-    this.getCurrentVideoProgress = this.getCurrentVideoProgress.bind(this)
-  }
-  componentDidMount() {
-    const video: any  = document.querySelector('video')
-    video.addEventListener('timeupdate', this.getCurrentVideoProgress)
-  }
-  componentWillUnmount() {
-    const video: any  = document.querySelector('video')
-    video.removeEventListener('timeupdate', this.getCurrentVideoProgress)
-  }
-  togglePlayPause() {
-    const video: any  = document.querySelector('video')
-    if (video.paused) {
-      this.setState({playing: true})
-      video.play()
-    } else {
-      this.setState({playing: false})
-      video.pause()
+      playing: true,
+      played: 0,
+      volume: 1,
+      loaded: 0,
+      seeking: false,
+      duration: 0
     }
   }
-  getCurrentVideoProgress() {
-    const video: any  = document.querySelector('video')
-    let timebar: any = document.querySelector('.video-timebar-line')
-    let timebarPos = video.currentTime / video.duration
-    timebar.style.width = timebarPos * 100 + '%'
-    if (video.ended) {
-      this.setState({playing: false})
-    }
+  ref = player => {
+    this.player = player
   }
-  renderPlayButton() {
-    if (this.state.playing === false) {
-      return (
-        <IconContext.Provider value={{size: "26px"}}>
-          <IoIosPlay />
-        </IconContext.Provider>
-      )
-    }
-    else {
+  togglePlayPause = () => {
+    this.setState({playing: !this.state.playing})
+  }
+  getCurrentVideoProgress = (state) => {
+    this.setState(state)
+  }
+  videoEnded = () => {
+    this.setState({playing: false})
+  }
+  seekVideo = (event) => {
+    this.setState({played: parseFloat(event.target.value)})
+    this.player.seekTo(parseFloat(event.target.value))
+  }
+  handleDuration = (duration) => {
+    this.setState({duration})
+  }
+  renderPlayButton = () => {
+    if (this.state.playing) {
       return (
         <IconContext.Provider value={{size: "26px"}}>
           <IoIosPause />
         </IconContext.Provider>
       )
     }
+    else {
+      return (
+        <IconContext.Provider value={{size: "26px"}}>
+          <IoIosPlay />
+        </IconContext.Provider>
+      )
+    }
   }
-  renderPlayer(loading: boolean, error: boolean) {
+  renderPlayer = (loading: boolean, error: boolean) => {
     const errorOverlay = this.state.error ? {opacity: 1} : {opacity: 0}
     const Player = (
-      <div className="video-player-container" onClick={this.togglePlayPause}>
-        <ReactPlayer className="video-player" url={'media/videos/' + this.props.author + '/' + this.props.filename}
-          controls={false} pip={true} width="100%" height="auto" playsinline={true} playing={this.state.playing}/>
+      <div className="video-player-container">
+        <div onClick={this.togglePlayPause}>
+          <ReactPlayer className="video-player" url={'media/videos/' + this.props.author + '/' + this.props.filename}
+            controls={false} pip={true} width="100%" height="auto"
+            playing={this.state.playing} onProgress={this.getCurrentVideoProgress}
+            onEnded={this.videoEnded} ref={this.ref} onDuration={this.handleDuration}
+          />
+        </div>
         <div className="video-controls">
           <div className="video-timebar">
-            <div className="video-timebar-line"></div>
+            <input className="video-timebar-progress" type="range" min={0} max={1}
+              value={this.state.played} step="any" onChange={this.seekVideo}
+            />
           </div>
           <div className="video-play">
-            <button className="btn" id="video-play-button">
+            <button className="btn" id="video-play-button" onClick={this.togglePlayPause}>
               {this.renderPlayButton()}
             </button>
           </div>
