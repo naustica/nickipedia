@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactPlayer from 'react-player';
-import {IoIosPlay, IoIosPause, IoMdExpand} from 'react-icons/io';
-import {IconContext} from "react-icons";
+import { IoIosPlay, IoIosPause, IoMdExpand, IoMdVolumeHigh } from 'react-icons/io';
+import { IconContext } from "react-icons";
 
 
 import './../video.scss'
@@ -20,7 +20,7 @@ class VideoStream extends Component<{author: string, filename: string, loading: 
       duration: 0
     }
   }
-  ref = player => {
+  ref = (player: any) => {
     this.player = player
   }
   togglePlayPause = () => {
@@ -32,12 +32,16 @@ class VideoStream extends Component<{author: string, filename: string, loading: 
   videoEnded = () => {
     this.setState({playing: false})
   }
-  seekVideo = (event) => {
+  seekVideo = (event: { target: { value: string } }) => {
     this.setState({played: parseFloat(event.target.value)})
     this.player.seekTo(parseFloat(event.target.value))
   }
-  handleDuration = (duration) => {
+  handleDuration = (duration: any) => {
     this.setState({duration})
+  }
+  getFullscreen = () => {
+    const player = document.getElementsByTagName('video')[0]
+    player.requestFullscreen()
   }
   renderPlayButton = () => {
     if (this.state.playing) {
@@ -57,17 +61,22 @@ class VideoStream extends Component<{author: string, filename: string, loading: 
   }
   renderPlayer = (loading: boolean, error: boolean) => {
     const errorOverlay = this.state.error ? {opacity: 1} : {opacity: 0}
+    const showVideoControls = this.state.playing ? {} : {opacity: 1}
     const Player = (
       <div className="video-player-container">
         <div onClick={this.togglePlayPause}>
           <ReactPlayer className="video-player" url={'media/videos/' + this.props.author + '/' + this.props.filename}
-            controls={false} pip={true} width="100%" height="auto"
+            controls={false} pip={false} width="100%" height="auto"
             playing={this.state.playing} onProgress={this.getCurrentVideoProgress}
             onEnded={this.videoEnded} ref={this.ref} onDuration={this.handleDuration}
           />
         </div>
-        <div className="video-controls">
+        <div className="video-controls" style={showVideoControls}>
           <div className="video-timebar">
+            <span className="video-timebar-line">
+              <span className="video-timebar-loaded" style={{width: this.state.loaded * 100 + "%"}}></span>
+              <span className="video-timebar-fill" style={{width: this.state.played * 100 + "%"}}></span>
+            </span>
             <input className="video-timebar-progress" type="range" min={0} max={1}
               value={this.state.played} step="any" onChange={this.seekVideo}
             />
@@ -77,12 +86,22 @@ class VideoStream extends Component<{author: string, filename: string, loading: 
               {this.renderPlayButton()}
             </button>
           </div>
+          <div className="video-audio">
+            <button className="btn" id="video-audio-button">
+              <IconContext.Provider value={{size: "26px"}}>
+                <IoMdVolumeHigh />
+              </IconContext.Provider>
+            </button>
+          </div>
+          <div className="video-play-time">
+            {this.state.played} / {this.state.duration}
+          </div>
           <div className="video-expand">
-            <button className="btn" id="video-expand-button">
-            <IconContext.Provider value={{size: "24px"}}>
-              <IoMdExpand />
-            </IconContext.Provider>
-          </button>
+            <button className="btn" id="video-expand-button" onClick={this.getFullscreen}>
+              <IconContext.Provider value={{size: "26px"}}>
+                <IoMdExpand />
+              </IconContext.Provider>
+            </button>
           </div>
         </div>
       </div>
