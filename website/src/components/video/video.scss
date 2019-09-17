@@ -97,6 +97,7 @@ video {
     outline: none !important;
     padding-bottom: 0.6rem;
     padding-top: 0rem;
+    padding-left: 0.2rem;
     &:active,&:focus, &:hover {
       box-shadow: (none) !important;
     }
@@ -132,7 +133,7 @@ video {
       width: 100%;
       height: 3px;
       //background-color: #A19FA1;
-      background-color: hsla(300, 1%, 63%, 0.5);
+      background-color: hsla(300, 1%, 63%, 0.4);
       overflow: hidden;
     }
     .video-timebar-fill {
@@ -147,7 +148,7 @@ video {
       display: block;
       width: 0;
       height: 3px;
-      background-color: #A19FA1;
+      background-color: #ABA7A5;
     }
     .video-timebar-progress {
         -webkit-appearance: none;
@@ -167,6 +168,7 @@ video {
             margin-top: 1px;
             background-color: #F2F2F2;
             outline: none;
+            //transform: translate(-3px)
         }
     }
     &:hover, &:focus, &:active {
@@ -174,7 +176,7 @@ video {
         height: 4px;
       }
       .video-timebar-progress::-webkit-slider-thumb {
-        transition: all 0.2s;
+        transition: all 0.3s;
         height: 13px;
         width: 13px;
         opacity: 1;
