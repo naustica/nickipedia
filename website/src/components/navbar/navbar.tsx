@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import Octicon, {Gear} from '@primer/octicons-react';
+import { GoGear } from 'react-icons/go'
+import { IconContext } from "react-icons"
 
 import './navbar.scss';
 
@@ -131,9 +132,11 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
           </div>
 
           <button type="button" className="btn" id="btn-upload" style={{marginRight: "1.5rem"}} onClick={this.onClickUpload}>upload a video</button>
-          <div>
-          <button type="button" className="btn" id="btn-control" name="settings" style={{marginRight: "1.5rem", border: "none", height: "100%"}} onClick={this.onClickToggleMenu}>
-            <Octicon icon={Gear} size="medium" ariaLabel="settings"/>
+          <div onClick={this.onClickToggleMenu} style={{height: "100%", zIndex: 2}}>
+          <button type="button" className="btn" id="btn-control" name="settings" style={{marginRight: "0.5rem", border: "none", height: "100%"}} onClick={this.onClickToggleMenu}>
+            <IconContext.Provider value={{size: "30px"}}>
+              <GoGear style={{zIndex: 1}} onClick={this.onClickToggleMenu}/>
+            </IconContext.Provider>
           </button>
           </div>
 
