@@ -61,6 +61,9 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
     this.setState({played: parseFloat(event.target.value)})
     this.player.seekTo(parseFloat(event.target.value))
   }
+  changeVolume = (event: { target: { value: string; } }) => {
+    this.setState({volume: parseFloat(event.target.value)})
+  }
   handleDuration = (duration: any) => {
     this.setState({duration})
   }
@@ -91,7 +94,7 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
         <div onClick={this.togglePlayPause}>
           <ReactPlayer className="video-player" url={'media/videos/' + this.props.author + '/' + this.props.filename}
             controls={false} pip={false} width="100%" height="auto"
-            playing={this.state.playing} onProgress={this.getCurrentVideoProgress}
+            playing={this.state.playing} onProgress={this.getCurrentVideoProgress} volume={this.state.volume}
             onEnded={this.videoEnded} ref={this.videoRef} onDuration={this.handleDuration}
           />
         </div>
@@ -116,6 +119,9 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
                 <IoMdVolumeHigh />
               </IconContext.Provider>
             </button>
+            <input className="video-audio-volume" type="range" min={0} max={1}
+              value={this.state.volume} step="any" onChange={this.changeVolume}
+            />
           </div>
           <div className="video-play-time">
             {ConvertPlayTime(this.state.played * 100)} / {ConvertPlayTime(this.state.duration)}
