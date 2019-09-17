@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import ReactPlayer from 'react-player';
-import { IoIosPlay, IoIosPause, IoMdExpand, IoMdVolumeHigh } from 'react-icons/io';
-import { IconContext } from "react-icons";
+import React, {Component} from 'react'
+import ReactPlayer from 'react-player'
+import { IoIosPlay, IoIosPause, IoMdExpand, IoMdVolumeHigh, IoMdVolumeOff } from 'react-icons/io'
+import { IconContext } from "react-icons"
 
-import {ConvertPlayTime} from './../../../utils/datetime';
+import {ConvertPlayTime} from './../../../utils/datetime'
 
-import './../video.scss';
+import './../video.scss'
 
 
 interface ReadOnly {
@@ -21,7 +21,8 @@ interface WriteOnly {
   loaded: number,
   seeking: boolean,
   duration: number,
-  fullscreen: boolean
+  fullscreen: boolean,
+  muted: boolean
 }
 
 class VideoStream extends Component<ReadOnly, WriteOnly> {
@@ -29,7 +30,7 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
   player: any
   videoContainer: any
 
-  constructor(props:any) {
+  constructor(props: any) {
     super(props)
     this.state = {
       error: false,
@@ -39,7 +40,8 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
       loaded: 0,
       seeking: false,
       duration: 0,
-      fullscreen: false
+      fullscreen: false,
+      muted: false
     }
   }
   videoRef = (player: any) => {
@@ -61,27 +63,59 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
     this.setState({played: parseFloat(event.target.value)})
     this.player.seekTo(parseFloat(event.target.value))
   }
-  changeVolume = (event: { target: { value: string; } }) => {
+  changeVolume = (event: { target: { value: string } }) => {
     this.setState({volume: parseFloat(event.target.value)})
   }
   handleDuration = (duration: any) => {
     this.setState({duration})
   }
   getFullscreen = () => {
-    this.videoContainer.requestFullscreen()
+    if (this.state.fullscreen) {
+      document.exitFullscreen()
+      this.setState({fullscreen: false})
+    }
+    else {
+      this.videoContainer.requestFullscreen()
+      this.setState({fullscreen: true})
+    }
+  }
+  handleKeyDown = (event: any) => {
+    if (event.keyCode === 32) {
+      event.preventDefault()
+      this.togglePlayPause()
+    }
+  }
+  toggleMuted = () => {
+    this.setState({muted: !this.state.muted})
   }
   renderPlayButton = () => {
     if (this.state.playing) {
       return (
-        <IconContext.Provider value={{size: "26px"}}>
+        <IconContext.Provider value={{size: "25px"}}>
           <IoIosPause />
         </IconContext.Provider>
       )
     }
     else {
       return (
-        <IconContext.Provider value={{size: "26px"}}>
+        <IconContext.Provider value={{size: "25px"}}>
           <IoIosPlay />
+        </IconContext.Provider>
+      )
+    }
+  }
+  renderVolumeButton = () => {
+    if (this.state.muted || this.state.volume === 0) {
+      return (
+        <IconContext.Provider value={{size: "25px"}}>
+          <IoMdVolumeOff />
+        </IconContext.Provider>
+      )
+    }
+    else {
+      return (
+        <IconContext.Provider value={{size: "25px"}}>
+          <IoMdVolumeHigh />
         </IconContext.Provider>
       )
     }
@@ -90,12 +124,12 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
     const errorOverlay = this.state.error ? {opacity: 1} : {opacity: 0}
     const showVideoControls = this.state.playing ? {} : {opacity: 1}
     const Player = (
-      <div className="video-player-container" ref={this.videoContainerRef}>
+      <div className="video-player-container" ref={this.videoContainerRef} onKeyDown={this.handleKeyDown} tabIndex={1}>
         <div onClick={this.togglePlayPause}>
           <ReactPlayer className="video-player" url={'media/videos/' + this.props.author + '/' + this.props.filename}
             controls={false} pip={false} width="100%" height="auto"
             playing={this.state.playing} onProgress={this.getCurrentVideoProgress} volume={this.state.volume}
-            onEnded={this.videoEnded} ref={this.videoRef} onDuration={this.handleDuration}
+            muted={this.state.muted} onEnded={this.videoEnded} ref={this.videoRef} onDuration={this.handleDuration}
           />
         </div>
         <div className="video-controls" style={showVideoControls}>
@@ -114,21 +148,22 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
             </button>
           </div>
           <div className="video-audio">
-            <button className="btn" id="video-audio-button">
-              <IconContext.Provider value={{size: "26px"}}>
-                <IoMdVolumeHigh />
-              </IconContext.Provider>
+            <button className="btn" id="video-audio-button" onClick={this.toggleMuted}>
+              {this.renderVolumeButton()}
             </button>
+            <span className="video-audio-line">
+              <span className="video-audio-fill" style={{width: this.state.volume * 100 + "%"}}></span>
+            </span>
             <input className="video-audio-volume" type="range" min={0} max={1}
               value={this.state.volume} step="any" onChange={this.changeVolume}
             />
           </div>
           <div className="video-play-time">
-            {ConvertPlayTime(this.state.played * 100)} / {ConvertPlayTime(this.state.duration)}
+            {ConvertPlayTime(this.state.duration * this.state.played)} / {ConvertPlayTime(this.state.duration)}
           </div>
           <div className="video-expand">
             <button className="btn" id="video-expand-button" onClick={this.getFullscreen}>
-              <IconContext.Provider value={{size: "26px"}}>
+              <IconContext.Provider value={{size: "25px"}}>
                 <IoMdExpand />
               </IconContext.Provider>
             </button>

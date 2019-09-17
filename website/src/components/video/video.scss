@@ -45,6 +45,7 @@
 }
 .video-player-container {
     position: relative;
+    outline: none;
     &:hover {
       .video-controls {
         opacity: 1;
@@ -82,46 +83,89 @@ video {
     flex-wrap: wrap;
     background-color: transparent;
 }
-#video-play-button {
-    color: #FFFFFF !important;
-    outline: none !important;
-    padding-left: 1.2rem;
-    padding-bottom: 0.6rem;
-    padding-top: 0rem;
-    &:active,&:focus, &:hover {
-      box-shadow: (none) !important;
-    }
+.video-play {
+
+  position: relative;
+
+  #video-play-button {
+      color: #F2F2F2 !important;
+      outline: none !important;
+      padding-left: 1.2rem;
+      padding-bottom: 0.6rem;
+      padding-top: 0rem;
+      &:active,&:focus, &:hover {
+        box-shadow: (none) !important;
+        color: #FFFFFF !important;
+      }
+  }
 }
 .video-expand {
     position: absolute;
-    top: 20px;
+    bottom: 1px;
     right: 0;
+
+    #video-expand-button {
+        color: #F2F2F2 !important;
+        outline: none !important;
+        padding-right: 1.2rem;
+        padding-bottom: 0.6rem;
+        padding-top: 0rem;
+        &:active,&:focus, &:hover {
+          box-shadow: (none) !important;
+          color: #FFFFFF !important;
+        }
+    }
 }
 .video-audio {
 
   position: relative;
+  padding-right: 1rem;
 
   #video-audio-button {
-      color: #FFFFFF !important;
+      color: #F2F2F2 !important;
       outline: none !important;
       padding-bottom: 0.6rem;
       padding-top: 0rem;
-      padding-right: 0.3rem;
+      padding-right: 0;
       padding-left: 0.2rem;
       &:active,&:focus, &:hover {
         box-shadow: (none) !important;
+        color: #FFFFFF !important;
+      }
+  }
+
+  .video-audio-line {
+      position: absolute;
+      z-index: 1;
+      left: 35px;
+      top: 12px;
+      width: 0;
+      height: 3px;
+      //background-color: #A19FA1;
+      background-color: hsla(300, 1%, 63%, 0.4);
+      overflow: hidden;
+      transition: width 0.4s ease-in-out;
+      .video-audio-fill {
+        position: absolute;
+        display: block;
+        width: 0;
+        height: 3px;
+        background-color: #F2F2F2;
       }
   }
 
   .video-audio-volume {
       -webkit-appearance: none;
-      //width: 80px;
+      //width: 60px;
       width: 0;
+      left: 6px;
       cursor: pointer;
       outline: none;
       position: relative;
       top: -0.5rem;
       height: 3px;
+      z-index: 2;
+      background-color: transparent;
       transition: width 0.4s ease-in-out;
 
       &::-webkit-slider-thumb {
@@ -138,7 +182,7 @@ video {
       }
   }
   &:hover {
-    .video-audio-volume {
+    .video-audio-volume, .video-audio-line {
       width: 60px;
       transition: width 0.3s ease-in-out;
     }
@@ -149,26 +193,26 @@ video {
   }
 }
 .video-play-time {
+    position: relative;
     color: #FFFFFF;
     margin-top: 0.4rem;
-    padding-left: 1rem;
+    padding-left: 0.5rem;
     font-size: 12px;
     font-weight: 300;
 }
-#video-expand-button {
-    color: #FFFFFF !important;
-    outline: none !important;
-    padding-right: 1.2rem;
-    padding-bottom: 0.6rem;
-    padding-top: 0rem;
-    &:active,&:focus, &:hover {
-      box-shadow: (none) !important;
-    }
-}
 .video-timebar {
     width: 97%;
-    margin: auto;
+    //margin: auto;
+    left: 1.5%;
+    margin-right: 1.5%;
     position: relative;
+
+    @media screen and (min-width: 1500px) {
+      left: 1%;
+      margin-right: 1%;
+      width: 98%;
+      padding-bottom: 0.5rem;
+    }
 
     .video-timebar-line {
       position: absolute;
