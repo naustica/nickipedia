@@ -19,7 +19,7 @@ $navbar-padding-x: 0.2rem;
 // optional
 @import "node_modules/bootstrap/scss/tables";
 @import "node_modules/bootstrap/scss/type";
-@import "node_modules/bootstrap/scss/images";
+// @import "node_modules/bootstrap/scss/images";
 @import "node_modules/bootstrap/scss/code";
 @import "node_modules/bootstrap/scss/forms";
 @import "node_modules/bootstrap/scss/navbar";
@@ -57,7 +57,7 @@ html {
     font-size: 14px;
 }
 body {
-    background-color: #F5F5F5;
+    background-color: #F9F9F9;
     margin-bottom: 1rem;
 }
 .app {
@@ -88,36 +88,6 @@ body {
     padding: 1rem;
     border-radius: 5px;
     z-index: 1
-}
-.slider {
-    position: relative;
-    -webkit-appearance: none;
-    width: 40px;
-    height: 22px;
-    background-color: #E8E7E7;
-    border: 0.5px solid black;
-    outline: none;
-    transition: 0.4s;
-    border-radius: 30px;
-    cursor: pointer;
-
-    &:checked {
-      background-color: #F1DA66;
-    }
-    &:before {
-      content: "";
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      border-radius: 20px;
-      top: 5%;
-      left: 6%;
-      background-color: black;
-      transition: 0.4s;
-    }
-    &:checked:before {
-      left: 19px;
-    }
 }
 .form-control {
     border-width: 1px;
