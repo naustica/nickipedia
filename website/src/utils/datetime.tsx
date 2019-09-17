@@ -1,4 +1,4 @@
-function ConvertTime(data) {
+export default function ConvertTime(data: { timestamp: any }[]) {
   for (var i=0; i<data.length; i++) {
     let currentDate:any = new Date()
     let date:any = new Date(data[i].timestamp)
@@ -59,4 +59,10 @@ function ConvertTime(data) {
     }
 }
 
-export default ConvertTime
+export function ConvertPlayTime(time: any) {
+  time = Number(time)
+  let minutes = Math.floor(time / 60)
+  let seconds = time - minutes * 60
+  seconds = Math.floor(Math.ceil(seconds * 100) / 100)
+  return String(minutes + ':' + seconds)
+}
