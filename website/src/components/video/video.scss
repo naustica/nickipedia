@@ -43,6 +43,41 @@
       border: none !important;
     }
 }
+.video-suggestion-card {
+    width: 100%;
+    height: 110px;
+    margin-bottom: 0.2rem;
+    a {
+      display: flex;
+      .video-suggestion-pic {
+        img {
+          height: 100px;
+          width: 150px;
+        }
+      }
+      .video-suggestion-body {
+        padding-left: 1rem;
+        .video-suggestion-title {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        .video-suggestion-author {
+          font-size: 13px;
+          font-weight: 400;
+          color: #6C6C6C;
+        }
+        .video-suggestion-views {
+          font-size: 12px;
+          font-weight: 400;
+          color: #6C6C6C;
+        }
+      }
+    }
+    &:hover {
+      transform: scale(1.01);
+      cursor: pointer;
+    }
+}
 .video-player-container {
     position: relative;
     outline: none;

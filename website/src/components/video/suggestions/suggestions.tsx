@@ -11,15 +11,19 @@ class VideoSuggestions extends Component<{suggestions: any, loading: boolean},{}
   }
   renderSuggestionsCards(loading) {
     const content = loading ? this.props.suggestions.map(suggestion => (
-      <div className="card" key={suggestion.id} style={{height: "10rem", width: "14rem", backgroundColor: "#E0DFDF", margin: "1rem", marginBottom: "2rem"}}>
+      <div className="card" key={suggestion.id} style={{height: "110px", width: "100%", backgroundColor: "#E0DFDF", marginBottom: "1rem"}}>
       </div>
     )) : (
-      this.props.suggestions.slice(0, 6).map(suggestion => (
-        <div className="card" key={suggestion.id} style={{height: "10rem", width: "14rem", backgroundColor: "transparent", margin: "1rem", marginBottom: "2rem"}}>
+      this.props.suggestions.slice(0, 14).map(suggestion => (
+        <div className="video-suggestion-card" key={suggestion.id}>
           <Link to={"/watch/" + suggestion.id}>
-            <img src="media/default/default_thumbnail.jpg" className="card-img-top" alt="..." style={{borderRadius: "5px"}} />
-            <div className="card-img-overlay">
-              <h5 className="card-title" style={{fontSize: "12px", color: "black"}}>{suggestion.title}</h5>
+            <div className="video-suggestion-pic">
+              <img src="media/default/default_thumbnail.jpg" className="" alt="..."/>
+            </div>
+            <div className="video-suggestion-body">
+              <h5 className="video-suggestion-title">{suggestion.title}</h5>
+              <h6 className="video-suggestion-author">{suggestion.author_id}</h6>
+              <p className="video-suggestion-views">{suggestion.views + " views"}</p>
             </div>
           </Link>
         </div>
@@ -28,6 +32,7 @@ class VideoSuggestions extends Component<{suggestions: any, loading: boolean},{}
     return content
   }
   render() {
+    console.log(this.props.suggestions)
     return this.renderSuggestionsCards(this.props.loading)
   }
 }
