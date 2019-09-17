@@ -59,10 +59,15 @@ export default function ConvertTime(data: { timestamp: any }[]) {
     }
 }
 
-export function ConvertPlayTime(time: any) {
-  time = Number(time)
-  let minutes = Math.floor(time / 60)
-  let seconds = time - minutes * 60
+export function ConvertPlayTime(time: number) {
+  let minutes: any = Math.floor(time / 60)
+  var seconds: any = time - minutes * 60
   seconds = Math.floor(Math.ceil(seconds * 100) / 100)
+  if (seconds < 10) {
+    seconds = String(0) + String(seconds)
+  }
+  if (minutes < 10) {
+    minutes = String(0) + String(minutes)
+  }
   return String(minutes + ':' + seconds)
 }
