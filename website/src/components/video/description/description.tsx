@@ -1,6 +1,8 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import Octicon, {Heart, Trashcan, Thumbsdown, Thumbsup} from '@primer/octicons-react';
+import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
+import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io'
+import { GoTrashcan } from 'react-icons/go'
+import { IconContext } from "react-icons"
 
 import './../video.scss'
 import Loading from './../../loading/loading'
@@ -154,31 +156,54 @@ class VideoDescription extends Component<{id: number, title: string, description
     return d.getDate() + ' ' + d.toLocaleString('default', {month: 'short'}) + ' ' + d.getFullYear()
   }
 
+  renderLikeButton = () => {
+    if (this.state.userVoting === "upvoted") {
+      return (
+        <IconContext.Provider value={{size: "32px"}}>
+          <IoMdHeart />
+        </IconContext.Provider>
+      )
+    }
+    else {
+      return (
+        <IconContext.Provider value={{size: "32px"}}>
+          <IoMdHeartEmpty />
+        </IconContext.Provider>
+      )
+    }
+  }
+
+  renderDislikeButton = () => {
+    return (
+      <IconContext.Provider value={{size: "32px"}}>
+        <GoTrashcan />
+      </IconContext.Provider>
+    )
+  }
+
   render() {
     const videoTimestamp = this.convertVideoTimestamp(this.props.timestamp)
     const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "black"}
     const downvoteButtonStyle = this.state.userVoting === 'downvoted' ? {color: "#5975CC"} : {color: "black"}
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
-      <div className="card" style={{backgroundColor: "transparent", border: "none", borderRadius: "0"}}>
-        <div className="card-body" style={{padding: "0.2rem", paddingTop: "1rem"}}>
-          <h4 className="card-title" style={{fontWeight: 400, fontSize: "19px"}}>{this.props.title}</h4>
-          <p style={{fontSize: "14px", color: "#6D6D6D"}}>{this.props.views + ' views'}</p>
-          <hr/>
-          <h6 className="card-subtitle"><Link to="/" className="card-link">{this.props.author}</Link></h6>
-          <p style={{fontSize: "13px", color: "#757D85"}}>{"published on " +  videoTimestamp}</p>
-          <br/>
-          <p><a href="/" style={{backgroundColor: "#6871F0", marginRight: "0.5rem", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#kek</a><a href="/" style={{backgroundColor: "#FF2D80", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#lol</a></p>
-          <p className="card-text">{this.props.description}</p>
-          <button type="button" className="btn" id="btn-upvote" style={upvoteButtonStyle} onClick={this.onClickLike}>
-            <Octicon icon={Heart} size="medium" />
-            <div>{this.state.likes}</div>
-          </button>
-          <button type="button" className="btn" id="btn-downvote" style={downvoteButtonStyle} onClick={this.onClickDislike}>
-            <Octicon icon={Trashcan} size="medium" />
-            <div>{this.state.dislikes}</div>
-          </button>
-          <hr/>
-        </div>
+      <div className="video-description">
+        <h2 className="video-description-title">{this.props.title}</h2>
+        <p className="video-description-views">{this.props.views + ' views'}</p>
+        <hr/>
+        <h4 className="video-description-author"><Link to="/" className="card-link">{this.props.author}</Link></h4>
+        <p className="video-description-timestamp">{"published on " +  videoTimestamp}</p>
+        <br/>
+        <p><a href="/" style={{backgroundColor: "#6871F0", marginRight: "0.5rem", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#kek</a><a href="/" style={{backgroundColor: "#FF2D80", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#lol</a></p>
+        <p className="video-description-text">{this.props.description}</p>
+        <button type="button" className="btn" id="btn-upvote" style={upvoteButtonStyle} onClick={this.onClickLike}>
+          {this.renderLikeButton()}
+          <div>{this.state.likes}</div>
+        </button>
+        <button type="button" className="btn" id="btn-downvote" style={downvoteButtonStyle} onClick={this.onClickDislike}>
+          {this.renderDislikeButton()}
+          <div>{this.state.dislikes}</div>
+        </button>
+        <hr/>
       </div>
     )
     return loadingState
