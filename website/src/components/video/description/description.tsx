@@ -159,12 +159,12 @@ class VideoDescription extends Component<{id: number, title: string, description
     const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "black"}
     const downvoteButtonStyle = this.state.userVoting === 'downvoted' ? {color: "#5975CC"} : {color: "black"}
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
-      <div className="card" style={{marginTop: "0.5rem", backgroundColor: "transparent", border: "none", borderRadius: "0"}}>
-        <div className="card-body">
-          <h3 className="card-title">{this.props.title}</h3>
-          <p style={{fontSize: "15px", color: "#6D6D6D"}}>{this.props.views + ' views'}</p>
+      <div className="card" style={{backgroundColor: "transparent", border: "none", borderRadius: "0"}}>
+        <div className="card-body" style={{padding: "0.2rem", paddingTop: "1rem"}}>
+          <h4 className="card-title" style={{fontWeight: 400, fontSize: "19px"}}>{this.props.title}</h4>
+          <p style={{fontSize: "14px", color: "#6D6D6D"}}>{this.props.views + ' views'}</p>
           <hr/>
-          <h5 className="card-subtitle"><Link to="/" className="card-link">{this.props.author}</Link></h5>
+          <h6 className="card-subtitle"><Link to="/" className="card-link">{this.props.author}</Link></h6>
           <p style={{fontSize: "13px", color: "#757D85"}}>{"published on " +  videoTimestamp}</p>
           <br/>
           <p><a href="/" style={{backgroundColor: "#6871F0", marginRight: "0.5rem", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#kek</a><a href="/" style={{backgroundColor: "#FF2D80", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#lol</a></p>

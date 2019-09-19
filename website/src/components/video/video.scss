@@ -57,9 +57,11 @@
       }
       .video-suggestion-body {
         padding-left: 1rem;
+        line-height: 10px;
         .video-suggestion-title {
           font-size: 14px;
           font-weight: 500;
+          line-height: 16px;
         }
         .video-suggestion-author {
           font-size: 13px;
@@ -67,7 +69,7 @@
           color: #6C6C6C;
         }
         .video-suggestion-views {
-          font-size: 12px;
+          font-size: 13px;
           font-weight: 400;
           color: #6C6C6C;
         }
@@ -293,7 +295,7 @@ video {
             height: 2px;
             width: 2px;
             border-radius: 50%;
-            margin-top: 1px;
+            margin-top: 4px;
             background-color: #F2F2F2;
             outline: none;
             //transform: translate(-3px)
