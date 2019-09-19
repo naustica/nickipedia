@@ -39,6 +39,7 @@
     "html-webpack-plugin": "^3.2.0",
     "http-server": "^0.11.1",
     "node-sass": "^4.12.0",
+    "sass-google-fonts": "^1.0.1",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
