@@ -83,7 +83,7 @@ class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
   render() {
     const loadingStyles = {} //this.props.search.fetching ? {backgroundColor: "#E0DFDF", color: "transparent", boxShadow: "none", border: "none"} : {}
     return (
-      <div className="container" style={{paddingTop: "2rem"}}>
+      <div className="container" style={{paddingTop: "1rem"}}>
         <div className="row">
           <div className="col-3" style={{padding: 0}}>
             <div className="card" id="filter-card" style={loadingStyles}>
