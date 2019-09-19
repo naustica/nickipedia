@@ -8,8 +8,6 @@ $white: transparent;
 $input-bg: transparent;
 $input-padding-y-lg: 1rem;
 $input-padding-x-lg: 1.5rem;
-$navbar-padding-y: 0.2rem;
-$navbar-padding-x: 0.2rem;
 
 // required
 @import "node_modules/bootstrap/scss/functions";
@@ -22,11 +20,11 @@ $navbar-padding-x: 0.2rem;
 // @import "node_modules/bootstrap/scss/images";
 @import "node_modules/bootstrap/scss/code";
 @import "node_modules/bootstrap/scss/forms";
-@import "node_modules/bootstrap/scss/navbar";
+//@import "node_modules/bootstrap/scss/navbar";
 @import "node_modules/bootstrap/scss/breadcrumb";
 @import "node_modules/bootstrap/scss/alert";
 @import "node_modules/bootstrap/scss/input-group";
-@import "node_modules/bootstrap/scss/nav";
+//@import "node_modules/bootstrap/scss/nav";
 @import "node_modules/bootstrap/scss/reboot";
 @import "node_modules/bootstrap/scss/close";
 @import "node_modules/bootstrap/scss/buttons";
@@ -34,6 +32,13 @@ $navbar-padding-x: 0.2rem;
 @import "node_modules/bootstrap/scss/media";
 @import "node_modules/bootstrap/scss/spinners";
 @import "node_modules/bootstrap/scss/utilities/spacing";
+
+
+// google fonts
+@import "node_modules/sass-google-fonts/src/GoogleFonts.scss";
+
+@include google-font('Roboto', '400,500,700');
+@include google-font('Source+Sans+Pro', '700');
 
 
 * {
@@ -53,12 +58,14 @@ hr {
 }
 html {
     position: relative;
-    min-height: 100%;
+    min-height: 101%;
     font-size: 14px;
 }
 body {
     background-color: #F9F9F9;
     margin-bottom: 1rem;
+    font-family: 'Roboto';
+    //font-family: 'Gamja Flower'
 }
 .app {
     padding-right: 2rem;
@@ -88,6 +95,36 @@ body {
     padding: 1rem;
     border-radius: 5px;
     z-index: 1
+}
+.slider {
+    position: relative;
+    -webkit-appearance: none;
+    width: 40px;
+    height: 22px;
+    background-color: #E8E7E7;
+    border: 0.5px solid black;
+    outline: none;
+    transition: 0.4s;
+    border-radius: 30px;
+    cursor: pointer;
+
+    &:checked {
+      background-color: #F1DA66;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 20px;
+      top: 5%;
+      left: 6%;
+      background-color: black;
+      transition: 0.4s;
+    }
+    &:checked:before {
+      left: 19px;
+    }
 }
 .form-control {
     border-width: 1px;
