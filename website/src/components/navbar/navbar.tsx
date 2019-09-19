@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { GoGear } from 'react-icons/go'
+import { IoMdNotificationsOutline } from 'react-icons/io'
 import { IconContext } from "react-icons"
 
 import './navbar.scss';
@@ -105,7 +105,7 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
     this.props.history.push('/upload')
   }
   onWindowClick(event):any {
-    if (event.target.name !== 'settings' && event.target.tagName.toLowerCase() !== 'path' && event.target.tagName.toLowerCase() !== 'a' && event.target.tagName.toLowerCase() !== 'li' && event.target !== document.querySelector('[aria-label="settings"]')) {
+    if (event.target.className !== 'navbar-user' && event.target.className !== 'navbar-user-pic') {
       this.setState({toggle: false})
     }
   }
@@ -113,39 +113,43 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
     const toggleStyle = this.state.toggle ? {display: "inline"} : {display: "none"}
     const searchStyle = this.state.suggestions.length > 0 ? {borderBottomLeftRadius: "0", borderBottomRightRadius: "0"} : {borderBottomLeftRadius: "5px", borderBottomRightRadius: "5px"}
     return (
-      <div className="nav-header" style={{backgroundColor: "#FDF9F3", borderBottom: "1px solid #D0CDC8"}}>
-        <nav className="navbar fixed-top navbar-expand-lg navbar-light">
-          <div style={{display: "inline-block", cursor: "pointer", paddingLeft: "1rem"}}>
-            <div style={{width: "20px", height: "2px", backgroundColor: "#333", margin: "4px 0", transition: "0.4s"}}></div>
-            <div style={{width: "20px", height: "2px", backgroundColor: "#333", margin: "4px 0", transition: "0.4s"}}></div>
-            <div style={{width: "20px", height: "2px", backgroundColor: "#333", margin: "4px 0", transition: "0.4s"}}></div>
+      <div className="nav-header">
+        <nav className="navbar">
+          <div className="navbar-menu">
+            <div className="navbar-menu-line"></div>
+            <div className="navbar-menu-line"></div>
+            <div className="navbar-menu-line"></div>
           </div>
-          <Link to='/' className="navbar-brand" style={{paddingLeft: "1.5rem", fontWeight: 500, fontSize: "20px"}}>nickipedia</Link>
-
-          <div className="mx-auto" style={{width: "50%"}}>
-            <form method="POST" onSubmit={this.submitForm} style={{position: "fixed", width: "50%", top: "0.4rem", left: "auto", right: "auto"}}>
+          <div className="navbar-logo">
+            <Link to='/'>nickipedia</Link>
+          </div>
+          <div className="navbar-search">
+            <form method="POST" onSubmit={this.submitForm} style={{position: "fixed", width: "50%", top: "0.6rem", left: "auto", right: "auto"}}>
               <div className="form-group input-group">
                 <input className="form-control from-control" id="form-control-search" style={searchStyle} type="text" name="search" value={this.state.term} onChange={this.getTerm} autoFocus placeholder="search"/>
                 {this.renderSuggestions()}
               </div>
-              </form>
+            </form>
           </div>
-
-          <button type="button" className="btn" id="btn-upload" style={{marginRight: "1.5rem"}} onClick={this.onClickUpload}>upload a video</button>
-          <div onClick={this.onClickToggleMenu} style={{height: "100%", zIndex: 2}}>
-          <button type="button" className="btn" id="btn-control" name="settings" style={{marginRight: "0.5rem", border: "none", height: "100%"}} onClick={this.onClickToggleMenu}>
-            <IconContext.Provider value={{size: "30px"}}>
-              <GoGear style={{zIndex: 1}} onClick={this.onClickToggleMenu}/>
-            </IconContext.Provider>
-          </button>
+          <div className="navbar-upload">
+            <button type="button" className="btn" id="btn-upload" onClick={this.onClickUpload}>UPLOAD A VIDEO</button>
           </div>
-
+          <div className="navbar-messages">
+            <button type="button" className="btn" id="btn-message" name="message">
+              <IconContext.Provider value={{size: "26px"}}>
+                <IoMdNotificationsOutline style={{zIndex: 1}}/>
+              </IconContext.Provider>
+            </button>
+          </div>
+          <div className="navbar-user">
+              <img src="media/default/default_pic_a.jpg" className="navbar-user-pic" onClick={this.onClickToggleMenu} />
+          </div>
         </nav>
-      <div className="toggle-menu" style={toggleStyle}>
-        <ul>
-          <Link to={'/settings'} style={{color: "black"}} onClick={this.onClickToggleMenu}><li>settings</li></Link>
-          <Link to={'/logout'} style={{color: "black"}} onClick={this.onClickToggleMenu}><li>logout</li></Link>
-        </ul>
+        <div className="toggle-menu" style={toggleStyle}>
+          <ul>
+            <Link to={'/settings'} style={{color: "black"}} onClick={this.onClickToggleMenu}><li>settings</li></Link>
+            <Link to={'/logout'} style={{color: "black"}} onClick={this.onClickToggleMenu}><li>logout</li></Link>
+          </ul>
       </div>
     </div>
   )
