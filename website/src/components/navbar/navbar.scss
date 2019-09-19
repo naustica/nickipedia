@@ -36,7 +36,7 @@
           font-weight: 500;
           font-size: 20px;
           font-family: Helvetica;
-          letter-spacing: -0.8px;
+          letter-spacing: -0.6px;
           margin-right: 2rem;
         }
 
@@ -46,6 +46,7 @@
             width: 35px;
             height: 35px;
             border-radius: 50%;
+            //border: 1px solid #A6C3EE;
             &:hover {
               cursor: pointer;
             }
@@ -75,18 +76,20 @@
               color: black;
               padding-left: 0.65rem;
               padding-right: 0.65rem;
-              font-weight: 700;
               font-size: 13px;
               text-align: center;
-              font-weight: 700;
+              font-weight: 500;
               line-height: 11px;
-              font-family: 'Source Sans Pro';
+              letter-spacing: -0.5px;
+              font-family: Helvetica;
               border-radius: 3px;
               outline: none !important;
-              background-color: #66E2D5 !important;
+              //background-color: #66E2D5 !important;
+              background-color: #FEE08A;
               border: 2px solid black !important;
               &:focus, &:active, &:hover {
-                background-color: #7ee7dc !important;
+                // background-color: #7ee7dc !important;
+                background-color: #F3EF95;
                 box-shadow: (none) !important;
                 color: black !important;
               }
@@ -139,22 +142,25 @@
         }
     }
     .toggle-menu {
-        right: 0;
-        margin-top: 0.3px; // fixed value!!! -> change needed
+        right: 5%;
+        top: 2%;
+        z-index: 200;
+        position: absolute;
+        margin-right: 1%;
+        margin-top: 2px; // fixed value!!! -> change needed
         position: fixed;
         //background-color: #A06F85;
         background-color: #F5F5F5;
         //border: 2px solid #505458;
-        box-shadow: 0px 0.5px 0 0.5px #ccc;
-        border-right: none;
-        border-top: none;
+        border: 0.5px solid #E8E7E7;
         overflow: hidden;
+        min-width: 200px;
         ul {
           margin: 0;
           padding: 0;
           overflow: hidden;
           list-style-type: none;
-          text-align: center;
+          text-align: left;
         }
         li {
           padding: 1.3rem;
