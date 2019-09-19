@@ -43,10 +43,36 @@
       border: none !important;
     }
 }
+
+.video-description {
+
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.2rem;
+
+    .video-description-title {
+      font-weight: 400;
+      font-size: 19px;
+    }
+    .video-description-author {
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .video-description-views {
+      font-size: 14px;
+      color: #6D6D6D;
+    }
+    .video-description-timestamp {
+      font-size: 13px;
+      color: #757D85;
+    }
+}
+
 .video-suggestion-card {
     width: 100%;
     height: 110px;
     margin-bottom: 0.2rem;
+    overflow: hidden;
     a {
       display: flex;
       .video-suggestion-pic {
@@ -58,6 +84,7 @@
       .video-suggestion-body {
         padding-left: 1rem;
         line-height: 10px;
+        overflow: hidden;
         .video-suggestion-title {
           font-size: 14px;
           font-weight: 500;
