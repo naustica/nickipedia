@@ -47,7 +47,7 @@ class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolea
   render() {
     return (
       <div className="container" style={{padding: "2rem"}}>
-        <h3 style={{paddingBottom: "2rem"}}>settings</h3>
+        <h3 style={{paddingBottom: "2rem", fontSize: "22px", fontWeight: 500}}>settings</h3>
         <div className="row">
         <Tabs>
           <div className="col-3">
@@ -58,7 +58,7 @@ class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolea
           </div>
           <div className="col-9">
           <TabPanel>
-            <h3 style={{paddingBottom: "2rem"}}>account</h3>
+            <h3 style={{paddingBottom: "2rem", fontSize: "20px", fontWeight: 500}}>account</h3>
             <div className="container">
               <div className="col-8">
                 <p>
@@ -76,13 +76,13 @@ class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolea
                 </div>
               </div>
               <div className="col-4">
-                <p style={{fontWeight: 600}}>profil picture</p>
+                <p style={{fontWeight: 500}}>profil picture</p>
                 <img src="media/default/default_pic_a.jpg" id="img-profil-settings" />
               </div>
             </div>
           </TabPanel>
           <TabPanel>
-            <h3 style={{paddingBottom: "2rem"}}>advanced settings</h3>
+            <h3 style={{paddingBottom: "2rem", fontSize: "20px", fontWeight: 500}}>advanced settings</h3>
             <div className="container">
               <div className="row">
                 <div className="col-3">
