@@ -60,9 +60,11 @@ html {
     position: relative;
     min-height: 101%;
     font-size: 14px;
+    line-height: 16px;
 }
 body {
-    background-color: #F9F9FA;
+    //background-color: #F9F9FA;
+    background-color: #F9F9F9;
     margin-bottom: 1rem;
     font-family: 'Roboto';
     //font-family: 'Gamja Flower'
@@ -79,8 +81,8 @@ body {
 }
 #img-profil {
     border-radius: 50%;
-    height: 50px;
-    width: 50px;
+    height: 45px;
+    width: 45px;
 }
 #img-profil-settings {
     border-radius: 5%;
