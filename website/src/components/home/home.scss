@@ -8,6 +8,7 @@
     border: none;
     margin-top: 0.5rem;
     h3 {
+      font-size: 18px;
       font-weight: 500;
     }
     ul {
@@ -21,8 +22,9 @@
       margin-left: 0 - 1.25rem;
       margin-right: 0 - 1.25rem;
       padding-left: 1.25rem;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 400;
+      letter-spacing: 0.3px;
     }
     li:hover {
       background-color: #E8E7E7;
@@ -34,7 +36,8 @@
     border: none;
     margin-top: 0.5rem;
     h4 {
-      font-weight: 500
+      font-weight: 500;
+      font-size: 18px;
     }
     ul {
       list-style-type: none;
@@ -47,7 +50,7 @@
       margin-left: 0 - 1.25rem;
       margin-right: 0 - 1.25rem;
       padding-left: 1.25rem;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 400;
     }
     li:hover {
@@ -56,59 +59,19 @@
 }
 #front-page-suggestions {
     border: none;
-    height: 230px;
+    height: 200px;
     width: 100%;
     margin-bottom: 2rem;
+    line-height: 16px;
+    letter-spacing: 0.2px;
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.01);
     }
 }
-.frontpage-tabs {
-    width: 100%;
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
-    ul {
-      list-style-type: none;
-      text-align: center;
-    }
-    li {
-      font-size: 16px;
-      font-weight: 500;
-      display: inline;
-      color: black;
-      padding: 0.4rem;
-      border-radius: 5px;
-      background-color: #FEE08A;
-      border: 1.3px solid #505458;
-      box-shadow: 3px 3px #F3EF95;
-      margin: 1rem;
-    }
-    li:hover {
-      color: black;
-      background-color: #F3EF95;
-      box-shadow: 3px 3px #FEE08A;
-      border: 1.3px solid #505458;
-    }
-}
-.frontpage-suggestions-h {
-    width: 30%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+.frontpage-suggestions-header {
+    padding: 1rem;
+    padding-left: 0.7rem;
     font-size: 16px;
     font-weight: 500;
-    color: black;
-    margin-bottom: 2rem;
-    padding: 0.4rem;
-    border-radius: 5px;
-    background-color: #D5DCFE;
-    border: 1.3px solid #6871F0;
-    box-shadow: 3px 3px #6871F0;
-}
-.frontpage-suggestions-h:hover {
-    color: white;
-    background-color: #6871F0;
-    border: 1.3px solid #D5DCFE;
-    box-shadow: 3px 3px #D5DCFE;
-    cursor: pointer;
+    line-height: 20px;
 }

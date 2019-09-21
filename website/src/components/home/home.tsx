@@ -71,19 +71,11 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
             </div>
           </div>
           <div className="col-10">
-          <div className="frontpage-tabs">
-            <ul>
-              <Link to={"/"}><li style={style}>feed</li></Link>
-              <Link to={"/"}><li style={style}>recommended</li></Link>
-              <Link to={"/"}><li style={style}>classics</li></Link>
-            </ul>
-          </div>
+          <h2 className="frontpage-suggestions-header">Recommended</h2>
             <div className="row">
                 {this.renderCards(0, 8)}
             </div>
-            <div style={{width: "100%", padding: "1rem", textAlign: "center"}}>
-              <Link to="/"><h2 className="frontpage-suggestions-h" style={style}>suggestions</h2></Link>
-            </div>
+            <h2 className="frontpage-suggestions-header" style={style}>Suggestions</h2>
             <div className="row">
               {this.renderCards(8, 16)}
             </div>
