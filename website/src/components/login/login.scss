@@ -1,15 +1,91 @@
-#login-container {
-    width: 40%;
+.container-login {
     position: absolute;
-    top: 40%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-}
-.login-info {
-    position: fixed;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    margin-top: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    .login-card {
+      width: 380px;
+      max-width: 380px;
+      border: 1px solid black;
+      border-radius: 10px;
+      padding: 1rem;
+      height: 500px;
+      background-color: transparent;
+
+      @media(max-width: 600px) {
+        height: 450px;
+      }
+
+      .login-card-body {
+        text-align: center;
+
+        .login-card-title {
+          font-size: 24px;
+          font-weight: 500;
+          line-height: 20px;
+          padding: 25px;
+          padding-top: 15%;
+        }
+        form {
+
+          width: 90%;
+          margin: auto;
+
+          .login-button {
+            -webkit-appearance: none;
+            background-color: #F58F8E;
+            border-radius: 5px;
+            color: white;
+            width: 85px;
+            height: 40px;
+            font-size: 15px;
+            font-weight: 400;
+            font-family: Helvetica;
+            line-height: 20px;
+            margin: 1rem;
+            overflow: hidden;
+            &:active, &:focus {
+              outline: none;
+            }
+          }
+
+          .login-form-group {
+            padding: 20px;
+            position: relative;
+
+            .login-form-input {
+              border: none;
+              background-color: transparent;
+              border-bottom: 2px solid black;
+              width: 100%;
+              outline: none;
+              height: 40px;
+              padding: 1rem;
+              font-size: 15px;
+              color: black;
+              &:focus {
+                outline: none;
+                border-bottom: 2px solid #F58F8E;
+                transition: border-bottom 0.5s;
+              }
+              &::-webkit-input-placeholder {
+                font-weight: 400;
+                line-height: 20px;
+                font-size: 15px;
+                font-family: 'Roboto';
+              }
+            }
+
+          }
+        }
+      }
+
+    }
+
 }

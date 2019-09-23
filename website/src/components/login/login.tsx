@@ -30,8 +30,8 @@ class Login extends Component<{history:any}, { username?: string, password?: str
     }
     return true
   }
-  submitForm(event:React.FormEvent<HTMLFormElement>): any {
-    var form = event.target as HTMLFormElement;
+  submitForm(event: any): any {
+    //var form = event.target as HTMLFormElement;
     event.preventDefault();
     if (this.validateForm()) {
       this.setState({loading: true})
@@ -44,7 +44,7 @@ class Login extends Component<{history:any}, { username?: string, password?: str
         .then((data) => {
           if (data.access_token === undefined) {
             this.setState({loading: false, error: '*username or password not correct'})
-            form.reset();
+            //form.reset();
           } else {
             this.setState({access_token: data.access_token})
             localStorage.setItem('access_token', this.state.access_token)
@@ -59,27 +59,30 @@ class Login extends Component<{history:any}, { username?: string, password?: str
       }
   }
   render() {
-    const formBorderColor = this.state.error != '' ? {borderColor: 'red', backgroundColor: "#F5F5F5"} : {borderColor: 'black', backgroundColor: "#F5F5F5"}
+    const formBorderColor = this.state.error != '' ? {borderColor: 'red'} : {}
     return (
-      <div className="container" id="login-container" style={{padding: "2rem"}}>
-        <div className="card" style={{padding: "1.5rem", opacity: 0.95, border: "1px solid #505458", backgroundColor: "#FDF9F3"}}>
-          <div className="card-body">
-            <h5 className="card-title" style={{textAlign: "center", padding: "2rem"}}>login</h5>
-            <div style={{textAlign: "center", color: "red", padding: "1rem"}}>
+      <div className="container-login">
+        <div className="login-card">
+          <div className="login-card-body">
+            <h1 className="login-card-title">Login</h1>
+            <div className="login-card-error">
               {this.state.error}
             </div>
             <form onSubmit={this.submitForm}>
-              <div className="form-group input-group-lg" style={{padding: "0.8rem"}}>
-                <input className="form-control from-control-lg" style={formBorderColor} type="text" name="username" autoFocus value={this.state.username} onChange={this.onChange} placeholder="username"/>
+              <div className="login-form-group">
+                <input className="login-form-input" style={formBorderColor} type="text" name="username" autoFocus value={this.state.username} onChange={this.onChange} placeholder="Username"/>
               </div>
-              <div className="form-group input-group-lg" style={{padding: "0.8rem"}}>
-                <input className="form-control from-control-lg" style={formBorderColor} type="password" name="password" value={this.state.password} onChange={this.onChange} placeholder="password"/>
+              <div className="login-form-group">
+                <input className="login-form-input" style={formBorderColor} type="password" name="password" value={this.state.password} onChange={this.onChange} placeholder="Password"/>
               </div>
-              <div className="form-group input-group-lg" style={{textAlign: "center", padding: "2rem"}}>
-                <Link to="/register" style={{fontSize: "16px"}}>dont have an account?</Link>
-              </div>
+              <button type="button" className="login-button" onClick={this.submitForm}>Login</button>
               <button type="submit" style={{display: "none"}}></button>
-              <Loading loading={this.state.loading}/>
+              <div className="login-form-group" style={{fontSize: "16px"}}>
+                Dont have an account? <Link to="/register" style={{fontSize: "16px", color: "#1873E8"}}>Sign up</Link>
+              </div>
+              <div className="login-card-loading">
+                <Loading loading={this.state.loading}/>
+              </div>
             </form>
           </div>
         </div>
