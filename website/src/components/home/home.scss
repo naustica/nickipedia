@@ -1,60 +1,57 @@
 #home-container {
     padding-top: 1rem;
     width: 100%;
-}
-#trends-card {
-    background-color: transparent;
-    width: 100%;
-    border: none;
-    margin-top: 0.5rem;
-    h3 {
-      font-size: 18px;
-      font-weight: 500;
-    }
-    ul {
-      list-style-type: none;
-      text-align: left;
-      margin: 0;
-      padding: 0;
-      padding-top: 1rem;
-    }
-    li {
-      margin-left: 0 - 1.25rem;
-      margin-right: 0 - 1.25rem;
-      padding-left: 1.25rem;
-      font-size: 15px;
-      font-weight: 400;
-      letter-spacing: 0.3px;
-    }
-    li:hover {
-      background-color: #E8E7E7;
-    }
-}
-#links-card {
-    background-color: transparent;
-    width: 100%;
-    border: none;
-    margin-top: 0.5rem;
-    h4 {
-      font-weight: 500;
-      font-size: 18px;
-    }
-    ul {
-      list-style-type: none;
-      text-align: left;
-      margin: 0;
-      padding: 0;
-      padding-top: 1rem;
-    }
-    li {
-      margin-left: 0 - 1.25rem;
-      margin-right: 0 - 1.25rem;
-      padding-left: 1.25rem;
-      font-size: 15px;
-      font-weight: 400;
-    }
-    li:hover {
-      background-color: #E8E7E7;
+
+    .navbar-tabs {
+
+      .navbar-side {
+
+        height: 100%;
+        width: 100%;
+        text-align: center;
+
+        .navbar-tablist {
+
+            margin: 0;
+            padding: 0;
+
+            @media (max-width: 800px) {
+              display: flex;
+              width: 100%;
+              justify-content: center;
+              align-items: center;
+            }
+
+            .navbar-tab {
+
+              list-style: none;
+              cursor: pointer;
+              outline: none;
+
+              .navbar-side-logo {
+
+                width: 100%;
+                display: block;
+                padding: 1rem;
+                color: #606060;
+
+                h1 {
+                  padding-top: 0.5rem;
+                  font-size: 10px;
+                  font-weight: 400;
+                }
+              }
+
+              &--selected {
+                background-color: transparent;
+                .navbar-side-logo{
+                  color: red;
+                }
+              }
+
+            }
+          }
+        }
     }
 }
 #front-page-suggestions {
@@ -64,6 +61,7 @@
     margin-bottom: 2rem;
     line-height: 16px;
     letter-spacing: 0.2px;
+    max-width: 210px;
     &:hover {
       transform: scale(1.01);
     }

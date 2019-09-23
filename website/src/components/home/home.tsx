@@ -1,10 +1,14 @@
-import React, {Component} from 'react';
-import {withRouter, Link} from 'react-router-dom';
-import {connect} from 'react-redux';
+import React, {Component} from 'react'
+import {withRouter, Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import { IoMdHome } from 'react-icons/io'
+import { GoFileDirectory, GoFlame } from 'react-icons/go'
+import { IconContext } from "react-icons"
+import {Tab, Tabs, TabList, TabPanel} from 'react-tabs'
 
 import './home.scss'
 
-import Card from './card/card';
+import Card from './card/card'
 
 import {fetchVideos, fetchVideoStart, getVideoSuggestions, getVideoSuggestionsStart} from './../../store/actions/videoActions';
 
@@ -36,42 +40,40 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
     return (
       <div className="container" id="home-container">
         <div className="row">
-          <div className="col-2">
-            <div className="card" id="trends-card">
-              <div className="card-body" style={style}>
-                <h3 className="card-title">trends</h3>
-                <ul>
-                  <Link to={"/"} style={style}><li>#kek</li></Link>
-                  <Link to={"/"} style={style}><li>#lel</li></Link>
-                  <Link to={"/"} style={style}><li>#lul</li></Link>
-                  <Link to={"/"} style={style}><li>#kieling</li></Link>
-                  <Link to={"/"} style={style}><li>#marcel davis</li></Link>
-                  <Link to={"/"} style={style}><li>#bachenbenno</li></Link>
-                  <Link to={"/"} style={style}><li>#fistus</li></Link>
-                  <Link to={"/"} style={style}><li>#saas</li></Link>
-                  <Link to={"/"} style={style}><li>#pooper</li></Link>
-                  <Link to={"/"} style={style}><li>#laal</li></Link>
-                </ul>
+          <Tabs className="navbar-tabs" selectedTabClassName="navbar-tab--selected">
+          <div className="col-1">
+            <div className="navbar-side">
+            <TabList className="navbar-tablist">
+              <Tab className="navbar-tab">
+                <div className="navbar-side-logo">
+                  <IconContext.Provider value={{size: "24px"}}>
+                    <IoMdHome />
+                  </IconContext.Provider>
+                  <h1>Home</h1>
               </div>
-            </div>
-            <div className="card" id="links-card">
-              <div className="card-body" style={style}>
-                <h4 className="card-title">key links</h4>
-                <ul>
-                  <Link to={"/"} style={style}><li>about</li></Link>
-                  <Link to={"/"} style={style}><li>contact</li></Link>
-                  <Link to={"/"} style={style}><li>faq</li></Link>
-                  <Link to={"/"} style={style}><li>github</li></Link>
-                  <Link to={"/"} style={style}><li>twitter</li></Link>
-                  <Link to={"/"} style={style}><li>privacy policy</li></Link>
-                  <Link to={"/"} style={style}><li>terms of use</li></Link>
-                  <Link to={"/"} style={style}><li>code of conduct</li></Link>
-                </ul>
+              </Tab>
+              <Tab className="navbar-tab">
+                <div className="navbar-side-logo">
+                  <IconContext.Provider value={{size: "24px"}}>
+                    <GoFlame />
+                  </IconContext.Provider>
+                  <h1>Trending</h1>
               </div>
+              </Tab>
+              <Tab className="navbar-tab">
+                <div className="navbar-side-logo">
+                  <IconContext.Provider value={{size: "24px"}}>
+                    <GoFileDirectory />
+                  </IconContext.Provider>
+                  <h1>Library</h1>
+              </div>
+              </Tab>
+            </TabList>
             </div>
           </div>
-          <div className="col-10">
-          <h2 className="frontpage-suggestions-header">Recommended</h2>
+          <div className="col-11" style={{paddingLeft: "2rem"}}>
+          <TabPanel>
+          <h2 className="frontpage-suggestions-header" style={style}>Recommended</h2>
             <div className="row">
                 {this.renderCards(0, 8)}
             </div>
@@ -79,7 +81,9 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
             <div className="row">
               {this.renderCards(8, 16)}
             </div>
+            </TabPanel>
             </div>
+            </Tabs>
           </div>
         </div>
     )
