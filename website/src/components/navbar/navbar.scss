@@ -38,6 +38,12 @@
           font-family: Helvetica;
           letter-spacing: -0.6px;
           margin-right: 2rem;
+          padding-bottom: 4px;
+          overflow: visible;
+          white-space: nowrap;
+          @media(max-width: 800px) {
+            padding-left: 1rem;
+          }
         }
 
         .navbar-user {
@@ -53,26 +59,19 @@
           }
         }
         .navbar-messages {
-          #btn-message {
+          .message-button {
               color: black;
               overflow: hidden;
               background-color: transparent;
-              transition-duration: 0.4s;
-              transition-property: transform;
               border: none;
+              outline: none;
               &:focus, &:active, &:hover {
-                background-color: transparent !important;
-                box-shadow: (none) !important;
-                color: black !important;
-                border: none !important;
-              }
-              &:hover {
-                //transform: rotate(45deg);
+
               }
           }
         }
         .navbar-upload {
-          #btn-upload {
+          .upload-button {
               color: black;
               padding-left: 0.65rem;
               padding-right: 0.65rem;
@@ -83,61 +82,73 @@
               letter-spacing: -0.5px;
               font-family: Helvetica;
               border-radius: 3px;
-              outline: none !important;
-              //background-color: #66E2D5 !important;
+              outline: none;
+              overflow: hidden;
+              height: 26px;
               background-color: #FEE08A;
-              border: 2px solid black !important;
+              border: 2px solid black;
+              white-space: nowrap;
               &:focus, &:active, &:hover {
-                // background-color: #7ee7dc !important;
                 background-color: #F3EF95;
-                box-shadow: (none) !important;
-                color: black !important;
               }
             }
         }
         .navbar-search {
-          width: 50%;
-          #form-control-search {
-              border: none;
-              width: 100%;
-              outline: none;
-              background-color: #E8E7E7;
-              border-bottom-right-radius: 5px;
-              border-bottom-left-radius: 5px;
-          }
-          #form-control-search:focus {
-              outline: none;
-          }
-          input#form-control-search {
-              border-top-right-radius: 5px !important;
-              border-top-left-radius: 5px !important;
-              border-bottom-right-radius: 5px;
-              border-bottom-left-radius: 5px;
-          }
-          .search-suggestions {
-              width: 100%;
-              border: none;
-              border-bottom-left-radius: 5px !important;
-              border-bottom-right-radius: 5px !important;
-              background-color: #F5F5F5;
-              list-style-type: none;
-              text-align: left;
-              margin: 0;
-              padding: 0;
-              overflow: hidden;
+          width: 55%;
 
+          @media (min-width: 1200px) {
+            width: 65%;
           }
-          .search-suggestions:before {
-              content: "";
+          @media (min-width: 1500px) {
+            width: 70%;
           }
-          .search-suggestions li {
-              padding-left: 1.5rem;
-              padding-top: 1rem;
-              padding-bottom: 1rem;
-          }
-          .search-suggestions li:hover {
-              background: #EEEEEE;
-              cursor: pointer;
+
+          form {
+
+            position: fixed;
+            width: 40%;
+            top: 0.6rem;
+            left: 30%;
+            max-width: 600px;
+
+            .navbar-form-input {
+                border: none;
+                width: 100%;
+                outline: none;
+                background-color: #E8E7E7;
+                border-radius: 5px;
+                height: 35px;
+                padding: 1rem;
+                font-size: 14px;
+                &:focus {
+                  outline: none;
+                }
+            }
+            .search-suggestions {
+                width: 100%;
+                border: none;
+                border-bottom-left-radius: 5px !important;
+                border-bottom-right-radius: 5px !important;
+                background-color: #F5F5F5;
+                list-style-type: none;
+                text-align: left;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+
+            }
+            .search-suggestions:before {
+                content: "";
+            }
+            .search-suggestions li {
+                padding-left: 1rem;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+            .search-suggestions li:hover {
+                background: #EEEEEE;
+                cursor: pointer;
+            }
           }
         }
     }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { IoMdNotificationsOutline } from 'react-icons/io'
+import { GoDeviceCameraVideo } from 'react-icons/go'
 import { IconContext } from "react-icons"
 
 import './navbar.scss';
@@ -87,15 +88,20 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
     const form = event.target as HTMLFormElement;
     const term = this.state.term
     event.preventDefault();
-    fetch('api/search?term=' + term)
-      .then(() => {
-        this.setState({term: '', suggestions: []})
-        this.props.history.push('/result/' + term)
-      })
-      .catch(error => {
-        console.log(error)
-        form.reset();
-      })
+    if (term === '') {
+      return null
+    }
+    else {
+      fetch('api/search?term=' + term)
+        .then(() => {
+          this.setState({term: '', suggestions: []})
+          this.props.history.push('/result/' + term)
+        })
+        .catch(error => {
+          console.log(error)
+          form.reset();
+        })
+    }
   }
   onClickToggleMenu(event:any): any {
     const toggle = this.state.toggle
@@ -121,21 +127,28 @@ class Navbar extends Component<{history: any}, {toggle: boolean, term: string, o
             <div className="navbar-menu-line"></div>
           </div>
           <div className="navbar-logo">
-            <Link to='/'>nickipedia</Link>
+            <Link to='/'>
+              <div>
+              <IconContext.Provider value={{size: "21px"}}>
+                <GoDeviceCameraVideo style={{color: "red", paddingRight: "0.1rem"}}/>
+              </IconContext.Provider>
+              nickipedia
+              </div>
+            </Link>
           </div>
           <div className="navbar-search">
-            <form method="POST" onSubmit={this.submitForm} style={{position: "fixed", width: "50%", top: "0.6rem", left: "auto", right: "auto"}}>
-              <div className="form-group input-group">
-                <input className="form-control from-control" id="form-control-search" style={searchStyle} type="text" name="search" value={this.state.term} onChange={this.getTerm} autoFocus placeholder="search"/>
+            <form method="POST" onSubmit={this.submitForm}>
+              <div className="navbar-form-group">
+                <input className="navbar-form-input" style={searchStyle} type="text" name="search" value={this.state.term} onChange={this.getTerm} autoFocus placeholder="search"/>
                 {this.renderSuggestions()}
               </div>
             </form>
           </div>
           <div className="navbar-upload">
-            <button type="button" className="btn" id="btn-upload" onClick={this.onClickUpload}>UPLOAD A VIDEO</button>
+            <button type="button" className="upload-button" onClick={this.onClickUpload}>UPLOAD A VIDEO</button>
           </div>
           <div className="navbar-messages">
-            <button type="button" className="btn" id="btn-message" name="message">
+            <button type="button" className="message-button" name="message">
               <IconContext.Provider value={{size: "26px"}}>
                 <IoMdNotificationsOutline style={{zIndex: 1}}/>
               </IconContext.Provider>
