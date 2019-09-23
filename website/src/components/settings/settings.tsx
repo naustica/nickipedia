@@ -47,7 +47,7 @@ class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolea
   render() {
     return (
       <div className="container" style={{padding: "2rem"}}>
-        <h3 style={{paddingBottom: "2rem", fontSize: "22px", fontWeight: 500}}>settings</h3>
+        <h3 style={{paddingBottom: "2rem", fontSize: "20px", fontWeight: 500}}>settings</h3>
         <div className="row">
         <Tabs className="settings-tabs" selectedTabClassName="settings-tab--selected">
           <div className="col-3">
