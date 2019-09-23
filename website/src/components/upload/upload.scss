@@ -1,1 +1,142 @@
+.upload-form {
 
+  width: 100%;
+  padding-top: 1rem;
+  padding-left: 2rem;
+
+  .upload-form-header {
+    h1 {
+      font-size: 16px;
+      font-weight: 500;
+      text-align: left;
+      font-family: Helvetica;
+      padding: 1rem;
+      line-height: 20px;
+    }
+  }
+
+  .upload-form-body {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    height: 400px;
+    border-radius: 3px;
+    margin: auto;
+
+    .upload-form-link {
+
+      width: 100%;
+      text-align: center;
+      padding: 1rem;
+      cursor: pointer;
+      margin: 2rem;
+      border-radius: 3px;
+      background-color: #F5F5F5;
+
+
+      h1 {
+        font-size: 15px;
+        font-weight: 400;
+        padding: 1rem;
+        outline: none;
+      }
+
+      #btn-upload-link {
+        color: black;
+        overflow: hidden;
+        background-color: transparent;
+        border: none;
+        &:focus, &:active, &:hover {
+          background-color: transparent !important;
+          box-shadow: (none) !important;
+          color: black !important;
+          border: none !important;
+        }
+      }
+
+      &:hover {
+        #btn-upload-link {
+          color: grey !important;
+        }
+      }
+
+    }
+
+    .upload-form-file {
+
+      width: 100%;
+      text-align: center;
+      padding: 1rem;
+      cursor: pointer;
+      margin: 2rem;
+      background-color: #F5F5F5;
+
+      h1 {
+        font-size: 15px;
+        font-weight: 400;
+        padding: 1rem;
+        outline: none;
+      }
+
+      #btn-upload-file {
+        color: black;
+        overflow: hidden;
+        background-color: transparent;
+        border: none;
+        &:focus, &:active, &:hover {
+          background-color: transparent !important;
+          box-shadow: (none) !important;
+          color: black !important;
+          border: none !important;
+        }
+      }
+
+      &:hover {
+        #btn-upload-file {
+          color: grey !important;
+        }
+      }
+
+    }
+
+    form {
+
+      .upload-form-error {
+        padding: 2rem;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        color: red;
+      }
+
+      .form-submit {
+
+        text-align: center;
+        padding: 2rem;
+        display: flex;
+        justify-content: space-around;
+
+        .submit-button {
+          -webkit-appearance: none;
+          height: 40px;
+          width: 100px;
+          border: 2px solid black;
+          border-radius: 2px;
+          color: #606060;
+          background-color: #E3E3E3;
+          text-align: center;
+          overflow: hidden;
+          background-color: transparent;
+          outline: none;
+          &:focus, &:active {
+            outline: none;
+          }
+        }
+
+      }
+    }
+
+  }
+}

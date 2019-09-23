@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
-import bsCustomFileInput from 'bs-custom-file-input';
+import React, {Component} from 'react'
+import { IoIosLink, IoIosCloudUpload } from 'react-icons/io'
+import { IconContext } from "react-icons"
 
 import './upload.scss'
 
-import Loading from './../loading/loading';
+import Loading from './../loading/loading'
 
 
-class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?: string, uploadStatus?: boolean, title?: string, description?: string, id?: number}> {
+class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?: string, uploadStatus?: boolean, title?: string, description?: string, id?: number, step?: number, uploadVia?: string}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -17,23 +18,32 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
       id: 0,
       title: '',
       description: '',
+      step: 1,
+      uploadVia: ''
     }
-    this.onChange = this.onChange.bind(this)
     this.submitUploadForm = this.submitUploadForm.bind(this)
-    this.validateForm = this.validateForm.bind(this)
     this.submitRevisionForm = this.submitRevisionForm.bind(this)
   }
-  componentDidMount() {
-    bsCustomFileInput.init()
-  }
-  onChange(event:React.ChangeEvent<HTMLInputElement>): void {
+
+  onChange = (event:React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({[event.target.name]: event.target.value})
   }
-  validateForm() {
+
+  nextStep = () => {
+    const { step } = this.state
+    this.setState({step: step + 1})
+  }
+
+  prevStep = () => {
+    const { step } = this.state
+    this.setState({step: step - 1, urlMessage: '', url: '', loading: false})
+  }
+
+  validateForm = () => {
     return true
   }
-  submitUploadForm(event:React.FormEvent<HTMLFormElement>): any {
-    var form = event.target as HTMLFormElement;
+  submitUploadForm(event: any): any {
+    //var form = event.target as HTMLFormElement;
     const access_token = localStorage.getItem('access_token')
     event.preventDefault();
     if (this.validateForm()) {
@@ -51,7 +61,8 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
         .then(([status, data]) => {
           if (status === 201) {
             this.setState({loading: false, urlMessage: 'video successfully uploaded', title: data.title, description: data.text, id: data.id, uploadStatus: true})
-            form.reset()
+            this.nextStep()
+            //form.reset()
           }
           else {
             this.setState({loading: false, urlMessage: 'api call error'})
@@ -63,8 +74,8 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
           })
       }
   }
-  submitRevisionForm(event:React.FormEvent<HTMLFormElement>): any {
-    var form = event.target as HTMLFormElement;
+  submitRevisionForm(event: any): any {
+    //var form = event.target as HTMLFormElement;
     const access_token = sessionStorage.getItem('access_token')
     event.preventDefault();
     if (this.validateForm()) {
@@ -84,8 +95,14 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
         }))
         .then(([status, data]) => {
           if (status === 201) {
-            this.setState({loading: false, uploadStatus: false, urlMessage: 'video successfully updated', url: ''})
-            form.reset()
+            this.setState({
+                loading: false,
+                uploadStatus: false,
+                urlMessage: 'video successfully updated',
+                url: '',
+                step: 1
+              })
+            //form.reset()
           }
           else {
             this.setState({loading: false, urlMessage: 'api call error'})
@@ -100,43 +117,81 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
   }
 
   render() {
-    const upload = (
-      <div className="card-body">
-        <h5 className="card-title">upload</h5>
-        <div style={{padding: "1rem", fontSize: "18px"}}>{this.state.urlMessage}</div>
-        <p className="card-text">upload a video on nickipedia.</p>
-        <form onSubmit={this.submitUploadForm}>
-          <div className="form-group input-group-lg" style={{padding: "3rem"}}>
-            <input className="form-control from-control-lg" type="text" name="url" style={{border: "1px solid #505458"}} autoFocus value={this.state.url} onChange={this.onChange} placeholder="url"/>
+    const { step } = this.state
+
+    switch (step) {
+      case 1:
+        return (
+          <div className="upload-form">
+            <div className="upload-form-header">
+              <h1>UPLOAD A VIDEO</h1>
+            </div>
+            <div className="upload-form-body">
+              <div className="upload-form-link" onClick={this.nextStep}>
+                <button type="button" className="btn" id="btn-upload-link">
+                  <IconContext.Provider value={{size: "32px"}}>
+                    <IoIosLink />
+                  </IconContext.Provider>
+                </button>
+                <h1>UPLOAD VIA LINK</h1>
+              </div>
+              <div className="upload-form-file" onClick={this.nextStep}>
+                <button type="button" className="btn" id="btn-upload-file">
+                  <IconContext.Provider value={{size: "32px"}}>
+                    <IoIosCloudUpload />
+                  </IconContext.Provider>
+                </button>
+                <h1>UPLOAD VIA FILE</h1>
+              </div>
+            </div>
           </div>
-          <button type="submit" style={{display: "none"}}></button>
-          <Loading loading={this.state.loading}/>
-        </form>
-      </div>
-    )
-    const revision = (
-      <div className="card-body">
-        <h5 className="card-title">upload</h5>
-        <div style={{padding: "2rem", fontSize: "18px"}}>{this.state.urlMessage}</div>
-        <p className="card-text" style={{paddingTop: "2rem"}}>are all fields correct?</p>
-        <form onSubmit={this.submitRevisionForm}>
-          <div className="form-group input-group-lg" style={{padding: "3rem"}}>
-            <input className="form-control from-control-lg" type="text" name="title" style={{border: "1px solid #505458"}} autoFocus value={this.state.title} onChange={this.onChange} placeholder="title"/>
+        )
+      case 2:
+        return (
+          <div className="upload-form">
+            <div className="upload-form-header">
+              <h1>UPLOAD A VIDEO - URL</h1>
+            </div>
+            <div className="upload-form-body">
+              <form style={{width: "90%"}}>
+                <div className="upload-form-error">{this.state.urlMessage}</div>
+                <div className="form-group input-group-lg">
+                  <input className="form-control from-control-lg" type="text" name="url" style={{border: "2px solid #505458"}} autoFocus value={this.state.url} onChange={this.onChange} placeholder="url"/>
+                </div>
+                <div className="form-submit">
+                  <button type="button" className="submit-button" onClick={this.prevStep}>GO BACK</button>
+                  <button type="button" className="submit-button" onClick={this.submitUploadForm}>CONTINUE</button>
+                </div>
+                <Loading loading={this.state.loading}/>
+              </form>
+            </div>
           </div>
-          <div className="form-group input-group-lg" style={{padding: "3rem"}}>
-            <input className="form-control from-control-lg" type="text" name="description" style={{border: "1px solid #505458"}} value={this.state.description} onChange={this.onChange} placeholder="description"/>
+        )
+      case 3:
+        return (
+          <div className="upload-form">
+            <div className="upload-form-header">
+              <h1>UPLOAD A VIDEO - Update</h1>
+            </div>
+            <div className="upload-form-body">
+              <form style={{width: "90%"}}>
+                <div className="upload-form-error">{this.state.urlMessage}</div>
+                <div className="form-group input-group-lg" style={{padding: "3rem"}}>
+                  <input className="form-control from-control-lg" type="text" name="title" style={{border: "1px solid #505458"}} autoFocus value={this.state.title} onChange={this.onChange} placeholder="title"/>
+                </div>
+                <div className="form-group input-group-lg" style={{padding: "3rem"}}>
+                  <input className="form-control from-control-lg" type="text" name="description" style={{border: "1px solid #505458"}} value={this.state.description} onChange={this.onChange} placeholder="description"/>
+                </div>
+                <div className="form-submit">
+                  <button type="button" className="submit-button" onClick={this.prevStep}>GO BACK</button>
+                  <button type="button" className="submit-button" onClick={this.submitRevisionForm}>DONE</button>
+                </div>
+                <Loading loading={this.state.loading}/>
+              </form>
+            </div>
           </div>
-          <button type="submit" style={{display: "none"}}></button>
-          <Loading loading={this.state.loading}/>
-        </form>
-      </div>
-    )
-    const formToRender = this.state.uploadStatus === false ? upload : revision
-    return (
-      <div className="card" style={{textAlign: "center", width: "80%", marginTop: "1.5rem", marginLeft: "auto", marginRight: "auto", border: "none"}}>
-        {formToRender}
-      </div>
-    )
+        )
+    }
   }
 }
 
