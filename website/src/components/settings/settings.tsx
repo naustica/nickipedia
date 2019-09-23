@@ -49,15 +49,15 @@ class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolea
       <div className="container" style={{padding: "2rem"}}>
         <h3 style={{paddingBottom: "2rem", fontSize: "22px", fontWeight: 500}}>settings</h3>
         <div className="row">
-        <Tabs>
+        <Tabs className="settings-tabs" selectedTabClassName="settings-tab--selected">
           <div className="col-3">
-          <TabList>
-            <Tab>account</Tab>
-            <Tab>advanced settings</Tab>
+          <TabList className="settings-tablist">
+            <Tab className="settings-tab">account</Tab>
+            <Tab className="settings-tab">advanced settings</Tab>
           </TabList>
           </div>
           <div className="col-9">
-          <TabPanel>
+          <TabPanel className="settings-tabpanel">
             <h3 style={{paddingBottom: "2rem", fontSize: "20px", fontWeight: 500}}>account</h3>
             <div className="container">
               <div className="col-8">
@@ -81,7 +81,7 @@ class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolea
               </div>
             </div>
           </TabPanel>
-          <TabPanel>
+          <TabPanel className="settings-tabpanel">
             <h3 style={{paddingBottom: "2rem", fontSize: "20px", fontWeight: 500}}>advanced settings</h3>
             <div className="container">
               <div className="row">
