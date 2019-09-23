@@ -53,18 +53,20 @@ class Card extends Component<{result: any, loading}, {maxLength: number, likes: 
   }
   render() {
     const checkLengthTitle = this.props.result.title.length > this.state.maxLength ? this.props.result.title.substring(0, this.state.maxLength) + '...' : this.props.result.title
-    const loadingState = this.props.loading ? (<div className="col-3"><div className="card" id="front-page-suggestions" style={{backgroundColor: "#E0DFDF"}}></div></div>) : (
+    const loadingState = this.props.loading ? (<div className="col-3"><div className="frontpage-suggestions-card" style={{backgroundColor: "#E0DFDF"}}></div></div>) : (
       <div className="col-3">
-      <div className="card" id="front-page-suggestions">
+      <div className="frontpage-suggestions-card">
         <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
-        <div style={{height: "100%", position: "absolute", margin: "0.1rem"}}>
-          <img className="card-img-top" src="media/default/background.jpg" style={{objectFit: "cover", height: "50%"}} alt="..." />
-          <div className="card-body" style={{borderTop: "1px solid #505458", padding: "0.1rem", paddingTop: "0.8rem"}}>
-            <p className="card-text" style={{textAlign: "left", fontSize: "14px", fontWeight: 500, position: "relative", margin: 0, height: "auto"}}>{checkLengthTitle}</p>
-            <p className="card-text" style={{textAlign: "left", fontSize: "13px", fontWeight: 400, color: "#6D6D6D", position: "relative", height: "auto", paddingTop: "0.5rem", marginBottom: 0}}>{this.props.result.author_id}</p>
-            <p className="card-text" style={{textAlign: "left", fontSize: "13px", fontWeight: 400, color: "#6D6D6D", position: "relative", height: "auto", paddingTop: "0.2rem"}}>{this.props.result.views + " views" + " • " + this.state.timestamp}</p>
+        <div className="frontpage-suggestions-card-img">
+          <img className="" src="media/default/background.jpg" alt="..." />
+        </div>
+        <div className="frontpage-suggestions-card-body">
+          <p className="frontpage-suggestions-card-title">{checkLengthTitle}</p>
+          <div className="frontpage-suggestions-card-info">
+            <p className="frontpage-suggestions-card-author">{this.props.result.author_id}</p>
+            <p className="frontpage-suggestions-card-views">{this.props.result.views + " views" + " • " + this.state.timestamp}</p>
           </div>
-          </div>
+        </div>
         </Link>
       </div>
       </div>
