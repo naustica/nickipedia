@@ -9,7 +9,7 @@ import store from './store/store';
 import Navbar from './components/navbar/navbar';
 import Home from './components/home/home';
 import Login from './components/login/login';
-import Register from './components/register/register';
+import Register from './components/login/register';
 import Results from './components/results/results';
 import Logout from './components/logout/logout';
 import Video from './components/video/video';
