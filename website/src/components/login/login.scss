@@ -10,36 +10,65 @@
     top: 0;
 
     .login-card {
-      width: 380px;
-      max-width: 380px;
-      border: 1px solid black;
-      border-radius: 10px;
-      padding: 1rem;
-      height: 500px;
-      background-color: transparent;
+      width: 350px;
+      max-width: 350px;
+      box-shadow: 0 0 3px black;
+      height: 450px;
+      background-color: #F5F5F5;
+      overflow: hidden;
 
       @media(max-width: 600px) {
         height: 450px;
+        width: 100%;
+      }
+      @media(max-width: 400px) {
+        height: 450px;
+        width: 300px;
       }
 
       .login-card-body {
+
         text-align: center;
+        width: 100%;
+        height: 100%;
+        animation: slide-right 0.4s;
+
+        @keyframes slide-right {
+          from {
+            margin-left: -100%;
+            width: 100%;
+          }
+          to {
+            margin-left: 0%;
+            width: 100%;
+          }
+        }
 
         .login-card-title {
+          text-align: left;
           font-size: 24px;
           font-weight: 500;
           line-height: 20px;
-          padding: 25px;
+          padding-left: 10%;
           padding-top: 15%;
+          padding-bottom: 5%;
         }
+
+        .login-card-error {
+          color: #E02736;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 16px;
+        }
+
         form {
 
-          width: 90%;
+          width: 80%;
           margin: auto;
 
           .login-button {
             -webkit-appearance: none;
-            background-color: #F58F8E;
+            background-color: #F06060;
             border-radius: 5px;
             color: white;
             width: 85px;
@@ -49,36 +78,95 @@
             font-family: Helvetica;
             line-height: 20px;
             margin: 1rem;
+            margin-top: 2rem;
             overflow: hidden;
             &:active, &:focus {
               outline: none;
             }
           }
 
+          .login-card-loading {
+            padding-top: 20px;
+          }
+
           .login-form-group {
-            padding: 20px;
             position: relative;
+            width: 100%;
+            padding-top: 20px;
+            overflow: hidden;
+
+            .login-form-error {
+              color: #E02736;
+              font-family: Helvetica;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 16px;
+              //text-align: left;
+              padding-left: 2%;
+            }
 
             .login-form-input {
               border: none;
               background-color: transparent;
-              border-bottom: 2px solid black;
+              //border-bottom: 2px solid black;
               width: 100%;
               outline: none;
-              height: 40px;
-              padding: 1rem;
+              height: 55px;
+              padding-top: 20px;
+              padding-left: 10px;
               font-size: 15px;
               color: black;
               &:focus {
                 outline: none;
-                border-bottom: 2px solid #F58F8E;
+                //border-bottom: 2px solid #F58F8E;
                 transition: border-bottom 0.5s;
+              }
+              &:focus + .login-label .login-content {
+                transform: translateY(-130%);
+                font-size: 14px;
+                color: #F06060;
+              }
+              &:focus + .login-label::after {
+                transform: translateX(0%);
               }
               &::-webkit-input-placeholder {
                 font-weight: 400;
                 line-height: 20px;
-                font-size: 15px;
+                font-size: 14px;
                 font-family: 'Roboto';
+              }
+            }
+
+            .login-label {
+              position: absolute;
+              bottom: -7px;
+              left: 0%;
+              width: 100%;
+              height: 100%;
+              font-size: 15px;
+              color: transparent;
+              font-weight: 400;
+              pointer-events: none;
+              border-bottom: 2px solid black;
+
+              &::after {
+                content: "";
+                position: absolute;
+                left: 0px;
+                bottom: -2px;
+                height: 100%;
+                width: 100%;
+                border-bottom: 3px solid #F06060;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+              }
+
+
+              .login-content {
+                position: absolute;
+                bottom: 7px;
+                left: 8px;
+                transition: all 0.3s ease;
               }
             }
 
