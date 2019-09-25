@@ -82,6 +82,10 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
               {this.renderCards(8, 16)}
             </div>
             </TabPanel>
+            <TabPanel>
+            </TabPanel>
+            <TabPanel>
+            </TabPanel>
             </div>
             </Tabs>
           </div>
