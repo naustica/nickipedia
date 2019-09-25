@@ -80,7 +80,7 @@ class Register extends Component<ReadOnly, WriteOnly> {
           }
         })
         .catch(error => {
-          this.setState({loading: false})
+          this.setState({loading: false, error: '*no database connection'})
           console.log(error)
           //form.reset();
         })

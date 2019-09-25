@@ -78,7 +78,7 @@ class Login extends Component<ReadOnly, WriteOnly> {
             this.props.history.push('/')
           }})
           .catch(error => {
-            this.setState({loading: false})
+            this.setState({loading: false, error: '*no database connection'})
             console.log(error)
           })
       }
