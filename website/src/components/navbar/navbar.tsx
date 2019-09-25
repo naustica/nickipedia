@@ -8,6 +8,10 @@ import './navbar.scss';
 
 
 class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleMessage: boolean, term: string, options: any, suggestions: Array<any>, loading: boolean}> {
+
+  messageToggler: any
+  settingsToggler: any
+
   constructor(props:any) {
     super(props)
     this.state = {
@@ -24,6 +28,15 @@ class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleM
     this.getTerm = this.getTerm.bind(this)
     this.submitForm = this.submitForm.bind(this)
   }
+
+  messageTogglerRef = (messageToggler: any) => {
+    this.messageToggler = messageToggler
+  }
+
+  settingsTogglerRef = (settingsToggler: any) => {
+    this.settingsToggler = settingsToggler
+  }
+
   componentDidMount() {
     window.addEventListener('click', this.onWindowClick);
     this.setState({loading: true})
@@ -114,16 +127,17 @@ class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleM
   onClickUpload(event:React.MouseEvent<HTMLButtonElement>): any {
     this.props.history.push('/upload')
   }
-  onWindowClick(event):any {
+  onWindowClick(event: { target: any; }):any {
+
+
     if (this.state.toggleSettings) {
-      if (event.target.className !== 'navbar-user' && event.target.className !== 'navbar-user-pic'
-        && event.target.className !== 'navbar-toggle-user-settings')
+      if (event.target !== this.settingsToggler && !this.settingsToggler.contains(event.target))
           {
             this.setState({toggleSettings: false})
           }
     }
     if (this.state.toggleMessage) {
-      if (event.target.className !== 'navbar-toggle-message' && event.target.tagName !== 'svg')
+      if (event.target !== this.messageToggler && !this.messageToggler.contains(event.target))
           {
             this.setState({toggleMessage: false})
           }
@@ -168,7 +182,7 @@ class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleM
               </IconContext.Provider>
             </button>
           </div>
-          <div className="navbar-messages">
+          <div className="navbar-messages" ref={this.messageTogglerRef}>
             <button type="button" className="message-button" name="message" onClick={this.onClickToggleNotifications}>
               <IconContext.Provider value={{size: "26px"}}>
                 <IoMdNotificationsOutline />
@@ -183,7 +197,7 @@ class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleM
               </div>
             </div>
           </div>
-          <div className="navbar-user">
+          <div className="navbar-user" ref={this.settingsTogglerRef}>
             <img src="media/default/default_pic_a.jpg" className="navbar-user-pic" onClick={this.onClickToggleSettings} />
             <div className="navbar-toggle-user-settings" style={toggleSettingsStyle}>
               <div className="navbar-toggle-user-info">
