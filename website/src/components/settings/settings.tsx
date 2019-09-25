@@ -47,42 +47,42 @@ class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolea
   render() {
     return (
       <div className="container" style={{padding: "2rem"}}>
-        <h3 style={{paddingBottom: "2rem", fontSize: "20px", fontWeight: 500}}>settings</h3>
+        <h3 style={{paddingBottom: "2rem", fontSize: "20px", fontWeight: 500}}>Settings</h3>
         <div className="row">
         <Tabs className="settings-tabs" selectedTabClassName="settings-tab--selected">
           <div className="col-3">
           <TabList className="settings-tablist">
-            <Tab className="settings-tab">account</Tab>
-            <Tab className="settings-tab">advanced settings</Tab>
+            <Tab className="settings-tab">Account</Tab>
+            <Tab className="settings-tab">Advanced settings</Tab>
           </TabList>
           </div>
           <div className="col-9">
           <TabPanel className="settings-tabpanel">
-            <h3 style={{paddingBottom: "2rem", fontSize: "20px", fontWeight: 500}}>account</h3>
+            <h3 style={{paddingBottom: "2rem", fontSize: "18px", fontWeight: 500}}>Account</h3>
             <div className="container">
               <div className="col-8">
                 <p>
-                  <b>username</b>
+                  <b style={{fontSize: "15px"}}>Username</b>
                   <br />
                   {this.props.user.data.username}
                 </p>
                 <p>
-                  <b>email</b>
+                  <b style={{fontSize: "15px"}}>Email</b>
                   <br />
                   {this.props.user.data.email}
                 </p>
                 <div style={{paddingTop: "5rem"}}>
-                <button className="btn" id="btn-profile">update profile</button>
+                <button className="btn" id="btn-profile">Update profile</button>
                 </div>
               </div>
               <div className="col-4">
-                <p style={{fontWeight: 500}}>profil picture</p>
+                <p style={{fontSize: "16px", fontWeight: 500}}>profil picture</p>
                 <img src="media/default/default_pic_a.jpg" id="img-profil-settings" />
               </div>
             </div>
           </TabPanel>
           <TabPanel className="settings-tabpanel">
-            <h3 style={{paddingBottom: "2rem", fontSize: "20px", fontWeight: 500}}>advanced settings</h3>
+            <h3 style={{paddingBottom: "2rem", fontSize: "18px", fontWeight: 500}}>Advanced settings</h3>
             <div className="container">
               <div className="row">
                 <div className="col-3">
