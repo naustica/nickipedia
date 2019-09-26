@@ -1,6 +1,8 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import Octicon, {TriangleRight} from '@primer/octicons-react';
+import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
+import { IoIosPlay } from 'react-icons/io'
+import { GoKebabVertical } from 'react-icons/go'
+import { IconContext } from "react-icons"
 
 import './../results.scss';
 import ConvertTime from './../../../utils/datetime';
@@ -54,19 +56,24 @@ class Card extends Component<{result:any, fetching: boolean}, {maxLength: number
     const checkLengthDescription = this.props.result.text.length > this.state.maxLength ? this.props.result.text.substring(0, this.state.maxLength) + '...' : this.props.result.text
     const loadingStyles = this.props.fetching ? {backgroundColor: "#E0DFDF", color: "transparent", boxShadow: "none", border: "none"} : {}
     return (
-        <div className="card mb-2" id="result-card">
+        <div className="result-card">
           <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
-            <div className="col-3">
-              <img src="media/default/default_thumbnail.jpg" className="card-img-top" id="card-img-result" alt="..." />
-              <div className="card-img-overlay" id="result-play-button">
-                <Octicon icon={TriangleRight} size="medium"/>
+            <div className="result-card-img">
+              <img src="media/default/background.jpg" className="result-card-img" alt="..." />
+              <div className="result-card-img-overlay">
+                <IconContext.Provider value={{size: "26px"}}>
+                  <IoIosPlay />
+                </IconContext.Provider>
               </div>
             </div>
-            <div className="col-9">
-              <div className="card-body">
-                <h6 className="card-title" style={{marginBottom: "0.5rem", fontSize: "16px"}}>{this.props.result.title}</h6>
-                <p style={{fontSize: "12px", color: "#6D6D6D", marginBottom: "0.5rem"}}>{this.props.result.author_id} • {this.props.result.views + ' views'} • {this.state.timestamp}</p>
-                <p className="card-text" style={{fontSize: "12px"}}>{checkLengthDescription}</p>
+            <div className="result-card-body">
+              <h1 className="result-card-title">{this.props.result.title}</h1>
+              <p className="result-card-info">{this.props.result.author_id} • {this.props.result.views + ' views'} • {this.state.timestamp}</p>
+              <p className="result-card-description">{checkLengthDescription}</p>
+              <div className="result-card-options">
+                <IconContext.Provider value={{size: "20px"}}>
+                  <GoKebabVertical />
+                </IconContext.Provider>
               </div>
             </div>
           </Link>

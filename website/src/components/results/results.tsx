@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
-import Octicon, {Settings} from '@primer/octicons-react';
-import {connect} from 'react-redux';
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import { IoMdOptions } from 'react-icons/io'
+import { IconContext } from "react-icons"
 
-import './results.scss';
-import {fetchSearchStart, fetchSearchResults, cleanSearchResults} from './../../store/actions/searchActions';
+import './results.scss'
+import {fetchSearchStart, fetchSearchResults, cleanSearchResults} from './../../store/actions/searchActions'
 
-import Card from './card/card';
+import Card from './card/card'
 
 
 @(connect((store: any) => {
@@ -83,16 +84,21 @@ class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
   render() {
     const loadingStyles = {} //this.props.search.fetching ? {backgroundColor: "#E0DFDF", color: "transparent", boxShadow: "none", border: "none"} : {}
     return (
-      <div className="container" style={{paddingTop: "1rem"}}>
+      <div className="container" style={{paddingTop: "3rem"}}>
         <div className="row">
-          <div className="col-3" style={{padding: 0}}>
-            <div className="card" id="filter-card" style={loadingStyles}>
-              <div className="card-body">
-                <h4 className="card-title">SEARCH RESULTS</h4>
-                <h5 className="card-subtitle" style={{padding: "1rem"}}>{this.props.search.term}</h5>
-                <h6 className="card-subtitle" style={{padding: "2rem"}}><b>FILTER</b></h6>
-                <Octicon icon={Settings} size="medium" />
-                  <ul className="list-group" style={{listStyleType: "none", textAlign: "center", margin: 0, padding: 0, paddingTop: "1rem"}}>
+          <div className="col-3">
+            <div className="filter-card" style={loadingStyles}>
+              <div className="filter-card-body">
+                <h1 className="filter-card-title">Search Results</h1>
+                <h2 className="filter-card-term">{this.props.search.term}</h2>
+                <hr />
+                <h3 className="filter-card-subtitle">Filter</h3>
+                <div className="filter-card-svg">
+                  <IconContext.Provider value={{size: "26px"}}>
+                    <IoMdOptions />
+                  </IconContext.Provider>
+                </div>
+                  <ul className="list-group" style={{listStyleType: "none", textAlign: "center", margin: 0, paddingTop: "1rem"}}>
                     <li className="list-group-item" value="date" onClick={() => this.updateSorting('date')}>date</li>
                     <li className="list-group-item" value="views" onClick={() => this.updateSorting('views')}>view count</li>
                     <li className="list-group-item" value="rating" onClick={() => this.updateSorting('rating')}>rating</li>
@@ -102,7 +108,7 @@ class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
                 </div>
               </div>
             </div>
-            <div className="col-9" style={{padding: 0, paddingBottom: "2rem"}}>
+            <div className="col-9">
               {this.renderCards()}
             </div>
           </div>

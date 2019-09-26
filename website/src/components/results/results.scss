@@ -1,44 +1,122 @@
-#result-card {
+.filter-card {
     background-color: transparent;
-    margin: 1rem;
-    width: 95%;
-    height: 150px;
-    margin-left: auto;
-    margin-right: auto;
-    border: none;
-    &:hover {
-      #result-play-button {
-          left: 3%;
-          top: 7%;
-          opacity: 1;
-      }
-    }
-}
-#result-play-button {
-    color: #F5F5F5;
-    opacity: 0;
-    padding: 0;
-}
-#card-img-result {
-    width: 180px;
-    height: 150px;
-    padding: 0.5rem;
-    object-fit: cover;
-}
-#filter-card {
-    background-color: transparent;
-    border: none;
-    padding: 1rem;
     width: 100%;
     text-align: center;
     li:hover {
       transform: scale(1.05);
       cursor: pointer;
     }
-}
-#chanel-link {
-    color: #6D6D6D;
-    &:hover {
-      color: black;
+
+    .filter-card-body {
+
+      hr {
+        border-top: 1px solid #E0E0E0;
+        width: 90%;
+        margin: auto;
+      }
+
+      .filter-card-title {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24px;
+        margin: 0;
+      }
+
+      .filter-card-term {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 24px;
+        margin: 10px;
+      }
+      .filter-card-subtitle {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        margin-top: 20px;
+      }
+      .filter-card-svg {
+        padding: 10px;
+      }
     }
+}
+
+.result-card {
+
+  background-color: transparent;
+  width: 100%;
+  height: 130px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  overflow: hidden;
+  max-width: 900px;
+
+  &:hover {
+
+    .result-card-img .result-card-img-overlay {
+        opacity: 1;
+        transition: opacity 0.1s ease;
+    }
+
+    .result-card-body .result-card-options {
+      opacity: 1;
+    }
+  }
+
+  a {
+    display: flex;
+
+    .result-card-img {
+
+      position: relative;
+
+      img {
+        width: 230px;
+        height: 130px;
+        object-fit: cover;
+      }
+      .result-card-img-overlay {
+        color: #F5F5F5;
+        background-color: transparent;
+        position: absolute;
+        left: 3%;
+        top: 7%;
+        opacity: 0;
+        transition: opacity 0.1s ease;
+      }
+    }
+    .result-card-body {
+
+      padding-left: 15px;
+      position: relative;
+      width: 100%;
+
+      .result-card-title {
+        font-size: 17px;
+        line-height: 24px;
+        font-weight: 400;
+        margin-bottom: 3px;
+        margin-top: 2px;
+      }
+      .result-card-info {
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 18px;
+        color: #6D6D6D;
+      }
+      .result-card-description {
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 400;
+        color: #6D6D6D;
+      }
+      .result-card-options {
+        color: #6D6D6D;
+        position: absolute;
+        top: 7%;
+        right: 3%;
+        opacity: 0;
+      }
+    }
+  }
 }
