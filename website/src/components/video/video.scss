@@ -50,21 +50,56 @@
     margin-top: 0.5rem;
     padding: 0.2rem;
 
+    hr {
+      border-top: 1px solid #ccc;
+      width: 100%;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+
     .video-description-title {
       font-weight: 400;
       font-size: 19px;
-    }
-    .video-description-author {
-      font-weight: 500;
-      font-size: 14px;
     }
     .video-description-views {
       font-size: 14px;
       color: #6D6D6D;
     }
-    .video-description-timestamp {
-      font-size: 13px;
-      color: #757D85;
+    .video-description-infobox {
+
+      display: flex;
+      padding-bottom: 10px;
+
+      .video-description-infobox-img {
+
+        img {
+          width: 45px;
+          height: 45px;
+          border-radius: 50%;
+        }
+      }
+
+      .video-description-infobox-text {
+
+        padding-left: 20px;
+
+        .video-description-author {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16px;
+          margin: 0;
+          padding-top: 5px;
+        }
+        .video-description-timestamp {
+          font-size: 13px;
+          color: #757D85;
+        }
+        .video-description-text {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 21px;
+        }
+      }
     }
 }
 

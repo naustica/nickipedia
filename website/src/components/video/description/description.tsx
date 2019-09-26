@@ -159,14 +159,14 @@ class VideoDescription extends Component<{id: number, title: string, description
   renderLikeButton = () => {
     if (this.state.userVoting === "upvoted") {
       return (
-        <IconContext.Provider value={{size: "32px"}}>
+        <IconContext.Provider value={{size: "30px"}}>
           <IoMdHeart />
         </IconContext.Provider>
       )
     }
     else {
       return (
-        <IconContext.Provider value={{size: "32px"}}>
+        <IconContext.Provider value={{size: "30px"}}>
           <IoMdHeartEmpty />
         </IconContext.Provider>
       )
@@ -175,7 +175,7 @@ class VideoDescription extends Component<{id: number, title: string, description
 
   renderDislikeButton = () => {
     return (
-      <IconContext.Provider value={{size: "32px"}}>
+      <IconContext.Provider value={{size: "30px"}}>
         <GoTrashcan />
       </IconContext.Provider>
     )
@@ -188,13 +188,18 @@ class VideoDescription extends Component<{id: number, title: string, description
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
       <div className="video-description">
         <h2 className="video-description-title">{this.props.title}</h2>
-        <p className="video-description-views">{this.props.views + ' views'}</p>
+        <p className="video-description-views">{this.props.views + ' views' + ' • ' + videoTimestamp}</p>
         <hr/>
-        <h4 className="video-description-author"><Link to="/" className="card-link">{this.props.author}</Link></h4>
-        <p className="video-description-timestamp">{"published on " +  videoTimestamp}</p>
-        <br/>
-        <p><a href="/" style={{backgroundColor: "#6871F0", marginRight: "0.5rem", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#kek</a><a href="/" style={{backgroundColor: "#FF2D80", color: "white", padding: "0.3rem", borderRadius: "5px"}}>#lol</a></p>
-        <p className="video-description-text">{this.props.description}</p>
+        <div className="video-description-infobox">
+          <div className="video-description-infobox-img">
+            <img src="media/default/default_pic_a.jpg" className="" />
+          </div>
+          <div className="video-description-infobox-text">
+            <h4 className="video-description-author"><Link to="/" className="card-link">{this.props.author}</Link></h4>
+            <p className="video-description-timestamp">{"0 subscribers"}</p>
+            <p className="video-description-text">{this.props.description}</p>
+          </div>
+        </div>
         <button type="button" className="btn" id="btn-upvote" style={upvoteButtonStyle} onClick={this.onClickLike}>
           {this.renderLikeButton()}
           <div>{this.state.likes}</div>
