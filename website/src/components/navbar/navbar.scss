@@ -134,6 +134,7 @@
               border: none;
               outline: none;
               z-index: 2;
+              cursor: pointer;
               &:focus, &:active, &:hover {
 
               }
@@ -172,6 +173,7 @@
             background-color: transparent;
             border: none;
             outline: none;
+            cursor: pointer;
             &:focus, &:active, &:hover {
 
             }
@@ -202,7 +204,8 @@
                 background-color: #E8E7E7;
                 border-radius: 5px;
                 height: 35px;
-                padding: 1rem;
+                //padding: 1rem;
+                padding-left: 1rem;
                 font-size: 14px;
                 &:focus {
                   outline: none;
