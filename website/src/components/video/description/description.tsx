@@ -159,14 +159,14 @@ class VideoDescription extends Component<{id: number, title: string, description
   renderLikeButton = () => {
     if (this.state.userVoting === "upvoted") {
       return (
-        <IconContext.Provider value={{size: "30px"}}>
+        <IconContext.Provider value={{size: "32px"}}>
           <IoMdHeart />
         </IconContext.Provider>
       )
     }
     else {
       return (
-        <IconContext.Provider value={{size: "30px"}}>
+        <IconContext.Provider value={{size: "32px"}}>
           <IoMdHeartEmpty />
         </IconContext.Provider>
       )
@@ -175,7 +175,7 @@ class VideoDescription extends Component<{id: number, title: string, description
 
   renderDislikeButton = () => {
     return (
-      <IconContext.Provider value={{size: "30px"}}>
+      <IconContext.Provider value={{size: "32px"}}>
         <GoTrashcan />
       </IconContext.Provider>
     )
