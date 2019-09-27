@@ -89,14 +89,6 @@ body {
     width: 150px;
     cursor: pointer;
 }
-#posts {
-    margin-bottom: 1.5rem;
-    background-color: $white;
-    opacity: 0.9;
-    padding: 1rem;
-    border-radius: 5px;
-    z-index: 1
-}
 .slider {
     position: relative;
     -webkit-appearance: none;
@@ -154,7 +146,7 @@ body {
     min-height: 1px;
     width: 8.33%;
     padding: 0.15rem;
-    background-color: $white;
+    background-color: transparent;
 }
 .col-1{ width: 8.33%;  }
 .col-2{ width: 16.66%; }
