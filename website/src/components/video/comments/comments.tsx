@@ -1,11 +1,13 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
+import { IoMdOptions } from 'react-icons/io'
+import { IconContext } from "react-icons"
 
 
 import './../video.scss'
 
-import Loading from './../../loading/loading';
-import ConvertTime from './../../../utils/datetime';
+import Loading from './../../loading/loading'
+import ConvertTime from './../../../utils/datetime'
 
 
 class VideoComments extends Component<{id: number}, {data?: any, comment?: string, loading?: boolean}> {
@@ -48,7 +50,7 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
     this.setState({[event.target.name]: event.target.value})
   }
   submitForm(event:React.FormEvent<HTMLFormElement>): any {
-    const access_token = sessionStorage.getItem('access_token')
+    const access_token = localStorage.getItem('access_token')
     const username = localStorage.getItem('username')
     var form = event.target as HTMLFormElement;
     event.preventDefault();
@@ -76,13 +78,16 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
   }
   render() {
     const postForm = (
-      <div className="media" style={{width: "100%", paddingBottom: "1rem"}}>
-        <img src="media/default/default_pic_a.jpg" className="align-self-start mr-3" id="img-profil" />
-        <div className="media-body">
-          <div className="mb-0" style={{paddingLeft: "0.5rem"}}>
+      <div className="comment-write-card">
+        <div className="comment-write-card-img">
+          <img src="media/default/default_pic_a.jpg" className="" />
+        </div>
+        <div className="comment-write-body">
+          <div className="comment-write-form">
             <form onSubmit={this.submitForm}>
-              <div className="form-group input-group-lg">
-                <input className="form-control from-control-lg" id="form-control-comment" type="text" name="comment" onChange={this.onChange} placeholder="leave a comment..."/>
+              <div className="comment-form-group">
+                <input className="comment-form-input" type="text" name="comment" onChange={this.onChange} placeholder="Leave a comment..."/>
+                <span className="comment-form-border"></span>
                 <button type="submit" style={{display: "none"}}></button>
                 <Loading loading={this.state.loading}/>
               </div>
@@ -93,18 +98,36 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
     )
     const getComments = this.state.data.length === undefined ? (<div></div>) :
       (this.state.data.sort((a, b) => b.id - a.id).map(comment =>
-        <div className="media" id="posts" key={comment.id} style={{border: "none", width: "100%"}}>
-          <img src="media/default/default_pic_a.jpg" className="align-self-center mr-3" id="img-profil" />
-          <div className="media-body" style={{marginLeft: "1rem"}}>
-            <div className="mt-0">{comment.author_id} @<Link to="/">{ comment.author_id }</Link><a style={{paddingLeft: "0.5rem", color: "#757D85"}}>{comment.timestamp}</a></div>
-            <div className="mb-0">{comment.content}</div>
+        <div className="comment-read-card" key={comment.id}>
+          <div className="comment-read-card-img">
+            <img src="media/default/default_pic_a.jpg" className="" />
+          </div>
+          <div className="comment-read-card-body">
+            <div className="comment-read-card-author">{comment.author_id} @<Link to="/" style={{fontSize: "13px"}}>{ comment.author_id }</Link><span style={{paddingLeft: "0.5rem", color: "#757D85", fontSize: "13px"}}>{comment.timestamp}</span></div>
+            <div className="comment-read-card-text">{comment.content}</div>
           </div>
         </div>
       ))
 
 
 
-    return (<div>{postForm}<div className="container">{getComments}</div></div>)
+    return (
+      <div>
+        <div className="comments-info">
+          <h1 className="comments-info-counter">{this.state.data.length + ' Comments'}</h1>
+          <h2 className="comments-info-sorter">
+            <IconContext.Provider value={{size: "24px"}}>
+              <IoMdOptions style={{paddingRight: "5px"}}/>
+            </IconContext.Provider>
+            Sort By
+          </h2>
+        </div>
+        {postForm}
+        <div className="container">
+          {getComments}
+        </div>
+      </div>
+    )
   }
 }
 
