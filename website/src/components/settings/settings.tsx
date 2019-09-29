@@ -72,7 +72,7 @@ class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolea
                   {this.props.user.data.email}
                 </p>
                 <div style={{paddingTop: "5rem"}}>
-                <button className="btn" id="btn-profile">Update profile</button>
+                <button className="button-update-profile">Update profile</button>
                 </div>
               </div>
               <div className="col-4">
