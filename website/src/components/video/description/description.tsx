@@ -1,14 +1,13 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io'
-import { GoTrashcan } from 'react-icons/go'
+import { IoMdHeart, IoMdHeartEmpty, IoMdTrash } from 'react-icons/io'
 import { IconContext } from "react-icons"
 
 import './../video.scss'
 import Loading from './../../loading/loading'
 
 
-class VideoDescription extends Component<{id: number, title: string, description: string, author: string, timestamp: any, views: number}, {likes: number, dislikes: number, userVoting: string, loading: boolean}> {
+class VideoDescription extends Component<{id: number, title: string, description: string, author: string, timestamp: any, views: number, loading: boolean}, {likes: number, dislikes: number, userVoting: string, loading: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -159,36 +158,47 @@ class VideoDescription extends Component<{id: number, title: string, description
   renderLikeButton = () => {
     if (this.state.userVoting === "upvoted") {
       return (
-        <IconContext.Provider value={{size: "32px"}}>
+        <IconContext.Provider value={{size: "28px"}}>
           <IoMdHeart />
         </IconContext.Provider>
       )
     }
     else {
       return (
-        <IconContext.Provider value={{size: "32px"}}>
+        <IconContext.Provider value={{size: "28px"}}>
           <IoMdHeartEmpty />
         </IconContext.Provider>
       )
     }
   }
 
-  renderDislikeButton = () => {
-    return (
-      <IconContext.Provider value={{size: "32px"}}>
-        <GoTrashcan />
-      </IconContext.Provider>
-    )
+  renderTextDescription = (): any => {
+    if (!this.props.loading) {
+      if (this.props.description.length === 0) {
+        return (
+          <span style={{color: "#757D85"}}>No Description available.</span>
+        )
+      }
+      else {
+        return (
+          this.props.description
+        )
+      }
+    }
   }
 
   render() {
     const videoTimestamp = this.convertVideoTimestamp(this.props.timestamp)
-    const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "black"}
-    const downvoteButtonStyle = this.state.userVoting === 'downvoted' ? {color: "#5975CC"} : {color: "black"}
+    const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "#6D6D6D"}
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
+
       <div className="video-description">
         <h2 className="video-description-title">{this.props.title}</h2>
         <p className="video-description-views">{this.props.views + ' views' + ' • ' + videoTimestamp}</p>
+        <button type="button" className="upvote-button" style={upvoteButtonStyle} onClick={this.onClickLike}>
+          {this.renderLikeButton()}
+          <span>{this.state.likes}</span>
+        </button>
         <hr/>
         <div className="video-description-infobox">
           <div className="video-description-infobox-img">
@@ -197,17 +207,9 @@ class VideoDescription extends Component<{id: number, title: string, description
           <div className="video-description-infobox-text">
             <h4 className="video-description-author"><Link to="/" className="card-link">{this.props.author}</Link></h4>
             <p className="video-description-timestamp">{"0 subscribers"}</p>
-            <p className="video-description-text">{this.props.description}</p>
+            <p className="video-description-text">{this.renderTextDescription()}</p>
           </div>
         </div>
-        <button type="button" className="btn" id="btn-upvote" style={upvoteButtonStyle} onClick={this.onClickLike}>
-          {this.renderLikeButton()}
-          <div>{this.state.likes}</div>
-        </button>
-        <button type="button" className="btn" id="btn-downvote" style={downvoteButtonStyle} onClick={this.onClickDislike}>
-          {this.renderDislikeButton()}
-          <div>{this.state.dislikes}</div>
-        </button>
         <hr/>
       </div>
     )

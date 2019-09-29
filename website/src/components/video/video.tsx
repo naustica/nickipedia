@@ -20,6 +20,7 @@ class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
   constructor(props:any) {
     super(props)
     this.props.video.fetching = true
+    this.props.video.changing = true
   }
   componentWillMount() {
     window.scrollTo(0, 0)
@@ -49,7 +50,14 @@ class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
         <div className="row">
           <div className="col-8">
             <VideoStream author={this.props.video.data.author_id} filename={this.props.video.data.filename} loading={this.props.video.changing}/>
-            <VideoDescription title={this.props.video.data.title} description={this.props.video.data.text} author={this.props.video.data.author_id} timestamp={this.props.video.data.timestamp} views={this.props.video.data.views} id={this.props.video.data.id} />
+            <VideoDescription title={this.props.video.data.title}
+              description={this.props.video.data.text}
+              author={this.props.video.data.author_id}
+              timestamp={this.props.video.data.timestamp}
+              views={this.props.video.data.views}
+              id={this.props.video.data.id}
+              loading={this.props.video.changing}
+            />
             <div className="container">
               <VideoComments id={this.props.video.data.id}/>
             </div>
