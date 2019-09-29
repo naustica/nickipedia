@@ -143,12 +143,12 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
             />
           </div>
           <div className="video-play">
-            <button className="btn" id="video-play-button" onClick={this.togglePlayPause}>
+            <button className="video-play-button" onClick={this.togglePlayPause}>
               {this.renderPlayButton()}
             </button>
           </div>
           <div className="video-audio">
-            <button className="btn" id="video-audio-button" onClick={this.toggleMuted}>
+            <button className="video-audio-button" onClick={this.toggleMuted}>
               {this.renderVolumeButton()}
             </button>
             <span className="video-audio-line">
@@ -162,7 +162,7 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
             {ConvertPlayTime(this.state.duration * this.state.played)} / {ConvertPlayTime(this.state.duration)}
           </div>
           <div className="video-expand">
-            <button className="btn" id="video-expand-button" onClick={this.getFullscreen}>
+            <button className="video-expand-button" onClick={this.getFullscreen}>
               <IconContext.Provider value={{size: "25px"}}>
                 <IoMdExpand />
               </IconContext.Provider>

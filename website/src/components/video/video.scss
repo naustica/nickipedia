@@ -1,41 +1,9 @@
-#btn-upvote {
-    color: black;
-    background-color: transparent;
-    margin-right: 1.5rem;
-    border: none;
-    &:hover {
-      background-color: transparent !important;
-      box-shadow: (none) !important;
-      color: #E0235F !important;
-      border: none !important;
-    }
-    &:focus, &:active {
-      box-shadow: (none) !important;
-      border: none !important;
-    }
-}
-#btn-downvote {
-    color: black;
-    background-color: transparent;
-    margin-right: 1.5rem;
-    border: none;
-    &:hover {
-      background-color: transparent !important;
-      box-shadow: (none) !important;
-      color: #5975CC !important;
-      border: none !important;
-    }
-    &:focus, &:active {
-      box-shadow: (none) !important;
-      border: none !important;
-    }
-}
-
 .video-description {
 
     width: 100%;
     margin-top: 0.5rem;
     padding: 0.2rem;
+    position: relative;
 
     hr {
       border-top: 1px solid #ccc;
@@ -51,6 +19,38 @@
     .video-description-views {
       font-size: 14px;
       color: #6D6D6D;
+    }
+    .upvote-button {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      float: right;
+      position: absolute;
+      right: 5%;
+      top: 27px;
+      color: black;
+
+      &:hover {
+        color: #E0235F !important;
+        &::after {
+          content: "";
+          left: -3px;
+          top: -4px;
+          width: 34px;
+          height: 34px;
+          position: absolute;
+          border-radius: 50%;
+          background-color: #E0235F;
+          opacity: 0.2;
+        }
+      }
+
+      span {
+        padding-left: 5px;
+        font-size: 15px;
+        line-height: 18px;
+        font-weight: 400;
+      }
     }
     .video-description-infobox {
 
@@ -173,16 +173,19 @@ video {
 .video-play {
 
   position: relative;
+  margin-right: 12px;
 
-  #video-play-button {
-      color: #F2F2F2 !important;
-      outline: none !important;
+  .video-play-button {
+      color: #F2F2F2;
+      outline: none;
       padding-left: 1.2rem;
       padding-bottom: 0.6rem;
       padding-top: 0rem;
+      border: none;
+      background-color: transparent;
+      margin: 3px;
       &:active,&:focus, &:hover {
-        box-shadow: (none) !important;
-        color: #FFFFFF !important;
+        color: #FFFFFF;
       }
   }
 }
@@ -191,33 +194,37 @@ video {
     bottom: 1px;
     right: 0;
 
-    #video-expand-button {
-        color: #F2F2F2 !important;
-        outline: none !important;
+    .video-expand-button {
+        color: #F2F2F2;
+        outline: none;
         padding-right: 1.2rem;
         padding-bottom: 0.6rem;
         padding-top: 0rem;
+        background-color: transparent;
+        border: none;
+        margin: 3px;
         &:active,&:focus, &:hover {
-          box-shadow: (none) !important;
-          color: #FFFFFF !important;
+          color: #FFFFFF;
         }
     }
 }
 .video-audio {
 
   position: relative;
-  padding-right: 1rem;
+  padding-right: 10px;
 
-  #video-audio-button {
-      color: #F2F2F2 !important;
-      outline: none !important;
+  .video-audio-button {
+      color: #F2F2F2;
+      outline: none;
       padding-bottom: 0.6rem;
       padding-top: 0rem;
       padding-right: 0;
       padding-left: 0.2rem;
+      border: none;
+      background-color: transparent;
+      margin: 3px;
       &:active,&:focus, &:hover {
-        box-shadow: (none) !important;
-        color: #FFFFFF !important;
+        color: #FFFFFF;
       }
   }
 
@@ -225,13 +232,13 @@ video {
       position: absolute;
       z-index: 1;
       left: 35px;
-      top: 12px;
+      top: 14px;
       width: 0;
       height: 3px;
       //background-color: #A19FA1;
       background-color: hsla(300, 1%, 63%, 0.4);
       overflow: hidden;
-      transition: width 0.4s ease-in-out;
+      transition: width 0.4s ease;
       .video-audio-fill {
         position: absolute;
         display: block;
@@ -245,15 +252,15 @@ video {
       -webkit-appearance: none;
       //width: 60px;
       width: 0;
-      left: 6px;
+      left: 3px;
       cursor: pointer;
       outline: none;
       position: relative;
-      top: -0.5rem;
+      top: -0.2rem;
       height: 3px;
       z-index: 2;
       background-color: transparent;
-      transition: width 0.4s ease-in-out;
+      transition: width 0.4s ease;
 
       &::-webkit-slider-thumb {
         opacity: 0;
@@ -265,24 +272,24 @@ video {
         margin-top: 1px;
         background-color: #F2F2F2;
         outline: none;
-        transition: opacity 0.35s ease-in-out;
+        transition: opacity 0.35s ease;
       }
   }
   &:hover {
     .video-audio-volume, .video-audio-line {
       width: 60px;
-      transition: width 0.3s ease-in-out;
+      transition: width 0.3s ease;
     }
     .video-audio-volume::-webkit-slider-thumb {
       opacity: 1;
-      transition: opacity 0.35s ease-in-out;
+      transition: opacity 0.35s ease;
     }
   }
 }
 .video-play-time {
     position: relative;
     color: #FFFFFF;
-    margin-top: 0.4rem;
+    margin-top: 0.5rem;
     padding-left: 0.5rem;
     font-size: 12px;
     font-weight: 300;
