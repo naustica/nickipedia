@@ -13,8 +13,8 @@ import Register from './components/login/register';
 import Results from './components/results/results';
 import Logout from './components/logout/logout';
 import Video from './components/video/video';
-import Footer from './components/footer/footer';
-import Upload from './components/upload/upload';
+//import Footer from './components/footer/footer';
+//import Upload from './components/upload/upload';
 import Settings from './components/settings/settings';
 import AuthenticatedRoute from './components/authentication/authentication';
 
@@ -41,7 +41,6 @@ class App extends Component {
                     <Route path='/about' component={About}/>
                     <Route path='/login' exact component={Login}/>
                     <Route path='/register' exact component={Register}/>
-                    <AuthenticatedRoute path='/upload' exact component={Upload}/>
                     <AuthenticatedRoute path='/logout' exact component={Logout}/>
                     <Route path='/result/:term' component={Results}/>
                     <Route path='/watch/:id' component={Video}/>

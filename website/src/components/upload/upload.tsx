@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { IoIosLink, IoIosCloudUpload } from 'react-icons/io'
+import { IoMdLink, IoIosCloudUpload } from 'react-icons/io'
 import { IconContext } from "react-icons"
 
 import './upload.scss'
@@ -7,7 +7,7 @@ import './upload.scss'
 import Loading from './../loading/loading'
 
 
-class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?: string, uploadStatus?: boolean, title?: string, description?: string, id?: number, step?: number, uploadVia?: string}> {
+class Upload extends Component<{style: any, reference: any}, {url?: string, loading?: boolean, urlMessage?: string, uploadStatus?: boolean, title?: string, description?: string, id?: number, step?: number, uploadVia?: string}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -119,79 +119,62 @@ class Upload extends Component<{}, {url?: string, loading?: boolean, urlMessage?
   render() {
     const { step } = this.state
 
+    let renderStep: any = (<div></div>)
+
     switch (step) {
       case 1:
-        return (
-          <div className="upload-form">
-            <div className="upload-form-header">
-              <h1>UPLOAD A VIDEO</h1>
+        renderStep = (
+          <div className="toggle-upload-method">
+            <div className="upload-method-card">
+              <h1>Upload video via link</h1>
             </div>
-            <div className="upload-form-body">
-              <div className="upload-form-link" onClick={this.nextStep}>
-                <button type="button" className="btn" id="btn-upload-link">
-                  <IconContext.Provider value={{size: "32px"}}>
-                    <IoIosLink />
-                  </IconContext.Provider>
-                </button>
-                <h1>UPLOAD VIA LINK</h1>
-              </div>
-              <div className="upload-form-file" onClick={this.nextStep}>
-                <button type="button" className="btn" id="btn-upload-file">
-                  <IconContext.Provider value={{size: "32px"}}>
-                    <IoIosCloudUpload />
-                  </IconContext.Provider>
-                </button>
-                <h1>UPLOAD VIA FILE</h1>
-              </div>
+            <div className="upload-method-card">
+              <h1>Upload video via file</h1>
             </div>
           </div>
         )
+        break
       case 2:
-        return (
-          <div className="upload-form">
-            <div className="upload-form-header">
-              <h1>UPLOAD A VIDEO - URL</h1>
+        renderStep = (
+          <form>
+            <div className="upload-form-group">
+              <input type="text" name="url" autoFocus value={this.state.url} onChange={this.onChange} placeholder="url" />
+              <span className="upload-form-border"/>
             </div>
-            <div className="upload-form-body">
-              <form style={{width: "90%"}}>
-                <div className="upload-form-error">{this.state.urlMessage}</div>
-                <div className="form-group input-group-lg">
-                  <input className="form-control from-control-lg" type="text" name="url" style={{border: "2px solid #505458"}} autoFocus value={this.state.url} onChange={this.onChange} placeholder="url"/>
-                </div>
-                <div className="form-submit">
-                  <button type="button" className="submit-button" onClick={this.prevStep}>GO BACK</button>
-                  <button type="button" className="submit-button" onClick={this.submitUploadForm}>CONTINUE</button>
-                </div>
-                <Loading loading={this.state.loading}/>
-              </form>
-            </div>
-          </div>
+          </form>
         )
+        break
       case 3:
-        return (
-          <div className="upload-form">
-            <div className="upload-form-header">
-              <h1>UPLOAD A VIDEO - Update</h1>
+        renderStep = (
+          <form>
+            <div className="upload-form-group">
+              <input type="text" name="title" autoFocus value={this.state.title} onChange={this.onChange} placeholder="title" />
+              <span className="upload-form-border"/>
             </div>
-            <div className="upload-form-body">
-              <form style={{width: "90%"}}>
-                <div className="upload-form-error">{this.state.urlMessage}</div>
-                <div className="form-group input-group-lg" style={{padding: "3rem"}}>
-                  <input className="form-control from-control-lg" type="text" name="title" style={{border: "1px solid #505458"}} autoFocus value={this.state.title} onChange={this.onChange} placeholder="title"/>
-                </div>
-                <div className="form-group input-group-lg" style={{padding: "3rem"}}>
-                  <input className="form-control from-control-lg" type="text" name="description" style={{border: "1px solid #505458"}} value={this.state.description} onChange={this.onChange} placeholder="description"/>
-                </div>
-                <div className="form-submit">
-                  <button type="button" className="submit-button" onClick={this.prevStep}>GO BACK</button>
-                  <button type="button" className="submit-button" onClick={this.submitRevisionForm}>DONE</button>
-                </div>
-                <Loading loading={this.state.loading}/>
-              </form>
+            <div className="upload-form-group">
+              <input type="text" name="description" autoFocus value={this.state.description} onChange={this.onChange} placeholder="description" />
+              <span className="upload-form-border"/>
             </div>
-          </div>
+          </form>
         )
     }
+    return (
+      <div className="toggle-upload-modal" style={this.props.style} ref={this.props.reference}>
+        <div className="toggle-upload-content">
+          <div className="toggle-upload-header">
+            <h1>Upload video</h1>
+          </div>
+          <hr />
+          <div className="toggle-upload-form">
+            {renderStep}
+          </div>
+          <hr />
+          <div className="toggle-upload-footer">
+            <button type="button" className="upload-form-confirm-button" onClick={this.nextStep}>Next</button>
+          </div>
+        </div>
+      </div>
+    )
   }
 }
 
