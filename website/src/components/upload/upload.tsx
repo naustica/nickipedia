@@ -157,12 +157,56 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
             </div>
           </form>
         )
+        break
+
     }
     return (
       <div className="toggle-upload-modal" style={this.props.style} ref={this.props.reference}>
         <div className="toggle-upload-content">
           <div className="toggle-upload-header">
             <h1>Upload video</h1>
+            <div className="toggle-upload-header-navbar">
+              <span className="toggle-upload-header-navbar-steps">
+                <span className="toggle-upload-header-navbar-steps-number">
+                 1
+                </span>
+                <span className="toggle-upload-header-navbar-steps-description">
+                 Upload form
+                </span>
+              </span>
+              <span className="toggle-upload-header-navbar-steps">
+                <span className="toggle-upload-header-navbar-steps-number">
+                  2
+               </span>
+               <span className="toggle-upload-header-navbar-steps-description">
+                Source
+               </span>
+              </span>
+              <span className="toggle-upload-header-navbar-steps">
+                <span className="toggle-upload-header-navbar-steps-number">
+                  3
+                </span>
+                <span className="toggle-upload-header-navbar-steps-description">
+                 Basic Info
+                </span>
+              </span>
+              <span className="toggle-upload-header-navbar-steps">
+                <span className="toggle-upload-header-navbar-steps-number">
+                  4
+                </span>
+                <span className="toggle-upload-header-navbar-steps-description">
+                 Advanced Settings
+                </span>
+              </span>
+              <span className="toggle-upload-header-navbar-steps">
+                <span className="toggle-upload-header-navbar-steps-number">
+                  5
+                </span>
+                <span className="toggle-upload-header-navbar-steps-description">
+                 Publish
+                </span>
+              </span>
+            </div>
           </div>
           <hr />
           <div className="toggle-upload-form">
@@ -170,6 +214,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
           </div>
           <hr />
           <div className="toggle-upload-footer">
+            <button type="button" className="upload-form-confirm-button" onClick={this.prevStep}>Back</button>
             <button type="button" className="upload-form-confirm-button" onClick={this.nextStep}>Next</button>
           </div>
         </div>
