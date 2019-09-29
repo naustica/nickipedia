@@ -4,19 +4,37 @@ import { IoMdNotificationsOutline, IoMdSettings, IoMdExit, IoMdVideocam } from '
 import { GoDeviceCameraVideo } from 'react-icons/go'
 import { IconContext } from "react-icons"
 
-import './navbar.scss';
+import './navbar.scss'
+
+import Upload from './../upload/upload'
+
+interface WriteOnly {
+  toggleSettings: boolean,
+  toggleMessage: boolean,
+  toggleUpload: boolean,
+  term: string,
+  options: any,
+  suggestions: Array<any>,
+  loading: boolean
+}
+
+interface ReadOnly {
+  history: any
+}
 
 
-class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleMessage: boolean, term: string, options: any, suggestions: Array<any>, loading: boolean}> {
+class Navbar extends Component<ReadOnly, WriteOnly> {
 
   messageToggler: any
   settingsToggler: any
+  uploadToggler: any
 
   constructor(props:any) {
     super(props)
     this.state = {
       toggleSettings: false,
       toggleMessage: false,
+      toggleUpload: false,
       term: '',
       options: [],
       suggestions: [],
@@ -35,6 +53,10 @@ class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleM
 
   settingsTogglerRef = (settingsToggler: any) => {
     this.settingsToggler = settingsToggler
+  }
+
+  uploadTogglerRef = (uploadToggler: any) => {
+    this.uploadToggler = uploadToggler
   }
 
   componentDidMount() {
@@ -124,8 +146,10 @@ class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleM
     const toggle = this.state.toggleSettings
     this.setState({toggleSettings: !toggle})
   }
-  onClickUpload(event:React.MouseEvent<HTMLButtonElement>): any {
-    this.props.history.push('/upload')
+  onClickUpload = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    //this.props.history.push('/upload')
+    const toggle = this.state.toggleUpload
+    this.setState({toggleUpload: !toggle})
   }
   onWindowClick(event: { target: any; }):any {
 
@@ -142,10 +166,17 @@ class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleM
             this.setState({toggleMessage: false})
           }
     }
+    if (this.state.toggleUpload) {
+      if (event.target === this.uploadToggler)
+          {
+            this.setState({toggleUpload: false})
+          }
+    }
   }
   render() {
     const toggleSettingsStyle = this.state.toggleSettings ? {display: "inline"} : {display: "none"}
     const toggleMessageStyle = this.state.toggleMessage ? {display: "inline"} : {display: "none"}
+    const toggleUploadStyle = this.state.toggleUpload ? {display: "inline"} : {display: "none"}
     const searchStyle = this.state.suggestions.length > 0 ? {borderBottomLeftRadius: "0", borderBottomRightRadius: "0"} : {borderBottomLeftRadius: "5px", borderBottomRightRadius: "5px"}
     const username = localStorage.getItem('username')
 
@@ -170,7 +201,7 @@ class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleM
           <div className="navbar-search">
             <form method="POST" onSubmit={this.submitForm}>
               <div className="navbar-form-group">
-                <input className="navbar-form-input" style={searchStyle} type="text" name="search" value={this.state.term} onChange={this.getTerm} autoFocus placeholder="search"/>
+                <input className="navbar-form-input" style={searchStyle} type="text" name="search" value={this.state.term} onChange={this.getTerm} placeholder="search"/>
                 {this.renderSuggestions()}
               </div>
             </form>
@@ -181,6 +212,7 @@ class Navbar extends Component<{history: any}, {toggleSettings: boolean, toggleM
                 <IoMdVideocam />
               </IconContext.Provider>
             </button>
+            <Upload style={toggleUploadStyle} reference={this.uploadTogglerRef}/>
           </div>
           <div className="navbar-messages" ref={this.messageTogglerRef}>
             <button type="button" className="message-button" name="message" onClick={this.onClickToggleNotifications}>
