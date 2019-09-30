@@ -6,9 +6,20 @@ import Loading from './../../loading/loading';
 
 
 class VideoSuggestions extends Component<{suggestions: any, loading: boolean},{}> {
+
   constructor(props:any) {
     super(props)
   }
+
+  checkLengthTitle = (title: string) => {
+    if (title.length > 40) {
+      return title.substring(0, 40) + '...'
+    }
+    else {
+      return title
+    }
+  }
+
   renderSuggestionsCards(loading) {
     const content = loading ? this.props.suggestions.map(suggestion => (
       <div className="card" key={suggestion.id} style={{height: "110px", width: "100%", backgroundColor: "#E0DFDF", marginBottom: "1rem"}}>
@@ -21,7 +32,7 @@ class VideoSuggestions extends Component<{suggestions: any, loading: boolean},{}
               <img src="media/default/background.jpg" className="" alt="..."/>
             </div>
             <div className="video-suggestion-body">
-              <h5 className="video-suggestion-title">{suggestion.title}</h5>
+              <h5 className="video-suggestion-title">{this.checkLengthTitle(suggestion.title)}</h5>
               <h6 className="video-suggestion-author">{suggestion.author_id}</h6>
               <p className="video-suggestion-views">{suggestion.views + " views"}</p>
             </div>
