@@ -184,7 +184,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     if (!this.props.loading) {
       if (this.props.description.length === 0 || this.props.description.length === 1) {
         return (
-          <span style={{color: "#757D85"}}>No Description available.</span>
+          <span style={{color: "#6D6D6D"}}>No Description available.</span>
         )
       }
       else {
@@ -211,7 +211,7 @@ class VideoDescription extends Component<{id: number, title: string, description
           </div>
           <div className="video-description-infobox-text">
             <h4 className="video-description-author"><Link to="/" className="card-link">{this.props.author}</Link></h4>
-            <p className="video-description-timestamp">{"0 subscribers"}</p>
+            <p className="video-description-subscribers">{"0 subscribers"}</p>
             <p className="video-description-text">{this.renderTextDescription()}</p>
           </div>
         </div>
