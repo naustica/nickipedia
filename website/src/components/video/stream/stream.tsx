@@ -80,9 +80,23 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
     }
   }
   handleKeyDown = (event: any) => {
+    // enter
     if (event.keyCode === 32) {
       event.preventDefault()
       this.togglePlayPause()
+    }
+    // f
+    if (event.keyCode === 70) {
+      event.preventDefault()
+      this.getFullscreen()
+    }
+    // arrow up
+    if (event.keyCode === 38) {
+      event.preventDefault()
+    }
+    // arrow down
+    if (event.keyCode === 40) {
+      event.preventDefault()
     }
   }
   toggleMuted = () => {
