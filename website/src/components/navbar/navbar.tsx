@@ -183,6 +183,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     return (
       <div className="nav-header">
         <nav className="navbar">
+        <div className="navbar-logo-menu">
           <div className="navbar-menu">
             <div className="navbar-menu-line"></div>
             <div className="navbar-menu-line"></div>
@@ -192,11 +193,12 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
             <Link to='/'>
               <div>
               <IconContext.Provider value={{size: "21px"}}>
-                <GoDeviceCameraVideo style={{color: "red", paddingRight: "0.1rem"}}/>
+                <GoDeviceCameraVideo style={{color: "#F53240", paddingRight: "0.1rem"}}/>
               </IconContext.Provider>
               nickipedia
               </div>
             </Link>
+          </div>
           </div>
           <div className="navbar-search">
             <form method="POST" onSubmit={this.submitForm}>

@@ -3,7 +3,7 @@
     position: sticky;
     width: 100%;
     background-color: #F5F5F5 !important;
-    box-shadow: 0px 0.7px 0 0.7px #D0CDC8;
+    box-shadow: 0 0.7px 0 0 #ccc;
     z-index: 100;
     transition: all 0.5s linear;
     background-color: #FDF9F3;
@@ -12,35 +12,44 @@
         width: 100%;
         z-index: 100;
         padding: 0;
+        padding-left: 5px;
+        padding-right: 5px;
         top: 0;
         height: 50px;
         display: flex;
         justify-content: space-around;
         align-items: center;
 
-        .navbar-menu {
-          display: inline-block;
-          cursor: pointer;
-          padding-left: 1rem;
-          .navbar-menu-line {
-            width: 18px;
-            height: 2px;
-            background-color: #333;
-            margin: 3px 0;
-          }
-        }
+        .navbar-logo-menu {
 
-        .navbar-logo {
-          font-weight: 500;
-          font-size: 19px;
-          font-family: Helvetica;
-          letter-spacing: -0.6px;
-          margin-right: 2rem;
-          padding-bottom: 4px;
-          overflow: visible;
-          white-space: nowrap;
-          @media(max-width: 800px) {
-            padding-left: 1rem;
+          display: flex;
+          align-items: center;
+
+          .navbar-menu {
+            display: inline-block;
+            cursor: pointer;
+
+            .navbar-menu-line {
+              width: 18px;
+              height: 2px;
+              background-color: #333;
+              margin: 3px 0;
+            }
+          }
+
+          .navbar-logo {
+            font-weight: 500;
+            font-size: 19px;
+            font-family: Helvetica;
+            letter-spacing: -0.6px;
+            margin-right: 2rem;
+            padding-bottom: 4px;
+            padding-left: 25px;
+            overflow: visible;
+            white-space: nowrap;
+            @media(max-width: 600px) {
+              display: none;
+            }
           }
         }
 
@@ -128,7 +137,7 @@
         }
         .navbar-messages {
           .message-button {
-              color: black;
+              color: #262626;
               overflow: hidden;
               background-color: transparent;
               border: none;
@@ -169,7 +178,7 @@
         .navbar-upload {
 
           .upload-button {
-            color: black;
+            color: #262626;
             overflow: hidden;
             background-color: transparent;
             border: none;
@@ -198,6 +207,11 @@
             top: -17px;
             left: 15%;
             max-width: 600px;
+            min-width: 150px;
+
+            @media (max-width: 600px) {
+              left: 10%;
+            }
 
             .navbar-form-input {
                 border: none;
@@ -224,20 +238,20 @@
                 margin: 0;
                 padding: 0;
                 overflow: hidden;
+                &::before {
+                  content: "";
+                }
+                li {
+                  padding-left: 1rem;
+                  padding-top: 1rem;
+                  padding-bottom: 1rem;
+                  &:hover {
+                      background: #EEEEEE;
+                      cursor: pointer;
+                  }
+                }
+            }
 
-            }
-            .search-suggestions:before {
-                content: "";
-            }
-            .search-suggestions li {
-                padding-left: 1rem;
-                padding-top: 1rem;
-                padding-bottom: 1rem;
-            }
-            .search-suggestions li:hover {
-                background: #EEEEEE;
-                cursor: pointer;
-            }
           }
         }
     }
