@@ -197,8 +197,8 @@ class VideoDescription extends Component<{id: number, title: string, description
 
   render() {
     const videoTimestamp = this.convertVideoTimestamp(this.props.timestamp)
-    const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "#6D6D6D"}
-    const downvoteButtonStyle = this.state.userVoting === 'downvoted' ? {color: "#5975CC"} : {color: "#6D6D6D"}
+    const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "#262626"}
+    const downvoteButtonStyle = this.state.userVoting === 'downvoted' ? {color: "#5975CC"} : {color: "#262626"}
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
 
       <div className="video-description">
