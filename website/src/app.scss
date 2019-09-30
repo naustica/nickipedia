@@ -35,7 +35,7 @@ body {
     background-color: #F1F1F1;
     margin-bottom: 1rem;
     font-family: 'Roboto';
-    color: #0A0A0A;
+    color: #262626;
 }
 a, a:link, a:visited, a:active, a:hover {
     text-decoration: none;
@@ -98,16 +98,6 @@ hr {
     &:checked:before {
       left: 19px;
     }
-}
-.form-control {
-    border-width: 1px;
-    outline: black;
-    border-color: black;
-}
-.form-control:focus {
-    border-width: 1px;
-    border-color: black;
-    box-shadow: 0 0 0 0;
 }
 .container {
     width: 100%;
