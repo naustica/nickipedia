@@ -172,9 +172,17 @@ class VideoDescription extends Component<{id: number, title: string, description
     }
   }
 
+  renderDislikeButton = () => {
+    return (
+      <IconContext.Provider value={{size: "28px"}}>
+        <IoMdTrash />
+      </IconContext.Provider>
+    )
+  }
+
   renderTextDescription = (): any => {
     if (!this.props.loading) {
-      if (this.props.description.length === 0) {
+      if (this.props.description.length === 0 || this.props.description.length === 1) {
         return (
           <span style={{color: "#757D85"}}>No Description available.</span>
         )
@@ -190,15 +198,12 @@ class VideoDescription extends Component<{id: number, title: string, description
   render() {
     const videoTimestamp = this.convertVideoTimestamp(this.props.timestamp)
     const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "#6D6D6D"}
+    const downvoteButtonStyle = this.state.userVoting === 'downvoted' ? {color: "#5975CC"} : {color: "#6D6D6D"}
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
 
       <div className="video-description">
         <h2 className="video-description-title">{this.props.title}</h2>
         <p className="video-description-views">{this.props.views + ' views' + ' • ' + videoTimestamp}</p>
-        <button type="button" className="upvote-button" style={upvoteButtonStyle} onClick={this.onClickLike}>
-          {this.renderLikeButton()}
-          <span>{this.state.likes}</span>
-        </button>
         <hr/>
         <div className="video-description-infobox">
           <div className="video-description-infobox-img">
@@ -210,6 +215,14 @@ class VideoDescription extends Component<{id: number, title: string, description
             <p className="video-description-text">{this.renderTextDescription()}</p>
           </div>
         </div>
+        <button type="button" className="upvote-button" style={upvoteButtonStyle} onClick={this.onClickLike}>
+          {this.renderLikeButton()}
+          <span>{this.state.likes}</span>
+        </button>
+        <button type="button" className="downvote-button" style={downvoteButtonStyle} onClick={this.onClickDislike}>
+          {this.renderDislikeButton()}
+          <span>{this.state.dislikes}</span>
+        </button>
         <hr/>
       </div>
     )
