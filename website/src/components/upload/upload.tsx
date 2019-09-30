@@ -39,6 +39,24 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
     this.setState({step: step - 1, urlMessage: '', url: '', loading: false})
   }
 
+  changeStep = (event: any): void => {
+    if (event.target.id === 'upload-step-1') {
+      this.setState({step: 1})
+    }
+    if (event.target.id === 'upload-step-2') {
+      this.setState({step: 2})
+    }
+    if (event.target.id === 'upload-step-3') {
+      this.setState({step: 3})
+    }
+    if (event.target.id === 'upload-step-4') {
+      this.setState({step: 4})
+    }
+    if (event.target.id === 'upload-step-5') {
+      this.setState({step: 5})
+    }
+  }
+
   validateForm = () => {
     return true
   }
@@ -166,7 +184,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
           <div className="toggle-upload-header">
             <h1>Upload video</h1>
             <div className="toggle-upload-header-navbar">
-              <span className="toggle-upload-header-navbar-steps">
+              <span className="toggle-upload-header-navbar-steps" id="upload-step-1" onClick={this.changeStep}>
                 <span className="toggle-upload-header-navbar-steps-number">
                  1
                 </span>
@@ -174,7 +192,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
                  Upload form
                 </span>
               </span>
-              <span className="toggle-upload-header-navbar-steps">
+              <span className="toggle-upload-header-navbar-steps" id="upload-step-2" onClick={this.changeStep}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   2
                </span>
@@ -182,7 +200,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
                 Source
                </span>
               </span>
-              <span className="toggle-upload-header-navbar-steps">
+              <span className="toggle-upload-header-navbar-steps" id="upload-step-3" onClick={this.changeStep}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   3
                 </span>
@@ -190,7 +208,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
                  Basic Info
                 </span>
               </span>
-              <span className="toggle-upload-header-navbar-steps">
+              <span className="toggle-upload-header-navbar-steps" id="upload-step-4" onClick={this.changeStep}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   4
                 </span>
@@ -198,7 +216,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
                  Advanced Settings
                 </span>
               </span>
-              <span className="toggle-upload-header-navbar-steps">
+              <span className="toggle-upload-header-navbar-steps" id="upload-step-5" onClick={this.changeStep}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   5
                 </span>

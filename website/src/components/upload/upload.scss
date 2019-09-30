@@ -56,12 +56,14 @@
             background-color: #ccc;
             padding: 5px;
             padding-left: 11px;
+            pointer-events: none;
           }
           .toggle-upload-header-navbar-steps-description {
             padding-left: 10px;
             font-size: 13px;
             font-weight: 400;
             line-height: 20px;
+            pointer-events: none;
           }
         }
       }
