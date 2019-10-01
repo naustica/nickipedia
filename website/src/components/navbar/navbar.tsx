@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { IoMdNotificationsOutline, IoMdSettings, IoMdExit, IoMdVideocam } from 'react-icons/io'
 import { GoDeviceCameraVideo } from 'react-icons/go'
 import { IconContext } from "react-icons"
+import cx from 'classnames'
 
 import './navbar.scss'
 
@@ -34,7 +35,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     this.state = {
       toggleSettings: false,
       toggleMessage: false,
-      toggleUpload: true,
+      toggleUpload: false,
       term: '',
       options: [],
       suggestions: [],
@@ -174,6 +175,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     }
   }
   render() {
+    const {toggleSettings} = this.state
     const toggleSettingsStyle = this.state.toggleSettings ? {display: "inline"} : {display: "none"}
     const toggleMessageStyle = this.state.toggleMessage ? {display: "inline"} : {display: "none"}
     const toggleUploadStyle = this.state.toggleUpload ? {display: "inline"} : {display: "none"}
@@ -232,7 +234,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
             </div>
           </div>
           <div className="navbar-user" ref={this.settingsTogglerRef}>
-            <img src="media/default/default_pic_a.jpg" className="navbar-user-pic" onClick={this.onClickToggleSettings} />
+            <img src="media/default/default_pic_a.jpg" className={cx("navbar-user-pic", {["navbar-user-pic--selected"]: Boolean(toggleSettings)})} onClick={this.onClickToggleSettings} />
             <div className="navbar-toggle-user-settings" style={toggleSettingsStyle}>
               <div className="navbar-toggle-user-info">
                 <img src="media/default/default_pic_a.jpg" className="navbar-toggle-user-pic" />
