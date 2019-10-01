@@ -34,7 +34,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     this.state = {
       toggleSettings: false,
       toggleMessage: false,
-      toggleUpload: false,
+      toggleUpload: true,
       term: '',
       options: [],
       suggestions: [],
@@ -244,7 +244,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
               <hr />
               <Link to={'/settings'} style={{color: "black"}} onClick={this.onClickToggleSettings}>
                 <div className="navbar-toggle-user-settings-links">
-                  <IconContext.Provider value={{size: "25px"}}>
+                  <IconContext.Provider value={{size: "21px"}}>
                     <IoMdSettings style={{color: "#313131", marginRight: "15px"}}/>
                   </IconContext.Provider>
                   Settings
@@ -252,7 +252,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
               </Link>
               <Link to={'/logout'} style={{color: "black"}} onClick={this.onClickToggleSettings}>
                 <div className="navbar-toggle-user-settings-links">
-                  <IconContext.Provider value={{size: "25px"}}>
+                  <IconContext.Provider value={{size: "21px"}}>
                     <IoMdExit style={{color: "#313131", marginRight: "15px"}}/>
                   </IconContext.Provider>
                   Logout
