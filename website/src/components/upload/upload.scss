@@ -10,7 +10,8 @@
 
   .toggle-upload-content {
     position: relative;
-    background-color: #F1F1F1;
+    //background-color: #F1F1F1;
+    background-color: #F5F5F5;
     margin: auto;
     top: 5%;
     width: 800px;
@@ -37,6 +38,7 @@
         padding-right: 20px;
         display: flex;
         justify-content: space-between;
+        -webkit-user-select: none;
 
         .toggle-upload-header-navbar-steps {
 
@@ -57,6 +59,9 @@
             .toggle-upload-header-navbar-steps-description {
               font-weight: 500 !important;
             }
+          }
+          &--disabled {
+            cursor: default;
           }
 
           .toggle-upload-header-navbar-steps-number {
@@ -116,30 +121,115 @@
       height: 640px;
 
       form {
-        width: 70%;
+        width: 80%;
+        text-align: center;
+        overflow: hidden;
 
         .upload-form-group {
 
           position: relative;
-          margin-bottom: 20%;
+          margin-bottom: 40px;
+
+          &::after {
+            content: attr(data-placeholder);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 13px;
+            color: #C7C7CD;
+            line-height: 16px;
+            pointer-events: none;
+            opacity: 1;
+          }
 
           input {
             width: 100%;
-            border: none;
+            height: 60px;
             outline: none;
             font-size: 15px;
             font-weight: 400;
             line-height: 24px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
             background-color: transparent;
-            padding-bottom: 5px;
+            padding: 20px 0px 0px 10px;
+            &:focus {
+              border: 1px solid #0461D4;
+            }
           }
-          .upload-form-border {
-            position: absolute;
-            left: 0;
-            height: 100%;
+          .upload-form-textarea {
+            position: relative;
             width: 100%;
-            border-bottom: 2px solid black;
+            resize: none;
+            outline: none;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            background-color: transparent;
+            &-title {
+              height: 100px;
+              padding: 25px 10px;
+            }
+            &-description {
+              height: 200px;
+              padding: 30px 10px;
+            }
+            &-original-author {
+              height: 80px;
+              padding: 25px 10px;
+            }
+            &-original-views {
+              height: 80px;
+              padding: 25px 10px;
+            }
+            &-hashtags {
+              height: 80px;
+              padding: 25px 10px;
+            }
+            &:focus {
+              border: 1px solid #0461D4;
+            }
+          }
+        }
+
+        .upload-button {
+          border: none;
+          outline: none;
+          background-color: #0461D4;
+          color: white;
+          width: 250px;
+          height: 40px;
+          border-radius: 3px;
+          -webkit-user-select: none;
+          &--disabled {
+            background-color: #969595;
             pointer-events: none;
+          }
+        }
+        .thumbnail-header {
+          text-align: left;
+
+          h1 {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            margin-bottom: 10px;
+          }
+          .thumbnail-slideshow {
+
+            display: flex;
+            justify-content: space-around;
+
+            .thumbnail-preview {
+              width: 200px;
+              height: 100px;
+              object-fit: cover;
+              border-radius: 3px;
+              cursor: pointer;
+              border: 2px solid transparent;
+              &--selected {
+                border: 2px solid #0461D4;
+              }
+            }
           }
         }
       }
@@ -162,7 +252,7 @@
         h1 {
           margin: 15px;
           display: block;
-          font-size: 17px;
+          font-size: 15px;
           font-weight: 400;
           line-height: 24px;
         }
@@ -175,7 +265,11 @@
             .upload-select-input {
               border-bottom-right-radius: 0px !important;
               border-bottom-left-radius: 0px !important;
-              border-bottom: 1px solid black !important;
+              border-bottom: 1px solid #ccc !important;
+            }
+            .upload-select-input::after {
+              transform: rotate(135deg) !important;
+              top: 17px !important;
             }
             .upload-select-options {
               display: block !important;
@@ -184,13 +278,13 @@
 
           .upload-select-input {
             position: relative;
-            border: 1px solid #969595;
+            border: 1px solid #0461D4;
             border-radius: 5px;
             text-align: center;
-            padding-top: 8px;
-            font-size: 16px;
+            padding-top: 9px;
+            font-size: 14px;
+            font-family: Helvetica;
             font-weight: 500;
-            position: relative;
             width: 100%;
             height: 40px;
             -webkit-user-select: none;
@@ -202,11 +296,11 @@
               width: 10px;
               height: 10px;
               box-shadow: -2px 2px 0 black;
-              transform: rotate(315deg)
+              transform: rotate(315deg);
             }
           }
           .upload-select-options {
-            border: 1px solid #969595;
+            border: 1px solid #0461D4;
             position: absolute;
             width: 100%;
             border-radius: 5px;
@@ -224,11 +318,12 @@
               margin: 0;
               li {
                 padding: 10px;
-                font-size: 13px;
+                font-size: 14px;
                 font-weight: 400;
                 position: relative;
                 overflow: hidden;
                 text-align: center;
+                font-family: Helvetica;
                 -webkit-user-select: none;
                 &:hover {
                   background-color: #e6e6e6;

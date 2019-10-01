@@ -23,7 +23,11 @@ interface WriteOnly {
   id?: number,
   step?: number,
   uploadVia?: string,
-  selectedUploadForm?: boolean
+  selectedUploadForm?: boolean,
+  selectedImage?: number,
+  originalAuthor?: string,
+  originalViews?: string,
+  hashtags?: string
 }
 
 const UPLOAD_TAB_CLASS = 'toggle-upload-header-navbar-steps'
@@ -44,13 +48,17 @@ class Upload extends Component<ReadOnly, WriteOnly> {
       description: '',
       step: 1,
       uploadVia: '',
-      selectedUploadForm: false
+      selectedUploadForm: false,
+      selectedImage: 1,
+      originalAuthor: '',
+      originalViews: '',
+      hashtags: ''
     }
     this.submitUploadForm = this.submitUploadForm.bind(this)
     this.submitRevisionForm = this.submitRevisionForm.bind(this)
   }
 
-  private onChange = (event:React.ChangeEvent<HTMLInputElement>): void => {
+  private onChange = (event: any): void => {
     this.setState({[event.target.name]: event.target.value})
   }
 
@@ -66,6 +74,34 @@ class Upload extends Component<ReadOnly, WriteOnly> {
 
   validateForm = () => {
     return true
+  }
+
+  validateSteps = () => {
+    const { step, uploadVia, uploadStatus, title, description } = this.state
+
+    switch(step) {
+      case 1:
+        if (uploadVia === '') {
+          return false
+        }
+        else return true
+
+      case 2:
+        if (!uploadStatus) {
+          return false
+        }
+        else {
+          return true
+        }
+
+      case 3:
+        if (title === '' || description === '') {
+          return false
+        }
+        else {
+          return true
+        }
+    }
   }
 
   submitUploadForm(event: any): any {
@@ -158,9 +194,10 @@ class Upload extends Component<ReadOnly, WriteOnly> {
   }
 
   render() {
-    const { step, selectedUploadForm } = this.state
+    const { step, selectedUploadForm, uploadVia, url, loading, selectedImage } = this.state
     const classNameTab = UPLOAD_TAB_CLASS
     const selectedClassNameTab = UPLOAD_TAB_CLASS + '--selected'
+    const disabledClassNameTab = UPLOAD_TAB_CLASS + '--disabled'
     const classNameButton = FORM_BUTTON_CLASS
     const disabledClassNameButton = FORM_BUTTON_CLASS + '--disabled'
     const classNameSelect = UPLOAD_SELECT_CLASS
@@ -194,28 +231,59 @@ class Upload extends Component<ReadOnly, WriteOnly> {
         )
         break
       case 2:
-        renderStep = (
-          <form>
-            <div className="upload-form-group">
-              <input type="text" name="url" autoFocus value={this.state.url} onChange={this.onChange} placeholder="url" />
-              <span className="upload-form-border"/>
-            </div>
-          </form>
-        )
+        if (uploadVia === 'link') {
+          renderStep = (
+            <form>
+              <div className="upload-form-group" data-placeholder="Url (required)">
+                <input type="text" name="url" autoFocus value={this.state.url} onChange={this.onChange} />
+              </div>
+              <button type="button" className={cx('upload-button', {['upload-button--disabled']: Boolean(url.length < 1)})} onClick={this.submitUploadForm}>{loading ? <Loading loading={loading}/> : 'Process'}</button>
+            </form>
+          )
+        }
+        if (uploadVia === 'file') {
+          renderStep = (
+            <div></div>
+          )
+        }
         break
       case 3:
         renderStep = (
           <form>
-            <div className="upload-form-group">
-              <input type="text" name="title" autoFocus value={this.state.title} onChange={this.onChange} placeholder="title" />
-              <span className="upload-form-border"/>
+            <div className="upload-form-group" data-placeholder="Title (required)">
+              <textarea className="upload-form-textarea upload-form-textarea-title" name="title" autoFocus value={this.state.title} onChange={this.onChange} />
             </div>
-            <div className="upload-form-group">
-              <input type="text" name="description" autoFocus value={this.state.description} onChange={this.onChange} placeholder="description" />
-              <span className="upload-form-border"/>
+            <div className="upload-form-group" data-placeholder="Description (required)">
+              <textarea className="upload-form-textarea upload-form-textarea-description" name="description" value={this.state.description} onChange={this.onChange} />
+            </div>
+            <div className="thumbnail-header">
+             <h1>Thumbnail</h1>
+             <div className="thumbnail-slideshow">
+                <img className={cx('thumbnail-preview', {['thumbnail-preview--selected']: Boolean(selectedImage === 1)})} src="media/default/background.jpg" onClick={() => this.setState({selectedImage: 1})}/>
+                <img className={cx('thumbnail-preview', {['thumbnail-preview--selected']: Boolean(selectedImage === 2)})} src="media/default/background.jpg" onClick={() => this.setState({selectedImage: 2})}/>
+                <img className={cx('thumbnail-preview', {['thumbnail-preview--selected']: Boolean(selectedImage === 3)})} src="media/default/background.jpg" onClick={() => this.setState({selectedImage: 3})}/>
+             </div>
             </div>
           </form>
         )
+        break
+      case 4:
+        renderStep = (
+          <form>
+            <div className="upload-form-group" data-placeholder="Original author (optional)">
+              <textarea className="upload-form-textarea upload-form-textarea-original-author" name="original-author" autoFocus value={this.state.originalAuthor} onChange={this.onChange} />
+            </div>
+            <div className="upload-form-group" data-placeholder="Original views (optional)">
+              <textarea className="upload-form-textarea upload-form-textarea-original-views" name="original-views" value={this.state.originalViews} onChange={this.onChange} />
+            </div>
+            <div className="upload-form-group" data-placeholder="Hashtags (optional)">
+              <textarea className="upload-form-textarea upload-form-textarea-hashtags" name="hashtags" value={this.state.hashtags} onChange={this.onChange} />
+            </div>
+          </form>
+        )
+        break
+
+      case 5:
         break
 
     }
@@ -225,7 +293,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
           <div className="toggle-upload-header">
             <h1>Upload video</h1>
             <div className="toggle-upload-header-navbar">
-              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==1)})} onClick={() => this.setState({step: 1})}>
+              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==1)}, {[disabledClassNameTab]: Boolean(false)})} onClick={() => this.setState({step: 1})}>
                 <span className="toggle-upload-header-navbar-steps-number">
                  1
                 </span>
@@ -233,7 +301,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
                  Upload form
                 </span>
               </span>
-              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==2)})} onClick={() => this.setState({step: 2})}>
+              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==2)}, {[disabledClassNameTab]: Boolean(false)})} onClick={() => this.setState({step: 2})}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   2
                </span>
@@ -241,7 +309,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
                 Source
                </span>
               </span>
-              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==3)})} onClick={() => this.setState({step: 3})}>
+              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==3)}, {[disabledClassNameTab]: Boolean(false)})} onClick={() => this.setState({step: 3})}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   3
                 </span>
@@ -249,7 +317,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
                  Basic Info
                 </span>
               </span>
-              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==4)})} onClick={() => this.setState({step: 4})}>
+              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==4)}, {[disabledClassNameTab]: Boolean(false)})} onClick={() => this.setState({step: 4})}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   4
                 </span>
@@ -257,7 +325,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
                  Advanced Settings
                 </span>
               </span>
-              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==5)})} onClick={() => this.setState({step: 5})}>
+              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==5)}, {[disabledClassNameTab]: Boolean(false)})} onClick={() => this.setState({step: 5})}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   5
                 </span>
@@ -273,8 +341,8 @@ class Upload extends Component<ReadOnly, WriteOnly> {
           </div>
           <hr />
           <div className="toggle-upload-footer">
-            <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==1)})} onClick={this.prevStep}>Back</button>
-            <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==5)})} onClick={this.nextStep}>Next</button>
+            <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==1 || !this.validateSteps())})} onClick={this.prevStep}>Back</button>
+            <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==5 || !this.validateSteps())})} onClick={this.nextStep}>Next</button>
           </div>
         </div>
       </div>
