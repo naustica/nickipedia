@@ -80,8 +80,13 @@
             margin: 1rem;
             margin-top: 2rem;
             overflow: hidden;
+            -webkit-user-select: none;
             &:active, &:focus {
               outline: none;
+            }
+            &--disabled {
+              pointer-events: none;
+              background-color: grey;
             }
           }
 
