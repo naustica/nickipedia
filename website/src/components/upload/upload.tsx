@@ -1,13 +1,37 @@
 import React, {Component} from 'react'
-import { IoMdLink, IoIosCloudUpload } from 'react-icons/io'
+import { IoMdLink, IoMdCloudUpload } from 'react-icons/io'
 import { IconContext } from "react-icons"
+import cx from 'classnames'
 
 import './upload.scss'
 
 import Loading from './../loading/loading'
 
 
-class Upload extends Component<{style: any, reference: any}, {url?: string, loading?: boolean, urlMessage?: string, uploadStatus?: boolean, title?: string, description?: string, id?: number, step?: number, uploadVia?: string}> {
+interface ReadOnly {
+  style: any,
+  reference: any
+}
+
+interface WriteOnly {
+  url?: string,
+  loading?: boolean,
+  urlMessage?: string,
+  uploadStatus?: boolean,
+  title?: string,
+  description?: string,
+  id?: number,
+  step?: number,
+  uploadVia?: string,
+  selectedUploadForm?: boolean
+}
+
+const UPLOAD_TAB_CLASS = 'toggle-upload-header-navbar-steps'
+const FORM_BUTTON_CLASS = 'upload-form-confirm-button'
+const UPLOAD_SELECT_CLASS = 'upload-select'
+
+
+class Upload extends Component<ReadOnly, WriteOnly> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -19,47 +43,31 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
       title: '',
       description: '',
       step: 1,
-      uploadVia: ''
+      uploadVia: '',
+      selectedUploadForm: false
     }
     this.submitUploadForm = this.submitUploadForm.bind(this)
     this.submitRevisionForm = this.submitRevisionForm.bind(this)
   }
 
-  onChange = (event:React.ChangeEvent<HTMLInputElement>): void => {
+  private onChange = (event:React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({[event.target.name]: event.target.value})
   }
 
-  nextStep = () => {
+  private nextStep = (): void => {
     const { step } = this.state
     this.setState({step: step + 1})
   }
 
-  prevStep = () => {
+  private prevStep = (): void => {
     const { step } = this.state
     this.setState({step: step - 1, urlMessage: '', url: '', loading: false})
-  }
-
-  changeStep = (event: any): void => {
-    if (event.target.id === 'upload-step-1') {
-      this.setState({step: 1})
-    }
-    if (event.target.id === 'upload-step-2') {
-      this.setState({step: 2})
-    }
-    if (event.target.id === 'upload-step-3') {
-      this.setState({step: 3})
-    }
-    if (event.target.id === 'upload-step-4') {
-      this.setState({step: 4})
-    }
-    if (event.target.id === 'upload-step-5') {
-      this.setState({step: 5})
-    }
   }
 
   validateForm = () => {
     return true
   }
+
   submitUploadForm(event: any): any {
     //var form = event.target as HTMLFormElement;
     const access_token = localStorage.getItem('access_token')
@@ -134,8 +142,29 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
       }
   }
 
+  renderUploadSelection = () => {
+    const { uploadVia } = this.state
+
+    switch (uploadVia) {
+      case 'link':
+        return 'Link Upload'
+
+      case 'file':
+        return 'File Upload'
+
+      case '':
+        return ''
+    }
+  }
+
   render() {
-    const { step } = this.state
+    const { step, selectedUploadForm } = this.state
+    const classNameTab = UPLOAD_TAB_CLASS
+    const selectedClassNameTab = UPLOAD_TAB_CLASS + '--selected'
+    const classNameButton = FORM_BUTTON_CLASS
+    const disabledClassNameButton = FORM_BUTTON_CLASS + '--disabled'
+    const classNameSelect = UPLOAD_SELECT_CLASS
+    const selectedClassNameSelect = UPLOAD_SELECT_CLASS + '--selected'
 
     let renderStep: any = (<div></div>)
 
@@ -143,11 +172,23 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
       case 1:
         renderStep = (
           <div className="toggle-upload-method">
-            <div className="upload-method-card">
-              <h1>Upload video via link</h1>
+            <div className="upload-icon">
+              <IconContext.Provider value={{size: "100px"}}>
+                <IoMdCloudUpload style={{paddingBottom: "5px", color: "#969595"}}/>
+              </IconContext.Provider>
             </div>
-            <div className="upload-method-card">
-              <h1>Upload video via file</h1>
+            <h1>Choose between Link and File Upload</h1>
+            <div className={cx(classNameSelect, {[selectedClassNameSelect]: selectedUploadForm})} onClick={() => this.setState({selectedUploadForm: !selectedUploadForm})}>
+              <div className="upload-select-input">
+                <span>{this.renderUploadSelection()}</span>
+              </div>
+              <div className="upload-select-options">
+                <ul>
+                  <li onClick={() => this.setState({uploadVia: 'link'})}>Link Upload</li>
+                  <hr />
+                  <li onClick={() => this.setState({uploadVia: 'file'})}>File Upload</li>
+                </ul>
+              </div>
             </div>
           </div>
         )
@@ -184,7 +225,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
           <div className="toggle-upload-header">
             <h1>Upload video</h1>
             <div className="toggle-upload-header-navbar">
-              <span className="toggle-upload-header-navbar-steps" id="upload-step-1" onClick={this.changeStep}>
+              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==1)})} onClick={() => this.setState({step: 1})}>
                 <span className="toggle-upload-header-navbar-steps-number">
                  1
                 </span>
@@ -192,7 +233,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
                  Upload form
                 </span>
               </span>
-              <span className="toggle-upload-header-navbar-steps" id="upload-step-2" onClick={this.changeStep}>
+              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==2)})} onClick={() => this.setState({step: 2})}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   2
                </span>
@@ -200,7 +241,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
                 Source
                </span>
               </span>
-              <span className="toggle-upload-header-navbar-steps" id="upload-step-3" onClick={this.changeStep}>
+              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==3)})} onClick={() => this.setState({step: 3})}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   3
                 </span>
@@ -208,7 +249,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
                  Basic Info
                 </span>
               </span>
-              <span className="toggle-upload-header-navbar-steps" id="upload-step-4" onClick={this.changeStep}>
+              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==4)})} onClick={() => this.setState({step: 4})}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   4
                 </span>
@@ -216,7 +257,7 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
                  Advanced Settings
                 </span>
               </span>
-              <span className="toggle-upload-header-navbar-steps" id="upload-step-5" onClick={this.changeStep}>
+              <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==5)})} onClick={() => this.setState({step: 5})}>
                 <span className="toggle-upload-header-navbar-steps-number">
                   5
                 </span>
@@ -232,8 +273,8 @@ class Upload extends Component<{style: any, reference: any}, {url?: string, load
           </div>
           <hr />
           <div className="toggle-upload-footer">
-            <button type="button" className="upload-form-confirm-button" onClick={this.prevStep}>Back</button>
-            <button type="button" className="upload-form-confirm-button" onClick={this.nextStep}>Next</button>
+            <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==1)})} onClick={this.prevStep}>Back</button>
+            <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==5)})} onClick={this.nextStep}>Next</button>
           </div>
         </div>
       </div>
