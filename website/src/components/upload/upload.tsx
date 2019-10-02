@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { IoMdLink, IoMdCloudUpload } from 'react-icons/io'
+import { IoMdLink, IoMdCloudUpload, IoMdCloudDone, IoMdFolder, IoMdFolderOpen } from 'react-icons/io'
 import { IconContext } from "react-icons"
 import cx from 'classnames'
 
@@ -27,7 +27,8 @@ interface WriteOnly {
   selectedImage?: number,
   originalAuthor?: string,
   originalViews?: string,
-  hashtags?: string
+  hashtags?: string,
+  drag?: boolean
 }
 
 const UPLOAD_TAB_CLASS = 'toggle-upload-header-navbar-steps'
@@ -52,7 +53,8 @@ class Upload extends Component<ReadOnly, WriteOnly> {
       selectedImage: 1,
       originalAuthor: '',
       originalViews: '',
-      hashtags: ''
+      hashtags: '',
+      drag: false
     }
     this.submitUploadForm = this.submitUploadForm.bind(this)
     this.submitRevisionForm = this.submitRevisionForm.bind(this)
@@ -101,6 +103,13 @@ class Upload extends Component<ReadOnly, WriteOnly> {
         else {
           return true
         }
+      case 4:
+
+        return true
+
+      case 5:
+
+        return true
     }
   }
 
@@ -178,6 +187,26 @@ class Upload extends Component<ReadOnly, WriteOnly> {
       }
   }
 
+  startFileUpload = (files: any) => {
+    console.log(files)
+  }
+
+  dragOverFile = (event: any) => {
+    event.preventDefault()
+    this.setState({drag: true})
+  }
+
+  dragLeaveFile = (event: any) => {
+    event.preventDefault()
+    this.setState({drag: false})
+  }
+
+  dropFile = (event: any) => {
+    event.preventDefault()
+    this.startFileUpload(event.dataTransfer.files)
+    this.nextStep()
+  }
+
   renderUploadSelection = () => {
     const { uploadVia } = this.state
 
@@ -190,6 +219,25 @@ class Upload extends Component<ReadOnly, WriteOnly> {
 
       case '':
         return ''
+    }
+  }
+
+  renderFileUploadIcon = () => {
+    const { drag } = this.state
+
+    if (drag) {
+      return (
+        <IconContext.Provider value={{size: "100px"}}>
+          <IoMdFolderOpen style={{paddingBottom: "5px", color: "#969595"}}/>
+        </IconContext.Provider>
+      )
+    }
+    else {
+      return (
+        <IconContext.Provider value={{size: "100px"}}>
+          <IoMdFolder style={{paddingBottom: "5px", color: "#969595"}}/>
+        </IconContext.Provider>
+      )
     }
   }
 
@@ -234,16 +282,31 @@ class Upload extends Component<ReadOnly, WriteOnly> {
         if (uploadVia === 'link') {
           renderStep = (
             <form>
+              <div className="upload-console-error"></div>
               <div className="upload-form-group" data-placeholder="Url (required)">
                 <input type="text" name="url" autoFocus value={this.state.url} onChange={this.onChange} />
               </div>
-              <button type="button" className={cx('upload-button', {['upload-button--disabled']: Boolean(url.length < 1)})} onClick={this.submitUploadForm}>{loading ? <Loading loading={loading}/> : 'Process'}</button>
+              <button type="button" className={cx('process-button', {['process-button--disabled']: Boolean(url.length < 1)})} onClick={this.submitUploadForm}>{loading ? <Loading loading={loading}/> : 'Process'}</button>
+              <div className="link-upload-status">
+                <div className="link-upload-status-fill" />
+              </div>
             </form>
           )
         }
         if (uploadVia === 'file') {
           renderStep = (
-            <div></div>
+            <div className="file-upload" onDragOver={this.dragOverFile} onDragLeave={this.dragLeaveFile} onDrop={this.dropFile}>
+              <div className="file-upload-console">
+                <div className="file-upload-icon">
+                  {this.renderFileUploadIcon()}
+                </div>
+                <h1>Drag and drop a file that you want to upload</h1>
+                <button className="select-file-button">Select File</button>
+                <div className="file-upload-status">
+                  <div className="file-upload-status-fill" />
+                </div>
+              </div>
+            </div>
           )
         }
         break
@@ -271,10 +334,10 @@ class Upload extends Component<ReadOnly, WriteOnly> {
         renderStep = (
           <form>
             <div className="upload-form-group" data-placeholder="Original author (optional)">
-              <textarea className="upload-form-textarea upload-form-textarea-original-author" name="original-author" autoFocus value={this.state.originalAuthor} onChange={this.onChange} />
+              <input name="originalAuthor" autoFocus value={this.state.originalAuthor} onChange={this.onChange} />
             </div>
             <div className="upload-form-group" data-placeholder="Original views (optional)">
-              <textarea className="upload-form-textarea upload-form-textarea-original-views" name="original-views" value={this.state.originalViews} onChange={this.onChange} />
+              <input name="originalViews" value={this.state.originalViews} onChange={this.onChange} />
             </div>
             <div className="upload-form-group" data-placeholder="Hashtags (optional)">
               <textarea className="upload-form-textarea upload-form-textarea-hashtags" name="hashtags" value={this.state.hashtags} onChange={this.onChange} />
@@ -284,6 +347,17 @@ class Upload extends Component<ReadOnly, WriteOnly> {
         break
 
       case 5:
+        renderStep = (
+          <div className="toggle-upload-method">
+            <div className="upload-icon">
+              <IconContext.Provider value={{size: "100px"}}>
+                <IoMdCloudDone style={{paddingBottom: "5px", color: "#969595"}}/>
+              </IconContext.Provider>
+            </div>
+            <input type="file" style={{display: "none"}} />
+            <button className="upload-button">Upload</button>
+          </div>
+        )
         break
 
     }
@@ -341,7 +415,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
           </div>
           <hr />
           <div className="toggle-upload-footer">
-            <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==1 || !this.validateSteps())})} onClick={this.prevStep}>Back</button>
+            <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==1)})} onClick={this.prevStep}>Back</button>
             <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==5 || !this.validateSteps())})} onClick={this.nextStep}>Next</button>
           </div>
         </div>
