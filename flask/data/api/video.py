@@ -13,26 +13,23 @@ from flask_jwt_extended import decode_token
 bp = Blueprint('video_api', __name__, url_prefix='/api')
 
 
-@bp.route('/video', methods=['POST'])
+@bp.route('/video/add_from_file', methods=['POST'])
 @permission_needed
 def create_video():
     """
-    example: POST: host/api/video
+    example: POST: host/api/video/add_from_file
     """
 
-    title = request.form.get('title')
-    text = request.form.get('text')
-    author_id = request.form.get('author_id')
     file = request.files.get('file')
 
-    if not title:
-        return make_response(jsonify(message='no title found.')), 400
+    access_token = request.headers.get('Authorization')
 
-    if not text:
-        return make_response(jsonify(message='no text found.')), 400
+    decoded_token = decode_token(access_token)
 
-    if not author_id:
-        return make_response(jsonify(message='no author_id found.')), 400
+    author_id = decoded_token['identity']
+
+    title = ''
+    text = ''
 
     if not file:
         return make_response(jsonify(message='no file found.')), 400
@@ -52,7 +49,7 @@ def create_video():
 
     new_video = Video(author_id, title, text, path, new_filename)
     new_video.save()
-    return make_response(jsonify(message='video created.')), 201
+    return make_response(video_schema.jsonify(new_video)), 201
 
 
 @bp.route('/video/add_from_url', methods=['GET'])
