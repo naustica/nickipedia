@@ -79,6 +79,9 @@ def add_video_from_url():
 
         title = video.title
         text = video.description
+        original_author = video.author
+        views = video.viewcount
+        length = video.length
         best = video.getbest(preftype='mp4')
 
         if not os.path.exists(path):
