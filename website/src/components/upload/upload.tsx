@@ -19,6 +19,7 @@ interface WriteOnly {
   error?: string,
   processStatus?: boolean,
   uploadStatus?: boolean,
+  processProgress?: number,
   title?: string,
   description?: string,
   id?: number,
@@ -42,8 +43,9 @@ const initialState = {
   error: '',
   processStatus: false,
   uploadStatus: false,
+  processProgress: 0,
   step: 1,
-  uploadMethod: '',
+  uploadMethod: 'file',
   selectedUploadForm: false,
   selectedImage: 1,
   id: 0,
@@ -139,6 +141,51 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     }
   }
 
+  private processFile = async (file: File): Promise<void> => {
+    const access_token = localStorage.getItem('access_token')
+    const request = new XMLHttpRequest()
+    const formData = new FormData()
+
+    formData.append('file', file)
+
+    if (this.validateForm()) {
+      this.setState({loading: true, error: ''})
+      try {
+
+        request.onreadystatechange = () => {
+          if (request.readyState === 4 && request.status === 201) {
+            let data = JSON.parse(request.response)
+            this.setState({loading: false, id: data.id, processStatus: true})
+            this.nextStep()
+          }
+          if (request.readyState === 4 && request.status !== 201) {
+            this.setState({loading: false, error: request.statusText})
+            throw this.state.error
+          }
+        }
+
+        request.upload.onprogress = this.updateProgress
+        request.open('POST', 'api/video/add_from_file', true)
+        request.setRequestHeader("Authorization", access_token)
+        request.onerror = () => {
+          this.setState({loading: false, error: request.statusText})
+          throw this.state.error
+        }
+        request.send(formData)
+      }
+      catch (error) {
+        this.setState({loading: false, error: error})
+      }
+    }
+  }
+
+  updateProgress = (event: { lengthComputable: any, loaded: number, total: number }) => {
+    if (event.lengthComputable) {
+      let percent = (event.loaded / event.total) * 100
+      this.setState({processProgress: percent})
+    }
+  }
+
   private addInfo = async (): Promise<void> => {
     const access_token = sessionStorage.getItem('access_token')
     if (this.validateForm()) {
@@ -164,10 +211,6 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     }
   }
 
-  startFileUpload = (files: any) => {
-    console.log(files)
-  }
-
   dragOverFile = (event: any) => {
     event.preventDefault()
     this.setState({drag: true})
@@ -180,8 +223,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
 
   dropFile = (event: any) => {
     event.preventDefault()
-    this.startFileUpload(event.dataTransfer.files)
-    this.nextStep()
+    this.processFile(event.dataTransfer.files[0])
   }
 
   renderUploadSelection = () => {
@@ -219,7 +261,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
   }
 
   render() {
-    const { step, selectedUploadForm, uploadMethod, url, loading, selectedImage, error, uploadStatus } = this.state
+    const { step, selectedUploadForm, uploadMethod, url, loading, selectedImage, error, uploadStatus, processProgress } = this.state
     const classNameTab = UPLOAD_TAB_CLASS
     const selectedClassNameTab = UPLOAD_TAB_CLASS + '--selected'
     const disabledClassNameTab = UPLOAD_TAB_CLASS + '--disabled'
@@ -279,7 +321,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
                 <h1>Drag and drop a file that you want to upload</h1>
                 <button className="select-file-button">Select File</button>
                 <div className="file-upload-status">
-                  <div className="file-upload-status-fill" />
+                  <div className="file-upload-status-fill" style={{width: processProgress + '%'}}/>
                 </div>
               </div>
             </div>
