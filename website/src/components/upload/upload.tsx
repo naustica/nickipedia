@@ -59,9 +59,16 @@ const initialState = {
 
 
 class Upload extends Component<ReadOnly, WriteOnly> {
+
+  fileInput: any
+
   constructor(props:any) {
     super(props)
     this.state = initialState
+  }
+
+  fileInputRef = (fileInput: any): void => {
+    this.fileInput = fileInput
   }
 
   private onChange = (event: { target: { name: any, value: any } }): void => {
@@ -225,6 +232,9 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     event.preventDefault()
     this.processFile(event.dataTransfer.files[0])
   }
+  getInputFile = () => {
+    this.fileInput.click()
+  }
 
   renderUploadSelection = () => {
     const { uploadMethod } = this.state
@@ -319,7 +329,8 @@ class Upload extends Component<ReadOnly, WriteOnly> {
                   {this.renderFileUploadIcon()}
                 </div>
                 <h1>Drag and drop a file that you want to upload</h1>
-                <button className="select-file-button">Select File</button>
+                <input type="file" style={{display: "none"}} ref={this.fileInputRef}/>
+                <button className="select-file-button" onClick={this.getInputFile}>Select File</button>
                 <div className="file-upload-status">
                   <div className="file-upload-status-fill" style={{width: processProgress + '%'}}/>
                 </div>
@@ -372,7 +383,6 @@ class Upload extends Component<ReadOnly, WriteOnly> {
                 <IoMdCloudDone style={{paddingBottom: "5px", color: "#969595"}}/>
               </IconContext.Provider>
             </div>
-            <input type="file" style={{display: "none"}} />
             <button className={cx("upload-button", {["upload-button--success"]: Boolean(uploadStatus)})} onClick={this.addInfo}>{uploadStatus ? 'Success': 'Upload'}</button>
           </div>
         )
