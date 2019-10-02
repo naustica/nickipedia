@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { IoMdLink, IoMdCloudUpload, IoMdCloudDone, IoMdFolder, IoMdFolderOpen } from 'react-icons/io'
+import { IoMdCloudUpload, IoMdCloudDone, IoMdFolder, IoMdFolderOpen } from 'react-icons/io'
 import { IconContext } from "react-icons"
 import cx from 'classnames'
 
@@ -16,13 +16,14 @@ interface ReadOnly {
 interface WriteOnly {
   url?: string,
   loading?: boolean,
-  urlMessage?: string,
+  error?: string,
+  processStatus?: boolean,
   uploadStatus?: boolean,
   title?: string,
   description?: string,
   id?: number,
   step?: number,
-  uploadVia?: string,
+  uploadMethod?: string,
   selectedUploadForm?: boolean,
   selectedImage?: number,
   originalAuthor?: string,
@@ -35,32 +36,33 @@ const UPLOAD_TAB_CLASS = 'toggle-upload-header-navbar-steps'
 const FORM_BUTTON_CLASS = 'upload-form-confirm-button'
 const UPLOAD_SELECT_CLASS = 'upload-select'
 
+const initialState = {
+  url: '',
+  loading: false,
+  error: '',
+  processStatus: false,
+  uploadStatus: false,
+  step: 1,
+  uploadMethod: '',
+  selectedUploadForm: false,
+  selectedImage: 1,
+  id: 0,
+  title: '',
+  description: '',
+  originalAuthor: '',
+  originalViews: '',
+  hashtags: '',
+  drag: false
+}
+
 
 class Upload extends Component<ReadOnly, WriteOnly> {
   constructor(props:any) {
     super(props)
-    this.state = {
-      url: '',
-      loading: false,
-      urlMessage: '',
-      uploadStatus: false,
-      id: 0,
-      title: '',
-      description: '',
-      step: 1,
-      uploadVia: '',
-      selectedUploadForm: false,
-      selectedImage: 1,
-      originalAuthor: '',
-      originalViews: '',
-      hashtags: '',
-      drag: false
-    }
-    this.submitUploadForm = this.submitUploadForm.bind(this)
-    this.submitRevisionForm = this.submitRevisionForm.bind(this)
+    this.state = initialState
   }
 
-  private onChange = (event: any): void => {
+  private onChange = (event: { target: { name: any, value: any } }): void => {
     this.setState({[event.target.name]: event.target.value})
   }
 
@@ -71,25 +73,25 @@ class Upload extends Component<ReadOnly, WriteOnly> {
 
   private prevStep = (): void => {
     const { step } = this.state
-    this.setState({step: step - 1, urlMessage: '', url: '', loading: false})
+    this.setState({step: step - 1, error: ''})
   }
 
-  validateForm = () => {
+  private validateForm = (): boolean => {
     return true
   }
 
-  validateSteps = () => {
-    const { step, uploadVia, uploadStatus, title, description } = this.state
+  private validateSteps = (): boolean => {
+    const { step, uploadMethod, processStatus, title, description } = this.state
 
     switch(step) {
       case 1:
-        if (uploadVia === '') {
+        if (uploadMethod === '') {
           return false
         }
         else return true
 
       case 2:
-        if (!uploadStatus) {
+        if (!processStatus) {
           return false
         }
         else {
@@ -113,78 +115,53 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     }
   }
 
-  submitUploadForm(event: any): any {
-    //var form = event.target as HTMLFormElement;
+  private processLink = async (): Promise<void> => {
     const access_token = localStorage.getItem('access_token')
-    event.preventDefault();
     if (this.validateForm()) {
-      this.setState({loading: true, urlMessage: ''})
-      fetch('api/video/add_from_url?url=' + this.state.url, {
-        headers: new Headers({
-          "Authorization": access_token
+      this.setState({loading: true, error: ''})
+      try {
+        const response = await fetch('api/video/add_from_url?url=' + this.state.url, {
+          headers: new Headers({
+            "Authorization": access_token
+          })
         })
-      })
-        .then ((response => {
-          const status = response.status
-          const data = response.json()
-          return Promise.all([status, data])
-        }))
-        .then(([status, data]) => {
-          if (status === 201) {
-            this.setState({loading: false, urlMessage: 'video successfully uploaded', title: data.title, description: data.text, id: data.id, uploadStatus: true})
-            this.nextStep()
-            //form.reset()
-          }
-          else {
-            this.setState({loading: false, urlMessage: 'api call error'})
-            console.log(status)
-          }
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        if (!response.ok) {
+          this.setState({loading: false, error: response.status + ' ' + response.statusText})
+          throw this.state.error
+        }
+        const data = await response.json()
+        this.setState({loading: false, title: data.title, description: data.text, id: data.id, processStatus: true})
+        this.nextStep()
       }
+      catch (error) {
+        this.setState({loading: false, error: error})
+      }
+    }
   }
-  submitRevisionForm(event: any): any {
-    //var form = event.target as HTMLFormElement;
+
+  private addInfo = async (): Promise<void> => {
     const access_token = sessionStorage.getItem('access_token')
-    event.preventDefault();
     if (this.validateForm()) {
       this.setState({loading: true})
-      fetch('api/video?video_id=' + this.state.id, {
-        method: 'put',
-        headers: new Headers({
-          "Authorization": access_token,
-          "Content-Type": "application/json"
-        }),
-        body: JSON.stringify({title: this.state.title, text: this.state.description})
-      })
-        .then ((response => {
-          const status = response.status
-          const data = response.json()
-          return Promise.all([status, data])
-        }))
-        .then(([status, data]) => {
-          if (status === 201) {
-            this.setState({
-                loading: false,
-                uploadStatus: false,
-                urlMessage: 'video successfully updated',
-                url: '',
-                step: 1
-              })
-            //form.reset()
-          }
-          else {
-            this.setState({loading: false, urlMessage: 'api call error'})
-            console.log(status)
-          }
-          })
-          .catch(error => {
-            this.setState({loading: false})
-            console.log(error)
-          })
+      try {
+        const response = await fetch('api/video?video_id=' + this.state.id, {
+          method: 'put',
+          headers: new Headers({
+            "Authorization": access_token,
+            "Content-Type": "application/json"
+          }),
+          body: JSON.stringify({title: this.state.title, text: this.state.description})
+        })
+        if (!response.ok) {
+          this.setState({loading: false, error: response.status + ' ' + response.statusText})
+          throw this.state.error
+        }
+        this.setState({ loading: false, url: '', uploadStatus: true })
       }
+      catch (error) {
+        this.setState({loading: false, error: error})
+      }
+    }
   }
 
   startFileUpload = (files: any) => {
@@ -208,9 +185,9 @@ class Upload extends Component<ReadOnly, WriteOnly> {
   }
 
   renderUploadSelection = () => {
-    const { uploadVia } = this.state
+    const { uploadMethod } = this.state
 
-    switch (uploadVia) {
+    switch (uploadMethod) {
       case 'link':
         return 'Link Upload'
 
@@ -242,7 +219,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
   }
 
   render() {
-    const { step, selectedUploadForm, uploadVia, url, loading, selectedImage } = this.state
+    const { step, selectedUploadForm, uploadMethod, url, loading, selectedImage, error, uploadStatus } = this.state
     const classNameTab = UPLOAD_TAB_CLASS
     const selectedClassNameTab = UPLOAD_TAB_CLASS + '--selected'
     const disabledClassNameTab = UPLOAD_TAB_CLASS + '--disabled'
@@ -251,7 +228,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     const classNameSelect = UPLOAD_SELECT_CLASS
     const selectedClassNameSelect = UPLOAD_SELECT_CLASS + '--selected'
 
-    let renderStep: any = (<div></div>)
+    let renderStep: any
 
     switch (step) {
       case 1:
@@ -269,9 +246,9 @@ class Upload extends Component<ReadOnly, WriteOnly> {
               </div>
               <div className="upload-select-options">
                 <ul>
-                  <li onClick={() => this.setState({uploadVia: 'link'})}>Link Upload</li>
+                  <li onClick={() => this.setState({uploadMethod: 'link'})}>Link Upload</li>
                   <hr />
-                  <li onClick={() => this.setState({uploadVia: 'file'})}>File Upload</li>
+                  <li onClick={() => this.setState({uploadMethod: 'file'})}>File Upload</li>
                 </ul>
               </div>
             </div>
@@ -279,21 +256,20 @@ class Upload extends Component<ReadOnly, WriteOnly> {
         )
         break
       case 2:
-        if (uploadVia === 'link') {
+        if (uploadMethod === 'link') {
           renderStep = (
-            <form>
-              <div className="upload-console-error"></div>
+            <form onSubmit={(event) => event.preventDefault()}>
               <div className="upload-form-group" data-placeholder="Url (required)">
                 <input type="text" name="url" autoFocus value={this.state.url} onChange={this.onChange} />
               </div>
-              <button type="button" className={cx('process-button', {['process-button--disabled']: Boolean(url.length < 1)})} onClick={this.submitUploadForm}>{loading ? <Loading loading={loading}/> : 'Process'}</button>
+              <button type="button" className={cx('process-button', {['process-button--disabled']: Boolean(url.length < 1)})} onClick={this.processLink}>{loading ? <Loading loading={loading}/> : 'Process'}</button>
               <div className="link-upload-status">
                 <div className="link-upload-status-fill" />
               </div>
             </form>
           )
         }
-        if (uploadVia === 'file') {
+        if (uploadMethod === 'file') {
           renderStep = (
             <div className="file-upload" onDragOver={this.dragOverFile} onDragLeave={this.dragLeaveFile} onDrop={this.dropFile}>
               <div className="file-upload-console">
@@ -312,7 +288,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
         break
       case 3:
         renderStep = (
-          <form>
+          <form onSubmit={(event) => event.preventDefault()}>
             <div className="upload-form-group" data-placeholder="Title (required)">
               <textarea className="upload-form-textarea upload-form-textarea-title" name="title" autoFocus value={this.state.title} onChange={this.onChange} />
             </div>
@@ -332,7 +308,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
         break
       case 4:
         renderStep = (
-          <form>
+          <form onSubmit={(event) => event.preventDefault()}>
             <div className="upload-form-group" data-placeholder="Original author (optional)">
               <input name="originalAuthor" autoFocus value={this.state.originalAuthor} onChange={this.onChange} />
             </div>
@@ -355,7 +331,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
               </IconContext.Provider>
             </div>
             <input type="file" style={{display: "none"}} />
-            <button className="upload-button">Upload</button>
+            <button className={cx("upload-button", {["upload-button--success"]: Boolean(uploadStatus)})} onClick={this.addInfo}>{uploadStatus ? 'Success': 'Upload'}</button>
           </div>
         )
         break
@@ -416,6 +392,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
           <hr />
           <div className="toggle-upload-footer">
             <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==1)})} onClick={this.prevStep}>Back</button>
+            <div className="upload-console-error">{error}</div>
             <button type="button" className={cx(classNameButton, {[disabledClassNameButton]: Boolean(step==5 || !this.validateSteps())})} onClick={this.nextStep}>Next</button>
           </div>
         </div>
