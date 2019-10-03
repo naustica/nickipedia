@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { IoMdCloudUpload, IoMdCloudDone, IoMdFolder, IoMdFolderOpen } from 'react-icons/io'
 import { IconContext } from "react-icons"
 import cx from 'classnames'
@@ -139,7 +139,15 @@ class Upload extends Component<ReadOnly, WriteOnly> {
           throw this.state.error
         }
         const data = await response.json()
-        this.setState({loading: false, title: data.title, description: data.text, id: data.id, processStatus: true})
+        this.setState({
+          loading: false,
+          title: data.title,
+          description: data.text,
+          originalAuthor: data.original_author,
+          originalViews: data.original_views,
+          id: data.id,
+          processStatus: true
+        })
         this.nextStep()
       }
       catch (error) {
@@ -204,7 +212,13 @@ class Upload extends Component<ReadOnly, WriteOnly> {
             "Authorization": access_token,
             "Content-Type": "application/json"
           }),
-          body: JSON.stringify({title: this.state.title, text: this.state.description})
+          body: JSON.stringify({
+            title: this.state.title,
+            text: this.state.description,
+            original_author: this.state.originalAuthor,
+            original_views: this.state.originalViews,
+            hashtags: this.state.hashtags
+          })
         })
         if (!response.ok) {
           this.setState({loading: false, error: response.status + ' ' + response.statusText})
