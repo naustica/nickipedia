@@ -156,6 +156,50 @@ def update_video():
     return make_response(jsonify(message='video updated.')), 201
 
 
+@bp.route('/video/thumbnail', methods=['PUT'])
+@permission_needed
+def video_thumbnail():
+    """
+    example: PUT: host/api/video/thumbnail?id=0
+    """
+
+    video_id = request.args.get('id', default=0, type=int)
+
+    access_token = request.headers.get('Authorization')
+
+    decoded_token = decode_token(access_token)
+
+    author_id = decoded_token['identity']
+
+    video = Video.query.get(video_id)
+
+    if not video:
+        return make_response(jsonify(message='video not found')), 400
+
+    pic = request.files.get('file')
+
+    if not pic:
+        return make_response(jsonify(message='no file found.')), 400
+
+    filename = secure_filename(pic.filename)
+
+    if not fnmatch(filename, '*.jpg'):
+        return make_response(jsonify(message='the file format should be jpg.')), 400
+
+    path = '{}{}/{}'.format(upload_path, 'photos', author_id)
+
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    new_filename = secure_filename(str(datetime.now()) + '.jpg')
+    path = '{}{}{}'.format(path, '/', new_filename)
+    pic.save(path)
+
+    video.thumbnail = new_filename
+    video.save()
+    return make_response(jsonify(message='video thumbnail updated.')), 201
+
+
 @bp.route('/video', methods=['DELETE'])
 #@permission_needed
 def delete_video():
