@@ -19,7 +19,8 @@ interface WriteOnly {
   error?: string,
   processStatus?: boolean,
   uploadStatus?: boolean,
-  processProgress?: number,
+  processProgressVideoUpload?: number,
+  processProgressThumbnail?: number,
   title?: string,
   description?: string,
   id?: number,
@@ -43,7 +44,8 @@ const initialState = {
   error: '',
   processStatus: false,
   uploadStatus: false,
-  processProgress: 0,
+  processProgressVideoUpload: 0,
+  processProgressThumbnail: 0,
   step: 1,
   uploadMethod: 'file',
   selectedUploadForm: false,
@@ -194,10 +196,52 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     }
   }
 
+  private processThumbnail = async (file: File): Promise<void> => {
+    const access_token = localStorage.getItem('access_token')
+    const { id } = this.state
+    const request = new XMLHttpRequest()
+    const formData = new FormData()
+
+    formData.append('file', file)
+
+    if (this.validateForm()) {
+      this.setState({loading: true, error: ''})
+      try {
+
+        request.onreadystatechange = () => {
+          if (request.readyState === 4 && request.status === 201) {
+            this.setState({loading: false})
+          }
+          if (request.readyState === 4 && request.status !== 201) {
+            this.setState({loading: false, error: request.statusText})
+            throw this.state.error
+          }
+        }
+
+        request.upload.onprogress = this.updateProgress
+        request.open('PUT', 'api/video/thumbnail?id=' + id, true)
+        request.setRequestHeader("Authorization", access_token)
+        request.onerror = () => {
+          this.setState({loading: false, error: request.statusText})
+          throw this.state.error
+        }
+        request.send(formData)
+      }
+      catch (error) {
+        this.setState({loading: false, error: error})
+      }
+    }
+  }
+
   updateProgress = (event: { lengthComputable: any, loaded: number, total: number }) => {
     if (event.lengthComputable) {
       let percent = (event.loaded / event.total) * 100
-      this.setState({processProgress: percent})
+      if (this.state.step === 2) {
+        this.setState({processProgressVideoUpload: percent})
+      }
+      if (this.state.step === 3) {
+        this.setState({processProgressThumbnail: percent})
+      }
     }
   }
 
@@ -217,7 +261,8 @@ class Upload extends Component<ReadOnly, WriteOnly> {
             text: this.state.description,
             original_author: this.state.originalAuthor,
             original_views: this.state.originalViews,
-            hashtags: this.state.hashtags
+            hashtags: this.state.hashtags,
+            public: true
           })
         })
         if (!response.ok) {
@@ -248,6 +293,17 @@ class Upload extends Component<ReadOnly, WriteOnly> {
   }
   getInputFile = () => {
     this.fileInput.click()
+  }
+
+  onFileSelected = (event: any) => {
+    const { step } = this.state
+    console.log(event.target.files[0])
+    if (step === 2) {
+      this.processFile(event.target.files[0])
+    }
+    if (step === 3) {
+      this.processThumbnail(event.target.files[0])
+    }
   }
 
   renderUploadSelection = () => {
@@ -285,7 +341,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
   }
 
   render() {
-    const { step, selectedUploadForm, uploadMethod, url, loading, selectedImage, error, uploadStatus, processProgress } = this.state
+    const { step, selectedUploadForm, uploadMethod, url, loading, selectedImage, error, uploadStatus, processProgressVideoUpload, processProgressThumbnail } = this.state
     const classNameTab = UPLOAD_TAB_CLASS
     const selectedClassNameTab = UPLOAD_TAB_CLASS + '--selected'
     const disabledClassNameTab = UPLOAD_TAB_CLASS + '--disabled'
@@ -343,10 +399,10 @@ class Upload extends Component<ReadOnly, WriteOnly> {
                   {this.renderFileUploadIcon()}
                 </div>
                 <h1>Drag and drop a file that you want to upload</h1>
-                <input type="file" style={{display: "none"}} ref={this.fileInputRef}/>
-                <button className="select-file-button" onClick={this.getInputFile}>Select File</button>
+                <input type="file" style={{display: "none"}} ref={this.fileInputRef} onChange={this.onFileSelected}/>
+                <button className={cx('select-file-button', {['select-file-button--disabled']: Boolean(processProgressVideoUpload > 0 && processProgressVideoUpload <= 100)})} onClick={this.getInputFile}>Select File</button>
                 <div className="file-upload-status">
-                  <div className="file-upload-status-fill" style={{width: processProgress + '%'}}/>
+                  <div className="file-upload-status-fill" style={{width: processProgressVideoUpload + '%'}}/>
                 </div>
               </div>
             </div>
@@ -365,7 +421,13 @@ class Upload extends Component<ReadOnly, WriteOnly> {
             <div className="thumbnail-header">
              <h1>Thumbnail</h1>
              <div className="thumbnail-slideshow">
-                <img className={cx('thumbnail-preview', {['thumbnail-preview--selected']: Boolean(selectedImage === 1)})} src="media/default/background.jpg" onClick={() => this.setState({selectedImage: 1})}/>
+                <input type="file" style={{display: "none"}} ref={this.fileInputRef} onChange={this.onFileSelected}/>
+                <div className={cx('thumbnail-upload', {['thumbnail-upload--selected']: Boolean(selectedImage === 1)}, {['thumbnail-upload--success']: Boolean(processProgressThumbnail === 100)})} onClick={this.getInputFile}>
+                  Custom thumbnail (only jpg)
+                  <div className="thumbnail-upload-status">
+                    <div className="thumbnail-upload-status-fill" style={{width: processProgressThumbnail + '%'}}/>
+                  </div>
+                </div>
                 <img className={cx('thumbnail-preview', {['thumbnail-preview--selected']: Boolean(selectedImage === 2)})} src="media/default/background.jpg" onClick={() => this.setState({selectedImage: 2})}/>
                 <img className={cx('thumbnail-preview', {['thumbnail-preview--selected']: Boolean(selectedImage === 3)})} src="media/default/background.jpg" onClick={() => this.setState({selectedImage: 3})}/>
              </div>
@@ -397,7 +459,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
                 <IoMdCloudDone style={{paddingBottom: "5px", color: "#969595"}}/>
               </IconContext.Provider>
             </div>
-            <button className={cx("upload-button", {["upload-button--success"]: Boolean(uploadStatus)})} onClick={this.addInfo}>{uploadStatus ? 'Success': 'Upload'}</button>
+            <button className={cx("upload-button", {["upload-button--success"]: Boolean(uploadStatus)}, {["upload-button--disabled"]: Boolean(!this.validateSteps)})} onClick={this.addInfo}>{uploadStatus ? 'Success': 'Upload'}</button>
           </div>
         )
         break
