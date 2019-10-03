@@ -26,7 +26,7 @@ def get_results():
 
     if table == 'video':
 
-        all_rows = db.session.query(func.count(Video.id)).scalar()
+        all_rows = db.session.query(func.count(Video.id).filter(Video.public == True)).scalar()
 
         page = int(page)
 
@@ -36,7 +36,7 @@ def get_results():
 
             start = (page - 1) * stop
 
-            results = Video.query.filter(Video.title.ilike('{}{}{}'.format('%', term, '%'))).offset(start).limit(stop).all()
+            results = Video.query.filter(Video.title.ilike('{}{}{}'.format('%', term, '%'))).filter(Video.public == True).offset(start).limit(stop).all()
 
             if not results:
                 return make_response(jsonify([])), 200
