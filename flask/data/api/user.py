@@ -109,9 +109,9 @@ def user_pic_update():
     filename = secure_filename(pic.filename)
 
     if not fnmatch(filename, '*.jpg'):
-        return make_response(jsonify(message='the video format should be jpg.')), 400
+        return make_response(jsonify(message='the file format should be jpg.')), 400
 
-    path = '{}{}/{}'.format(upload_path, 'videos', user.username)
+    path = '{}{}/{}'.format(upload_path, 'photos', user.username)
 
     if not os.path.exists(path):
         os.makedirs(path)
