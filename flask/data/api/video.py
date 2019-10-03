@@ -47,7 +47,7 @@ def create_video():
     new_filename = secure_filename(str(datetime.now()) + '.mp4')
     file.save('{}{}{}'.format(path, '/', new_filename))
 
-    new_video = Video(author_id, title, text, path, new_filename)
+    new_video = Video(author_id, title, text, root=path, filename=new_filename)
     new_video.save()
     return make_response(video_schema.jsonify(new_video)), 201
 
@@ -86,7 +86,7 @@ def add_video_from_url():
 
         best.download(filepath='{}{}{}'.format(path, '/', new_filename), quiet=True)
 
-        new_video = Video(author_id, title, text, path, new_filename)
+        new_video = Video(author_id, title, text, root=path, filename=new_filename)
         new_video.original_author = original_author
         new_video.original_views = views
         new_video.duration = duration
