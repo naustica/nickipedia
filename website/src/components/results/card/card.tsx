@@ -5,7 +5,7 @@ import { GoKebabVertical } from 'react-icons/go'
 import { IconContext } from "react-icons"
 
 import './../results.scss';
-import ConvertTime from './../../../utils/datetime';
+import ConvertTime, { ConvertDurationTime } from './../../../utils/datetime';
 
 
 class Card extends Component<{result:any, fetching: boolean}, {maxLength: number, likes: number, comments: number, timestamp: any, loading: boolean}> {
@@ -60,6 +60,7 @@ class Card extends Component<{result:any, fetching: boolean}, {maxLength: number
           <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
             <div className="result-card-img">
               <img src="media/default/background.jpg" className="result-card-img" alt="..." />
+              <span className="result-card-video-duration">{ConvertDurationTime(this.props.result.duration)}</span>
               <div className="result-card-img-overlay">
                 <IconContext.Provider value={{size: "26px"}}>
                   <IoIosPlay />

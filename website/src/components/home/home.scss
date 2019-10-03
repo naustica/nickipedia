@@ -56,9 +56,9 @@
 }
 .frontpage-suggestions-card {
 
-    height: 200px;
+    height: 205px;
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
     line-height: 16px;
     letter-spacing: 0.2px;
     max-width: 210px;
@@ -69,12 +69,25 @@
       .frontpage-suggestions-card-img {
 
         display: block;
+        position: relative;
 
         img {
           width: 100%;
           height: 110px;
           object-fit: cover;
           min-width: 180px;
+        }
+        .frontpage-suggestions-card-video-duration {
+          position: absolute;
+          background-color: red;
+          bottom: 4px;
+          right: 5px;
+          padding: 2px 4px 2px 4px;
+          font-size: 12px;
+          line-height: 12px;
+          color: #F3F3F3;
+          background-color: rgba(13, 13, 13, 0.7);
+          border-radius: 2px;
         }
       }
       .frontpage-suggestions-card-body {

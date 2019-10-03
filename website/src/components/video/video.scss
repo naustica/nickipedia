@@ -128,10 +128,23 @@
     a {
       display: flex;
       .video-suggestion-pic {
+        position: relative;
         img {
           height: 100px;
           width: 170px;
           object-fit: cover;
+        }
+        .video-suggestion-card-video-duration {
+          position: absolute;
+          background-color: red;
+          bottom: 4px;
+          right: 5px;
+          padding: 2px 4px 2px 4px;
+          font-size: 12px;
+          line-height: 12px;
+          color: #F3F3F3;
+          background-color: rgba(13, 13, 13, 0.7);
+          border-radius: 2px;
         }
       }
       .video-suggestion-body {

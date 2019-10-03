@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import './../video.scss';
 import Loading from './../../loading/loading';
 
+import { ConvertDurationTime } from './../../../utils/datetime'
+
 
 class VideoSuggestions extends Component<{suggestions: any, loading: boolean},{}> {
 
@@ -30,6 +32,7 @@ class VideoSuggestions extends Component<{suggestions: any, loading: boolean},{}
           <Link to={"/watch/" + suggestion.id}>
             <div className="video-suggestion-pic">
               <img src="media/default/background.jpg" className="" alt="..."/>
+              <span className="video-suggestion-card-video-duration">{ConvertDurationTime(suggestion.duration)}</span>
             </div>
             <div className="video-suggestion-body">
               <h5 className="video-suggestion-title">{this.checkLengthTitle(suggestion.title)}</h5>

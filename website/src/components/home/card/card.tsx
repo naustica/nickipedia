@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import Octicon, {Heart, CommentDiscussion} from '@primer/octicons-react';
+import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 
-import './../home.scss';
-import Loading from './../../loading/loading';
-import ConvertTime from './../../../utils/datetime';
+import './../home.scss'
+import Loading from './../../loading/loading'
+import ConvertTime, { ConvertDurationTime } from './../../../utils/datetime'
 
 
 class Card extends Component<{result: any, loading}, {maxLength: number, likes: number, comments: number, timestamp: string, loading: boolean}> {
@@ -59,6 +58,7 @@ class Card extends Component<{result: any, loading}, {maxLength: number, likes: 
         <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
         <div className="frontpage-suggestions-card-img">
           <img className="" src="media/default/background.jpg" alt="..." />
+          <span className="frontpage-suggestions-card-video-duration">{ConvertDurationTime(this.props.result.duration)}</span>
         </div>
         <div className="frontpage-suggestions-card-body">
           <p className="frontpage-suggestions-card-title">{checkLengthTitle}</p>
