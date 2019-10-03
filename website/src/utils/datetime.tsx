@@ -59,6 +59,8 @@ export default function ConvertTime(data: { timestamp: any }[]) {
     }
 }
 
+// convert play time from video
+
 export function ConvertPlayTime(time: number) {
   let minutes: any = Math.floor(time / 60)
   var seconds: any = time - minutes * 60
@@ -70,4 +72,18 @@ export function ConvertPlayTime(time: number) {
     minutes = String(0) + String(minutes)
   }
   return String(minutes + ':' + seconds)
+}
+
+// convert duration time for suggestion cards
+
+export function ConvertDurationTime(duration: string) {
+  try {
+    let durationSplit = duration.split(':')
+    let seconds = durationSplit[2]
+    let minutes = durationSplit[1]
+    return minutes + ':' + seconds
+  }
+  catch (error) {
+    return null
+  }
 }
