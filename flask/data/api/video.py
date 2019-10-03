@@ -78,7 +78,7 @@ def add_video_from_url():
         text = video.description
         original_author = video.author
         views = video.viewcount
-        length = video.length
+        duration = video.duration
         best = video.getbest(preftype='mp4')
 
         if not os.path.exists(path):
@@ -87,6 +87,9 @@ def add_video_from_url():
         best.download(filepath='{}{}{}'.format(path, '/', new_filename), quiet=True)
 
         new_video = Video(author_id, title, text, path, new_filename)
+        new_video.original_author = original_author
+        new_video.original_views = views
+        new_video.duration = duration
         new_video.save()
         return make_response(video_schema.jsonify(new_video)), 201
 
@@ -105,12 +108,12 @@ def get_videos():
 
     if all:
 
-        all_videos = Video.get_all()
+        all_videos_public = Video.get_all_public()
 
-        if not all_videos:
+        if not all_videos_public:
             return make_response(jsonify(message='no video was found.')), 404
 
-        result = videos_schema.dump(all_videos)
+        result = videos_schema.dump(all_videos_public)
 
         return make_response(jsonify(result.data)), 200
 
