@@ -57,7 +57,7 @@ class Card extends Component<{result: any, loading}, {maxLength: number, likes: 
       <div className="frontpage-suggestions-card">
         <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
         <div className="frontpage-suggestions-card-img">
-          <img className="" src="media/default/background.jpg" alt="..." />
+          <img className="" src={'media/default/background.jpg'} alt="..." />
           <span className="frontpage-suggestions-card-video-duration">{ConvertDurationTime(this.props.result.duration)}</span>
         </div>
         <div className="frontpage-suggestions-card-body">

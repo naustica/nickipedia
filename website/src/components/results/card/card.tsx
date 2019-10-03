@@ -59,7 +59,7 @@ class Card extends Component<{result:any, fetching: boolean}, {maxLength: number
         <div className="result-card">
           <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
             <div className="result-card-img">
-              <img src="media/default/background.jpg" className="result-card-img" alt="..." />
+              <img src={'media/default/background.jpg'} className="result-card-img" alt="..." />
               <span className="result-card-video-duration">{ConvertDurationTime(this.props.result.duration)}</span>
               <div className="result-card-img-overlay">
                 <IconContext.Provider value={{size: "26px"}}>

@@ -73,6 +73,8 @@
       img {
         width: 230px;
         height: 130px;
+        min-height: 130px;
+        min-width: 230px;
         object-fit: cover;
       }
       .result-card-video-duration {

@@ -31,7 +31,7 @@ class VideoSuggestions extends Component<{suggestions: any, loading: boolean},{}
         <div className="video-suggestion-card" key={suggestion.id}>
           <Link to={"/watch/" + suggestion.id}>
             <div className="video-suggestion-pic">
-              <img src="media/default/background.jpg" className="" alt="..."/>
+              <img src={'media/default/background.jpg'} className="" alt="..."/>
               <span className="video-suggestion-card-video-duration">{ConvertDurationTime(suggestion.duration)}</span>
             </div>
             <div className="video-suggestion-body">
