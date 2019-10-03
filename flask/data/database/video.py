@@ -17,7 +17,7 @@ class Video(db.Model):
     title = db.Column(db.String(128), nullable=False)
     text = db.Column(db.Text(), nullable=True)
     views = db.Column(db.Integer(), nullable=False, default=0)
-    thumbnail = db.Column(db.String(), default=os.getcwd() + '/data/database/files/default/default_thumbnail.jpg', nullable=True)
+    thumbnail = db.Column(db.String(), nullable=True)
     hashtags = db.Column(db.String(), nullable=True)
     original_author = db.Column(db.String(), nullable=True)
     original_views = db.Column(db.Integer(), nullable=True)
