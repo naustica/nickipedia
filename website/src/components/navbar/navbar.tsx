@@ -212,7 +212,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
           </div>
           <div className="navbar-upload">
             <button type="button" className="upload-button" onClick={this.onClickUpload}>
-              <IconContext.Provider value={{size: "26px"}}>
+              <IconContext.Provider value={{size: "25px"}}>
                 <IoMdVideocam />
               </IconContext.Provider>
             </button>
@@ -220,7 +220,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
           </div>
           <div className="navbar-messages" ref={this.messageTogglerRef}>
             <button type="button" className="message-button" name="message" onClick={this.onClickToggleNotifications}>
-              <IconContext.Provider value={{size: "26px"}}>
+              <IconContext.Provider value={{size: "25px"}}>
                 <IoMdNotificationsOutline />
               </IconContext.Provider>
             </button>
