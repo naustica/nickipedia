@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { IoMdCloudUpload, IoMdCloudDone, IoMdFolder, IoMdFolderOpen } from 'react-icons/io'
-import { IconContext } from "react-icons"
 import cx from 'classnames'
 
 import './upload.scss'
 
-import Loading from './../loading/loading'
+import UploadMethod from './uploadSteps/uploadMethod'
+import ProcessLink from './uploadSteps/processLink'
+import ProcessFile from './uploadSteps/processFile'
+import UploadMetadata from './uploadSteps/UploadMetadata'
+import UploadOptionalData from './uploadSteps/uploadOptionalData'
+import UploadFinish from './uploadSteps/uploadFinish'
 
 
 interface ReadOnly {
@@ -26,7 +29,6 @@ interface WriteOnly {
   id?: number,
   step?: number,
   uploadMethod?: string,
-  selectedUploadForm?: boolean,
   selectedImage?: number,
   originalAuthor?: string,
   originalViews?: string,
@@ -36,7 +38,6 @@ interface WriteOnly {
 
 const UPLOAD_TAB_CLASS = 'toggle-upload-header-navbar-steps'
 const FORM_BUTTON_CLASS = 'upload-form-confirm-button'
-const UPLOAD_SELECT_CLASS = 'upload-select'
 
 const initialState = {
   url: '',
@@ -48,7 +49,6 @@ const initialState = {
   processProgressThumbnail: 0,
   step: 1,
   uploadMethod: 'file',
-  selectedUploadForm: false,
   selectedImage: 1,
   id: 0,
   title: '',
@@ -62,15 +62,9 @@ const initialState = {
 
 class Upload extends Component<ReadOnly, WriteOnly> {
 
-  fileInput: any
-
   constructor(props:any) {
     super(props)
     this.state = initialState
-  }
-
-  fileInputRef = (fileInput: any): void => {
-    this.fileInput = fileInput
   }
 
   private onChange = (event: { target: { name: any, value: any } }): void => {
@@ -291,9 +285,6 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     event.preventDefault()
     this.processFile(event.dataTransfer.files[0])
   }
-  getInputFile = () => {
-    this.fileInput.click()
-  }
 
   onFileSelected = (event: any) => {
     const { step } = this.state
@@ -306,162 +297,63 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     }
   }
 
-  renderUploadSelection = () => {
-    const { uploadMethod } = this.state
-
-    switch (uploadMethod) {
-      case 'link':
-        return 'Link Upload'
-
-      case 'file':
-        return 'File Upload'
-
-      case '':
-        return ''
-    }
+  setUploadMethod = (method: string): void => {
+    this.setState({uploadMethod: method})
   }
 
-  renderFileUploadIcon = () => {
-    const { drag } = this.state
-
-    if (drag) {
-      return (
-        <IconContext.Provider value={{size: "100px"}}>
-          <IoMdFolderOpen style={{paddingBottom: "5px", color: "#969595"}}/>
-        </IconContext.Provider>
-      )
-    }
-    else {
-      return (
-        <IconContext.Provider value={{size: "100px"}}>
-          <IoMdFolder style={{paddingBottom: "5px", color: "#969595"}}/>
-        </IconContext.Provider>
-      )
-    }
+  updateSelectedThumbnail = (pictureId: number) => {
+    this.setState({selectedImage: pictureId})
   }
 
   render() {
-    const { step, selectedUploadForm, uploadMethod, url, loading, selectedImage, error, uploadStatus, processProgressVideoUpload, processProgressThumbnail } = this.state
+    const { step,
+            uploadMethod,
+            url,
+            loading,
+            selectedImage,
+            error,
+            uploadStatus,
+            processProgressVideoUpload,
+            processProgressThumbnail,
+            drag,
+            title,
+            description,
+            originalAuthor,
+            originalViews,
+            hashtags
+          } = this.state
+
     const classNameTab = UPLOAD_TAB_CLASS
     const selectedClassNameTab = UPLOAD_TAB_CLASS + '--selected'
     const disabledClassNameTab = UPLOAD_TAB_CLASS + '--disabled'
     const classNameButton = FORM_BUTTON_CLASS
     const disabledClassNameButton = FORM_BUTTON_CLASS + '--disabled'
-    const classNameSelect = UPLOAD_SELECT_CLASS
-    const selectedClassNameSelect = UPLOAD_SELECT_CLASS + '--selected'
 
     let renderStep: any
 
     switch (step) {
       case 1:
-        renderStep = (
-          <div className="toggle-upload-method">
-            <div className="upload-icon">
-              <IconContext.Provider value={{size: "100px"}}>
-                <IoMdCloudUpload style={{paddingBottom: "5px", color: "#969595"}}/>
-              </IconContext.Provider>
-            </div>
-            <h1>Choose between Link and File Upload</h1>
-            <div className={cx(classNameSelect, {[selectedClassNameSelect]: selectedUploadForm})} onClick={() => this.setState({selectedUploadForm: !selectedUploadForm})}>
-              <div className="upload-select-input">
-                <span>{this.renderUploadSelection()}</span>
-              </div>
-              <div className="upload-select-options">
-                <ul>
-                  <li onClick={() => this.setState({uploadMethod: 'link'})}>Link Upload</li>
-                  <hr />
-                  <li onClick={() => this.setState({uploadMethod: 'file'})}>File Upload</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )
+
+        renderStep = <UploadMethod setUploadMethod={this.setUploadMethod} uploadMethod={uploadMethod}/>
+
         break
       case 2:
         if (uploadMethod === 'link') {
-          renderStep = (
-            <form onSubmit={(event) => event.preventDefault()}>
-              <div className="upload-form-group" data-placeholder="Url (required)">
-                <input type="text" name="url" autoFocus value={this.state.url} onChange={this.onChange} />
-              </div>
-              <button type="button" className={cx('process-button', {['process-button--disabled']: Boolean(url.length < 1)})} onClick={this.processLink}>{loading ? <Loading loading={loading}/> : 'Process'}</button>
-              <div className="link-upload-status">
-                <div className="link-upload-status-fill" />
-              </div>
-            </form>
-          )
+          renderStep = <ProcessLink url={url} updateLink={this.onChange} loading={loading} processLink={this.processLink}/>
         }
         if (uploadMethod === 'file') {
-          renderStep = (
-            <div className="file-upload" onDragOver={this.dragOverFile} onDragLeave={this.dragLeaveFile} onDrop={this.dropFile}>
-              <div className="file-upload-console">
-                <div className="file-upload-icon">
-                  {this.renderFileUploadIcon()}
-                </div>
-                <h1>Drag and drop a file that you want to upload</h1>
-                <input type="file" style={{display: "none"}} ref={this.fileInputRef} onChange={this.onFileSelected}/>
-                <button className={cx('select-file-button', {['select-file-button--disabled']: Boolean(processProgressVideoUpload > 0 && processProgressVideoUpload <= 100)})} onClick={this.getInputFile}>Select File</button>
-                <div className="file-upload-status">
-                  <div className="file-upload-status-fill" style={{width: processProgressVideoUpload + '%'}}/>
-                </div>
-              </div>
-            </div>
-          )
+          renderStep = <ProcessFile dragOverFile={this.dragOverFile} dragLeaveFile={this.dragLeaveFile} dropFile={this.dropFile} onFileSelected={this.onFileSelected} process={processProgressVideoUpload} drag={drag}/>
         }
         break
       case 3:
-        renderStep = (
-          <form onSubmit={(event) => event.preventDefault()}>
-            <div className="upload-form-group" data-placeholder="Title (required)">
-              <textarea className="upload-form-textarea upload-form-textarea-title" name="title" autoFocus value={this.state.title} onChange={this.onChange} />
-            </div>
-            <div className="upload-form-group" data-placeholder="Description (required)">
-              <textarea className="upload-form-textarea upload-form-textarea-description" name="description" value={this.state.description} onChange={this.onChange} />
-            </div>
-            <div className="thumbnail-header">
-             <h1>Thumbnail</h1>
-             <div className="thumbnail-slideshow">
-                <input type="file" style={{display: "none"}} ref={this.fileInputRef} onChange={this.onFileSelected}/>
-                <div className={cx('thumbnail-upload', {['thumbnail-upload--selected']: Boolean(selectedImage === 1)}, {['thumbnail-upload--success']: Boolean(processProgressThumbnail === 100)})} onClick={this.getInputFile}>
-                  Custom thumbnail (only jpg)
-                  <div className="thumbnail-upload-status">
-                    <div className="thumbnail-upload-status-fill" style={{width: processProgressThumbnail + '%'}}/>
-                  </div>
-                </div>
-                <img className={cx('thumbnail-preview', {['thumbnail-preview--selected']: Boolean(selectedImage === 2)})} src="media/default/background.jpg" onClick={() => this.setState({selectedImage: 2})}/>
-                <img className={cx('thumbnail-preview', {['thumbnail-preview--selected']: Boolean(selectedImage === 3)})} src="media/default/background.jpg" onClick={() => this.setState({selectedImage: 3})}/>
-             </div>
-            </div>
-          </form>
-        )
+        renderStep = <UploadMetadata title={title} description={description} onFileSelected={this.onFileSelected} updateInput={this.onChange} selectedImage={selectedImage} processProgressThumbnail={processProgressThumbnail} updateSelectedThumbnail={this.updateSelectedThumbnail}/>
         break
       case 4:
-        renderStep = (
-          <form onSubmit={(event) => event.preventDefault()}>
-            <div className="upload-form-group" data-placeholder="Original author (optional)">
-              <input name="originalAuthor" autoFocus value={this.state.originalAuthor} onChange={this.onChange} />
-            </div>
-            <div className="upload-form-group" data-placeholder="Original views (optional)">
-              <input name="originalViews" value={this.state.originalViews} onChange={this.onChange} />
-            </div>
-            <div className="upload-form-group" data-placeholder="Hashtags (optional)">
-              <textarea className="upload-form-textarea upload-form-textarea-hashtags" name="hashtags" value={this.state.hashtags} onChange={this.onChange} />
-            </div>
-          </form>
-        )
+        renderStep = <UploadOptionalData originalAuthor={originalAuthor} originalViews={originalViews} hashtags={hashtags} updateInput={this.onChange} />
         break
 
       case 5:
-        renderStep = (
-          <div className="toggle-upload-method">
-            <div className="upload-icon">
-              <IconContext.Provider value={{size: "100px"}}>
-                <IoMdCloudDone style={{paddingBottom: "5px", color: "#969595"}}/>
-              </IconContext.Provider>
-            </div>
-            <button className={cx("upload-button", {["upload-button--success"]: Boolean(uploadStatus)}, {["upload-button--disabled"]: Boolean(!this.validateSteps)})} onClick={this.addInfo}>{uploadStatus ? 'Success': 'Upload'}</button>
-          </div>
-        )
+        renderStep = <UploadFinish uploadStatus={uploadStatus} validateSteps={this.validateSteps} addInfo={this.addInfo} />
         break
 
     }
