@@ -1,39 +1,37 @@
-import React, {Component} from 'react'
-import {withRouter, Link} from 'react-router-dom'
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
+import './../login.scss'
 
-import './login.scss'
-
-import Loading from './../loading/loading'
+import Loading from './../../loading/loading'
 
 interface ReadOnly {
-  history:any;
+  history:any
 }
 
 interface WriteOnly {
   username?: string,
   password?: string,
-  email?: string,
+  access_token?: string,
   loading?: boolean,
   error?: string,
   errorUsername?: string,
-  errorPassword?: string,
-  errorEmail?: string
+  errorPassword?: string
 }
 
 
-class Register extends Component<ReadOnly, WriteOnly> {
+class LoginForm extends Component<ReadOnly, WriteOnly> {
   constructor(props:any) {
     super(props)
     this.state = {
       username: '',
-      email: '',
       password: '',
+      access_token: '',
       loading: false,
       error: '',
       errorUsername: '',
-      errorPassword: '',
-      errorEmail: ''
+      errorPassword: ''
+
     }
     this.onChange = this.onChange.bind(this)
     this.submitForm = this.submitForm.bind(this)
@@ -51,10 +49,6 @@ class Register extends Component<ReadOnly, WriteOnly> {
       this.setState({errorPassword: '*Password required'})
       errorMessage = true
     }
-    if (this.state.email === '') {
-      this.setState({errorEmail: '*Email required'})
-      errorMessage = true
-    }
     if (errorMessage === true) {
       return false
     }
@@ -63,35 +57,40 @@ class Register extends Component<ReadOnly, WriteOnly> {
   submitForm(event: any): any {
     //var form = event.target as HTMLFormElement;
     event.preventDefault();
+    this.setState({error: '', errorUsername: '', errorPassword: ''})
     if (this.validateForm()) {
       this.setState({loading: true})
-      fetch('api/user/register', {
+      fetch('api/auth/login', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({username: this.state.username, email: this.state.email, password: this.state.password})
+        body: JSON.stringify({username: this.state.username, password: this.state.password})
       })
-      .then((response) => response.json())
+        .then ((response => response.json()))
         .then((data) => {
-          if (data.status != 'success') {
-            this.setState({loading: false, error: '*username or email exists'})
+          if (data.access_token === undefined) {
+            this.setState({loading: false, error: '*Username or Password not correct'})
             //form.reset();
           } else {
-            this.props.history.push('/login')
-          }
-        })
-        .catch(error => {
-          this.setState({loading: false, error: '*no database connection'})
-          console.log(error)
-          //form.reset();
-        })
-    }
+            this.setState({access_token: data.access_token})
+            localStorage.setItem('access_token', this.state.access_token)
+            localStorage.setItem('username', this.state.username)
+            this.setState({loading: false})
+            this.props.history.push('/')
+          }})
+          .catch(error => {
+            this.setState({loading: false, error: '*no database connection'})
+            console.log(error)
+          })
+      }
   }
   render() {
+
+    const { loading } = this.state
+
     return (
-      <div className="container-login">
-        <div className="login-card" style={{height: "560px"}}>
+        <div className="login-card">
           <div className="login-card-body">
-            <h1 className="login-card-title">Register</h1>
+            <h1 className="login-card-title">Login</h1>
             <div className="login-card-error">
               {this.state.error}
             </div>
@@ -107,15 +106,6 @@ class Register extends Component<ReadOnly, WriteOnly> {
               </div>
               <div className="login-form-group">
                 <div className="login-form-error">
-                  {this.state.errorEmail}
-                </div>
-                <input className="login-form-input" type="email" name="email" value={this.state.email} onChange={this.onChange} placeholder="Email"/>
-                <label className="login-label">
-                  <span className="login-content">Email</span>
-                </label>
-              </div>
-              <div className="login-form-group">
-                <div className="login-form-error">
                   {this.state.errorPassword}
                 </div>
                 <input className="login-form-input" type="password" name="password" value={this.state.password} onChange={this.onChange} placeholder="Password"/>
@@ -123,21 +113,21 @@ class Register extends Component<ReadOnly, WriteOnly> {
                   <span className="login-content">Password</span>
                 </label>
               </div>
-              <button type="button" className="login-button" onClick={this.submitForm}>Sign up</button>
-              <button type="submit" style={{display: "none"}}></button>
-              <div className="login-form-group" style={{fontSize: "15px"}}>
-                Already have an account? <Link to="/login" style={{fontSize: "15px", color: "#1873E8"}}>Sign in</Link>
+              <div className="login-form-group">
+                <div className="login-form-forgot-password">
+                  Forgot Password?
+                </div>
               </div>
-              <div className="login-card-loading">
+              <button type="button" className="login-button" onClick={this.submitForm}>{loading ? <div className="login-card-loading">
                 <Loading loading={this.state.loading}/>
-              </div>
+              </div> : "Sign in"}</button>
+              <button type="submit" style={{display: "none"}}></button>
             </form>
           </div>
         </div>
-      </div>
-  )
+      )
   }
 }
 
 
-export default withRouter(Register);
+export default withRouter(LoginForm)
