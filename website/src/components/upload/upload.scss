@@ -73,9 +73,12 @@
             background-color: #ccc;
             font-size: 12px;
             line-height: 20px;
-            padding: 5px;
-            padding-left: 12px;
+            text-align: center;
+            line-height: 30px;
             pointer-events: none;
+            &--success {
+              background-color: #0461D4;
+            }
           }
           .toggle-upload-header-navbar-steps-description {
             padding-left: 10px;
