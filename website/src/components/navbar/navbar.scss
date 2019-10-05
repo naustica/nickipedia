@@ -24,16 +24,35 @@
 
           display: flex;
           align-items: center;
+          z-index: 2;
 
           .navbar-menu {
             display: inline-block;
             cursor: pointer;
+            z-index: 2;
 
             .navbar-menu-line {
               width: 18px;
               height: 2px;
               background-color: #333;
               margin: 3px 0;
+              z-index: 2;
+            }
+          }
+
+          .side-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background-color: #FAFAFA;
+            z-index: 1;
+            transition: 0.3s;
+            overflow: hidden;
+            max-width: 250px;
+            &--active {
+              width: 250px;
             }
           }
 
@@ -47,6 +66,8 @@
             padding-left: 25px;
             overflow: visible;
             white-space: nowrap;
+            z-index: 2;
+            user-select: none;
             @media(max-width: 600px) {
               display: none;
             }

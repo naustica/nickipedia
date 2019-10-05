@@ -13,6 +13,7 @@ interface WriteOnly {
   toggleSettings: boolean,
   toggleMessage: boolean,
   toggleUpload: boolean,
+  toggleSidebar: boolean,
   term: string,
   options: any,
   suggestions: Array<any>,
@@ -29,6 +30,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
   messageToggler: any
   settingsToggler: any
   uploadToggler: any
+  sidebarToggler: any
 
   constructor(props:any) {
     super(props)
@@ -36,6 +38,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
       toggleSettings: false,
       toggleMessage: false,
       toggleUpload: false,
+      toggleSidebar: false,
       term: '',
       options: [],
       suggestions: [],
@@ -58,6 +61,10 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
 
   uploadTogglerRef = (uploadToggler: any) => {
     this.uploadToggler = uploadToggler
+  }
+
+  sidebarTogglerRef = (sidebarToggler: any) => {
+    this.sidebarToggler = sidebarToggler
   }
 
   componentDidMount() {
@@ -147,12 +154,18 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     const toggle = this.state.toggleSettings
     this.setState({toggleSettings: !toggle})
   }
+  onClickToggleSidebar = (event: any): any => {
+    const toggle = this.state.toggleSidebar
+    this.setState({toggleSidebar: !toggle})
+  }
   onClickUpload = (event: React.MouseEvent<HTMLButtonElement>): void => {
     //this.props.history.push('/upload')
     const toggle = this.state.toggleUpload
     this.setState({toggleUpload: !toggle})
   }
   onWindowClick(event: { target: any; }):any {
+
+    console.log(event.target)
 
 
     if (this.state.toggleSettings) {
@@ -173,9 +186,15 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
             this.setState({toggleUpload: false})
           }
     }
+    if (this.state.toggleSidebar) {
+      if (event.target !== this.sidebarToggler && !this.sidebarToggler.contains(event.target))
+          {
+            this.setState({toggleSidebar: false})
+          }
+    }
   }
   render() {
-    const {toggleSettings} = this.state
+    const { toggleSettings, toggleSidebar } = this.state
     const toggleSettingsStyle = this.state.toggleSettings ? {display: "inline"} : {display: "none"}
     const toggleMessageStyle = this.state.toggleMessage ? {display: "inline"} : {display: "none"}
     const toggleUploadStyle = this.state.toggleUpload ? {display: "inline"} : {display: "none"}
@@ -185,11 +204,13 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     return (
       <div className="nav-header">
         <nav className="navbar">
-        <div className="navbar-logo-menu">
-          <div className="navbar-menu">
+        <div className="navbar-logo-menu" ref={this.sidebarTogglerRef}>
+          <div className="navbar-menu" onClick={this.onClickToggleSidebar}>
             <div className="navbar-menu-line"></div>
             <div className="navbar-menu-line"></div>
             <div className="navbar-menu-line"></div>
+          </div>
+          <div className={cx("side-navbar", {["side-navbar--active"]: toggleSidebar})}>
           </div>
           <div className="navbar-logo">
             <Link to='/'>
