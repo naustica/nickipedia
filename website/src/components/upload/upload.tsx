@@ -384,7 +384,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
           break
       }
       tabs.push(
-        <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==i)}, {[disabledClassNameTab]: Boolean(!(this.navigateTabs(i)))})} onClick={() => this.selectNavigateTab(i)}>
+        <span className={cx(classNameTab, {[selectedClassNameTab]: Boolean(step==i)}, {[disabledClassNameTab]: Boolean(!(this.navigateTabs(i)))})} onClick={() => this.selectNavigateTab(i)} key={"tab-" + i}>
           <span className={cx("toggle-upload-header-navbar-steps-number", {["toggle-upload-header-navbar-steps-number--success"]: Boolean(this.checkSucceddedSteps(i))})}>
             {this.checkSucceddedSteps(i) ?
               <IconContext.Provider value={{size: "18px"}}>
