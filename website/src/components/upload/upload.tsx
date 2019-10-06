@@ -276,7 +276,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
             title: this.state.title,
             text: this.state.description,
             original_author: this.state.originalAuthor,
-            original_views: this.state.originalViews,
+            //original_views: this.state.originalViews,
             hashtags: this.state.hashtags,
             public: true
           })
