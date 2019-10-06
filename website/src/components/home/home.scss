@@ -65,6 +65,13 @@
     position: relative;
     cursor: pointer;
 
+    &:empty {
+      height: 200px;
+      width: 100%;
+      background-color: #EBEBEB;
+      animation: pulse 1s infinite ease;
+    }
+
     a {
       .frontpage-suggestions-card-img {
 
@@ -133,4 +140,10 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
+    display: block;
+    &--loading {
+      background-color: #EBEBEB;
+      color: transparent;
+      animation: pulse 1s infinite ease;
+    }
 }

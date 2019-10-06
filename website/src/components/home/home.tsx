@@ -1,16 +1,19 @@
-import React, {Component} from 'react'
-import {withRouter, Link} from 'react-router-dom'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { IoMdHome } from 'react-icons/io'
 import { GoFileDirectory, GoFlame } from 'react-icons/go'
 import { IconContext } from "react-icons"
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs'
+import cx from 'classnames'
 
 import './home.scss'
 
 import Card from './card/card'
 
-import {fetchVideos, fetchVideoStart, getVideoSuggestions, getVideoSuggestionsStart} from './../../store/actions/videoActions';
+import {fetchVideos, fetchVideoStart, getVideoSuggestions, getVideoSuggestionsStart} from './../../store/actions/videoActions'
+
+
+const MAX_SUGGESTIONS: number = 16
 
 
 @(connect((store: any) => {
@@ -22,21 +25,42 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
   constructor(props:any) {
     super(props)
   }
-  componentWillMount() {
+  public componentWillMount = (): any => {
     window.scrollTo(0, 0)
     Promise.all([
       this.props.dispatch(fetchVideoStart()),
       this.props.dispatch(getVideoSuggestionsStart()),
       this.props.dispatch(fetchVideos())
     ]).then(() => {
-      this.props.dispatch(getVideoSuggestions(null, 16))
+      this.props.dispatch(getVideoSuggestions(null, MAX_SUGGESTIONS))
     })
   }
-  renderCards(begin: number, end: number) {
-    return (this.props.videos.suggestions.slice(begin, end).map(result => <Card key={result.id} result={result} loading={this.props.videos.changing}/>))
+
+  private renderCards = (begin: number, end: number): any => {
+
+    let result: any
+
+    let loadingCards = []
+    let contentCards = []
+
+    for (var i = begin; i < end; i++) {
+      result = this.props.videos.suggestions[i]
+      if (result != undefined) {
+        contentCards.push(<Card key={result.id} result={result} loading={this.props.videos.changing}/>)
+      }
+      else {
+        loadingCards.push(<div className="col-3" key={i}><div className="frontpage-suggestions-card"></div></div>)
+      }
+    }
+    if (result != undefined) {
+      return contentCards
+    }
+    else {
+      return loadingCards
+    }
   }
+
   render() {
-    const style = this.props.videos.changing ? {backgroundColor: "#E0DFDF", color: "transparent", boxShadow: "none", border: "none"} : {}
     return (
       <div className="container" id="home-container">
         <div className="row">
@@ -73,11 +97,11 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
           </div>
           <div className="col-11" style={{paddingLeft: "2rem"}}>
           <TabPanel>
-          <h2 className="frontpage-suggestions-header" style={style}>Recommended</h2>
+          <h2 className={cx("frontpage-suggestions-header", {["frontpage-suggestions-header--loading"]: Boolean(this.props.videos.changing)})}>Recommended</h2>
             <div className="row">
                 {this.renderCards(0, 8)}
             </div>
-            <h2 className="frontpage-suggestions-header" style={style}>Suggestions</h2>
+            <h2 className={cx("frontpage-suggestions-header", {["frontpage-suggestions-header--loading"]: Boolean(this.props.videos.changing)})}>Suggestions</h2>
             <div className="row">
               {this.renderCards(8, 16)}
             </div>
@@ -94,4 +118,4 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
   }
 }
 
-export default withRouter(Home);
+export default Home
