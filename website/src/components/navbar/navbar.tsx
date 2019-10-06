@@ -165,9 +165,6 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
   }
   onWindowClick(event: { target: any; }):any {
 
-    console.log(event.target)
-
-
     if (this.state.toggleSettings) {
       if (event.target !== this.settingsToggler && !this.settingsToggler.contains(event.target))
           {
