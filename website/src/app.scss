@@ -71,6 +71,25 @@ hr {
     width: 150px;
     cursor: pointer;
 }
+.btn {
+    -webkit-appearance: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 20px;
+    margin: 1rem;
+    overflow: hidden;
+    -webkit-user-select: none;
+    box-shadow: 0 0 3px #2A2A28;
+    &:active, &:focus {
+      outline: none;
+    }
+    &--disabled {
+      pointer-events: none;
+      background-color: grey;
+    }
+}
 .slider {
     position: relative;
     -webkit-appearance: none;
