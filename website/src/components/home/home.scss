@@ -136,11 +136,12 @@
 }
 .frontpage-suggestions-header {
     padding: 1rem;
-    padding-left: 0.2rem;
+    padding-left: 0.1rem;
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
     display: block;
+    width: 99%;
     &--loading {
       background-color: #EBEBEB;
       color: transparent;

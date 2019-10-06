@@ -28,7 +28,7 @@ class Card extends Component<{result: any, loading}, {maxLength: number, likes: 
   }
   render() {
     const checkLengthTitle = this.props.result.title.length > this.state.maxLength ? this.props.result.title.substring(0, this.state.maxLength) + '...' : this.props.result.title
-    const loadingState = this.props.loading ? (<div className="col-3"><div className="frontpage-suggestions-card" style={{backgroundColor: "#EBEBEB"}}></div></div>) : (
+    const loadingState = this.props.loading ? (<div className="col-3"><div className="frontpage-suggestions-card"></div></div>) : (
       <div className="col-3">
       <div className="frontpage-suggestions-card">
         <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
