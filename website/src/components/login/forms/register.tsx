@@ -69,12 +69,12 @@ class RegisterForm extends Component<ReadOnly, WriteOnly> {
           body: JSON.stringify({username: this.state.username, email: this.state.email, password: this.state.password})
         })
         if (!response.ok) {
-          this.setState({loading: false, error: '*username or email exists'})
+          this.setState({loading: false, error: '*no database connection'})
         }
         this.props.history.push('/login')
       }
       catch (error) {
-        this.setState({loading: false, error: '*no database connection'})
+        this.setState({loading: false, error: '*username or email exists'})
         console.log(error)
       }
     }

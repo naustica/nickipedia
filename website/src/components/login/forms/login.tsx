@@ -64,7 +64,7 @@ class LoginForm extends Component<ReadOnly, WriteOnly> {
           body: JSON.stringify({username: this.state.username, password: this.state.password})
         })
         if (!response.ok) {
-          this.setState({loading: false, error: '*Username or Password not correct'})
+          this.setState({loading: false, error: '*no database connection'})
           throw this.state.error
         }
         const data = await response.json()
@@ -75,7 +75,7 @@ class LoginForm extends Component<ReadOnly, WriteOnly> {
         this.props.history.push('/')
       }
       catch (error) {
-        this.setState({loading: false, error: '*no database connection'})
+        this.setState({loading: false, error: '*Username or Password not correct'})
         console.log(error)
       }
     }
