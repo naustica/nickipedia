@@ -6,7 +6,7 @@ import './../login.scss'
 import Loading from './../../loading/loading'
 
 interface ReadOnly {
-  history:any
+  history: any
 }
 
 interface WriteOnly {
@@ -33,13 +33,11 @@ class LoginForm extends Component<ReadOnly, WriteOnly> {
       errorPassword: ''
 
     }
-    this.onChange = this.onChange.bind(this)
-    this.submitForm = this.submitForm.bind(this)
   }
-  onChange(event:React.ChangeEvent<HTMLInputElement>): void {
+  private onChange = (event:React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({[event.target.name]: event.target.value})
   }
-  validateForm = (): boolean => {
+  private validateForm = (): boolean => {
     let errorMessage: boolean = false
     if (this.state.username === '') {
       this.setState({errorUsername: '*Username required'})
@@ -54,34 +52,33 @@ class LoginForm extends Component<ReadOnly, WriteOnly> {
     }
     return true
   }
-  submitForm(event: any): any {
-    //var form = event.target as HTMLFormElement;
+  private submitForm = async (event: any): Promise<void> => {
     event.preventDefault();
     this.setState({error: '', errorUsername: '', errorPassword: ''})
     if (this.validateForm()) {
       this.setState({loading: true})
-      fetch('api/auth/login', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({username: this.state.username, password: this.state.password})
-      })
-        .then ((response => response.json()))
-        .then((data) => {
-          if (data.access_token === undefined) {
-            this.setState({loading: false, error: '*Username or Password not correct'})
-            //form.reset();
-          } else {
-            this.setState({access_token: data.access_token})
-            localStorage.setItem('access_token', this.state.access_token)
-            localStorage.setItem('username', this.state.username)
-            this.setState({loading: false})
-            this.props.history.push('/')
-          }})
-          .catch(error => {
-            this.setState({loading: false, error: '*no database connection'})
-            console.log(error)
-          })
+      try {
+        const response = await fetch('api/auth/login', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({username: this.state.username, password: this.state.password})
+        })
+        if (!response.ok) {
+          this.setState({loading: false, error: '*Username or Password not correct'})
+          throw this.state.error
+        }
+        const data = await response.json()
+        this.setState({access_token: data.access_token})
+        localStorage.setItem('access_token', this.state.access_token)
+        localStorage.setItem('username', this.state.username)
+        this.setState({loading: false})
+        this.props.history.push('/')
       }
+      catch (error) {
+        this.setState({loading: false, error: '*no database connection'})
+        console.log(error)
+      }
+    }
   }
   render() {
 
@@ -118,7 +115,7 @@ class LoginForm extends Component<ReadOnly, WriteOnly> {
                   Forgot Password?
                 </div>
               </div>
-              <button type="button" className="login-button" onClick={this.submitForm}>{loading ? <div className="login-card-loading">
+              <button type="button" className="btn login-button" onClick={this.submitForm}>{loading ? <div className="login-card-loading">
                 <Loading loading={this.state.loading}/>
               </div> : "Sign in"}</button>
               <button type="submit" style={{display: "none"}}></button>

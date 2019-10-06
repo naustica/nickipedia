@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
 
 import './login.scss'
 
@@ -36,12 +35,12 @@ class Login extends Component<ReadOnly, WriteOnly> {
 
     if (form === 'login') {
       return (
-        <LoginForm changeForm={this.changeForm}/>
+        <LoginForm />
       )
     }
     if (form === 'register') {
       return (
-        <RegisterForm changeForm={this.changeForm}/>
+        <RegisterForm />
       )
     }
   }
@@ -52,7 +51,7 @@ class Login extends Component<ReadOnly, WriteOnly> {
         return (
           <div className="login-info-box">
             <h1>Dont have an account?</h1>
-            <button className="login-info-box-button" onClick={this.changeForm}>Sign up</button>
+            <button className="btn login-info-box-button" onClick={this.changeForm}>Sign up</button>
           </div>
         )
       }
@@ -60,7 +59,7 @@ class Login extends Component<ReadOnly, WriteOnly> {
         return (
           <div className="login-info-box">
             <h1>Already have an account?</h1>
-            <button className="login-info-box-button" onClick={this.changeForm}>Sign in</button>
+            <button className="btn login-info-box-button" onClick={this.changeForm}>Sign in</button>
           </div>
         )
       }
@@ -86,4 +85,4 @@ class Login extends Component<ReadOnly, WriteOnly> {
 }
 
 
-export default withRouter(Login);
+export default Login

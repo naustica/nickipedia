@@ -17,6 +17,19 @@
       border: 1px solid #EBEBEB;
       box-shadow: 0 0 5px #EBEBEB;
 
+      @media(max-width: 800px) {
+        width: 600px;
+      }
+
+      @media(max-width: 650px) {
+        height: 450px;
+        width: 450px;
+      }
+      @media(max-width: 400px) {
+        height: 450px;
+        width: 300px;
+      }
+
       .login-left-form {
         width: 50%;
         border-bottom-left-radius: 5px;
@@ -28,15 +41,6 @@
           overflow: hidden;
           border-bottom-left-radius: 5px;
           border-top-left-radius: 5px;
-
-          @media(max-width: 600px) {
-            height: 450px;
-            width: 100%;
-          }
-          @media(max-width: 400px) {
-            height: 450px;
-            width: 300px;
-          }
 
           .login-card-body {
 
@@ -67,7 +71,7 @@
             }
 
             .login-card-error {
-              color: #E02736;
+              color: #d90a17;
               font-size: 14px;
               font-weight: 400;
               line-height: 16px;
@@ -79,30 +83,20 @@
               margin: auto;
 
               .login-button {
-                -webkit-appearance: none;
                 background-color: #F06060;
-                border: none;
-                border-radius: 5px;
                 color: white;
                 width: 220px;
                 height: 40px;
                 font-size: 15px;
                 font-weight: 400;
                 line-height: 20px;
-                margin: 1rem;
                 margin-top: 3rem;
-                overflow: hidden;
-                -webkit-user-select: none;
-                box-shadow: 0 0 3px #2A2A28;
-                &:active, &:focus {
-                  outline: none;
-                }
-                &--disabled {
-                  pointer-events: none;
-                  background-color: grey;
-                }
+
                 .login-card-loading {
                   padding-top: 4px;
+                }
+                @media (max-width: 650px) {
+                  width: 70%;
                 }
               }
 
@@ -239,12 +233,11 @@
               background-color: #F06060;
               width: 180px;
               height: 40px;
-              border: none;
-              border-radius: 5px;
-              outline: none;
               font-size: 16px;
-              overflow: hidden;
-              box-shadow: 0 0 3px #2A2A28;
+
+              @media (max-width: 650px) {
+                width: 70%;
+              }
             }
           }
         }
