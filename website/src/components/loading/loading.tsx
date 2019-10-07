@@ -9,7 +9,7 @@ class Loading extends Component<{loading: boolean},{}> {
     if (this.props.loading) {
       return (
         <div className="text-center" style={{textAlign: "center"}}>
-          <div className="spinner-border" role="status">
+          <div className="loading-spinner">
           </div>
         </div>
       )
