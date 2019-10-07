@@ -15,6 +15,7 @@
       display: flex;
       box-sizing: content-box;
       border: 1px solid #EBEBEB;
+      border-radius: 5px;
       box-shadow: 0 0 5px #EBEBEB;
 
       @media(max-width: 800px) {
@@ -32,8 +33,6 @@
 
       .login-left-form {
         width: 50%;
-        border-bottom-left-radius: 5px;
-        border-top-left-radius: 5px;
 
         .login-card {
           height: 100%;
@@ -194,12 +193,11 @@
           }
         }
       }
-      }
       .login-right-info {
         width: 50%;
+        height: 100%;
         border-bottom-right-radius: 5px;
         border-top-right-radius: 5px;
-        height: 100%;
         background-image: url("/media/default/background.jpg");
         background-size: 600px 600px;
         background-position: center;
@@ -243,5 +241,5 @@
         }
       }
 
-
+    }
 }

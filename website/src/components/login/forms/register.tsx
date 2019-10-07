@@ -59,7 +59,7 @@ class RegisterForm extends Component<ReadOnly, WriteOnly> {
     return true
   }
   private submitForm = async (event: any): Promise<void> => {
-    event.preventDefault();
+    event.preventDefault()
     if (this.validateForm()) {
       this.setState({loading: true})
       try {
@@ -69,12 +69,22 @@ class RegisterForm extends Component<ReadOnly, WriteOnly> {
           body: JSON.stringify({username: this.state.username, email: this.state.email, password: this.state.password})
         })
         if (!response.ok) {
-          this.setState({loading: false, error: '*no database connection'})
+          if (response.status === 500) {
+            this.setState({loading: false, error: '*no database connection'})
+            throw this.state.error
+          }
+          if (response.status === 400) {
+            this.setState({loading: false, error: '*username or email exists'})
+            throw this.state.error
+          }
+          else {
+            this.setState({loading: false, error: response.statusText})
+            throw this.state.error
+          }
         }
         this.props.history.push('/login')
       }
       catch (error) {
-        this.setState({loading: false, error: '*username or email exists'})
         console.log(error)
       }
     }

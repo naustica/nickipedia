@@ -53,7 +53,7 @@ class LoginForm extends Component<ReadOnly, WriteOnly> {
     return true
   }
   private submitForm = async (event: any): Promise<void> => {
-    event.preventDefault();
+    event.preventDefault()
     this.setState({error: '', errorUsername: '', errorPassword: ''})
     if (this.validateForm()) {
       this.setState({loading: true})
@@ -64,8 +64,18 @@ class LoginForm extends Component<ReadOnly, WriteOnly> {
           body: JSON.stringify({username: this.state.username, password: this.state.password})
         })
         if (!response.ok) {
-          this.setState({loading: false, error: '*no database connection'})
-          throw this.state.error
+          if (response.status === 500) {
+            this.setState({loading: false, error: '*no database connection'})
+            throw this.state.error
+          }
+          if (response.status === 400) {
+            this.setState({loading: false, error: '*Username or Password not correct'})
+            throw this.state.error
+          }
+          else {
+            this.setState({loading: false, error: response.statusText})
+            throw this.state.error
+          }
         }
         const data = await response.json()
         this.setState({access_token: data.access_token})
@@ -75,7 +85,6 @@ class LoginForm extends Component<ReadOnly, WriteOnly> {
         this.props.history.push('/')
       }
       catch (error) {
-        this.setState({loading: false, error: '*Username or Password not correct'})
         console.log(error)
       }
     }
