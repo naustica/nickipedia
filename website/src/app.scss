@@ -8,8 +8,6 @@
 // optional
 @import "node_modules/bootstrap/scss/type";
 @import "node_modules/bootstrap/scss/reboot";
-@import "node_modules/bootstrap/scss/spinners";
-
 
 // google fonts
 @import "node_modules/sass-google-fonts/src/GoogleFonts.scss";
@@ -120,6 +118,15 @@ hr {
       left: 19px;
     }
 }
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: 0.75s spin infinite linear;
+}
 .container {
     width: 100%;
     margin-left: 1rem !important;
@@ -189,6 +196,12 @@ hr {
         .col-11{ width: 100%;  }
         .col-12{ width: 100%;  }
     }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 @keyframes pulse {
     0% {
