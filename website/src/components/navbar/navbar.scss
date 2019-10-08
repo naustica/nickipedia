@@ -18,6 +18,10 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+        max-width: 1400px;
+        @media (min-width: 1400px) {
+          margin: auto;
+        }
 
         .navbar-logo-menu {
 

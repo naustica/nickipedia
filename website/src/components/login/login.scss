@@ -17,6 +17,7 @@
       border: 1px solid #EBEBEB;
       border-radius: 5px;
       box-shadow: 0 0 5px #EBEBEB;
+      min-width: 300px;
 
       @media(max-width: 800px) {
         width: 600px;
@@ -26,9 +27,15 @@
         height: 450px;
         width: 450px;
       }
-      @media(max-width: 400px) {
+      @media(max-width: 450px) {
         height: 450px;
         width: 300px;
+        .login-left-form {
+          width: 100% !important;
+        }
+        .login-right-info {
+          display: none;
+        }
       }
 
       .login-left-form {
