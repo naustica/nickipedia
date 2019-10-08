@@ -71,8 +71,10 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
   }
   getFullscreen = () => {
     if (this.state.fullscreen) {
-      document.exitFullscreen()
-      this.setState({fullscreen: false})
+      if (document.fullscreen) {
+        document.exitFullscreen()
+        this.setState({fullscreen: false})
+      }
     }
     else {
       this.videoContainer.requestFullscreen()

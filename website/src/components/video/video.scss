@@ -210,7 +210,7 @@ video {
     transition: all 0.2s;
     display: flex;
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
     width: 100%;
     flex-wrap: wrap;
     background-color: transparent;
@@ -223,9 +223,8 @@ video {
   .video-play-button {
       color: #F2F2F2;
       outline: none;
-      padding-left: 1.2rem;
-      padding-bottom: 0.6rem;
-      padding-top: 0rem;
+      padding-left: 15px;
+      padding-bottom: 6px;
       border: none;
       background-color: transparent;
       margin: 3px;
@@ -242,8 +241,8 @@ video {
     .video-expand-button {
         color: #F2F2F2;
         outline: none;
-        padding-right: 1.2rem;
-        padding-bottom: 0.6rem;
+        padding-right: 15px;
+        padding-bottom: 6px;
         padding-top: 0rem;
         background-color: transparent;
         border: none;
@@ -261,10 +260,8 @@ video {
   .video-audio-button {
       color: #F2F2F2;
       outline: none;
-      padding-bottom: 0.6rem;
-      padding-top: 0rem;
-      padding-right: 0;
-      padding-left: 0.2rem;
+      padding-bottom: 5px;
+      padding-left: 3px;
       border: none;
       background-color: transparent;
       margin: 3px;
@@ -301,7 +298,7 @@ video {
       cursor: pointer;
       outline: none;
       position: relative;
-      top: -0.2rem;
+      top: -3px;
       height: 3px;
       z-index: 2;
       background-color: transparent;
@@ -334,8 +331,8 @@ video {
 .video-play-time {
     position: relative;
     color: #FFFFFF;
-    margin-top: 0.5rem;
-    padding-left: 0.5rem;
+    margin-top: 7px;
+    padding-left: 5px;
     font-size: 12px;
     font-weight: 300;
 }
@@ -350,7 +347,7 @@ video {
       left: 1%;
       margin-right: 1%;
       width: 98%;
-      padding-bottom: 0.5rem;
+      padding-bottom: 3px;
     }
 
     .video-timebar-line {
