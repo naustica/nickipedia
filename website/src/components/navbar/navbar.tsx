@@ -15,8 +15,10 @@ interface WriteOnly {
   toggleUpload: boolean,
   toggleSidebar: boolean,
   term: string,
+  preTerm: string,
   options: any,
   suggestions: Array<any>,
+  cursorSearch: number
   loading: boolean
 }
 
@@ -31,6 +33,8 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
   settingsToggler: any
   uploadToggler: any
   sidebarToggler: any
+  searchSuggestions: any
+  searchBar: any
 
   constructor(props:any) {
     super(props)
@@ -40,15 +44,12 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
       toggleUpload: false,
       toggleSidebar: false,
       term: '',
+      preTerm: '',
       options: [],
       suggestions: [],
+      cursorSearch: -1,
       loading: false
     }
-
-    this.onClickUpload = this.onClickUpload.bind(this)
-    this.onWindowClick = this.onWindowClick.bind(this)
-    this.getTerm = this.getTerm.bind(this)
-    this.submitForm = this.submitForm.bind(this)
   }
 
   messageTogglerRef = (messageToggler: any) => {
@@ -67,7 +68,15 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     this.sidebarToggler = sidebarToggler
   }
 
-  componentDidMount() {
+  searchSuggestionsRef = (searchSuggestions: any) => {
+    this.searchSuggestions = searchSuggestions
+  }
+
+  searchBarRef = (searchBar: any) => {
+    this.searchBar = searchBar
+  }
+
+  public componentDidMount = () => {
     window.addEventListener('click', this.onWindowClick);
     this.setState({loading: true})
     fetch('api/video?all=True', {
@@ -100,10 +109,12 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
           console.log(error)
         })
   }
-  componentWillUnmount() {
+
+  public componentWillUnmount = () => {
     window.removeEventListener('click', this.onWindowClick);
   }
-  getTerm(event:React.ChangeEvent<HTMLInputElement>): void {
+
+  private getTerm = (event: any): void => {
     const value = event.target.value
     let suggestions = []
     if (value.length > 0) {
@@ -111,23 +122,29 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     suggestions = this.state.options.sort().filter(v => regex.test(v))
     suggestions = suggestions.slice(0, 5)
     }
-    this.setState({term: value, suggestions: suggestions})
+    this.setState({term: value, preTerm: value, suggestions: suggestions, cursorSearch: -1})
   }
-  suggestionsSelected(value) {
+
+  private suggestionsSelected = (value) => {
     this.setState({term: value, suggestions: []})
     this.props.history.push('/result/' + value)
   }
-  renderSuggestions() {
+
+  private renderSuggestions = () => {
+
+    const { cursorSearch } = this.state
+
     if (this.state.suggestions.length === 0) {
       return null
     }
     return (
-      <ul className="search-suggestions">
-        {this.state.suggestions.map((item => <li key={item} onClick={() => this.suggestionsSelected(item)}>{item}</li>))}
+      <ul className="search-suggestions" ref={this.searchSuggestionsRef}>
+        {this.state.suggestions.map((item, i) => <li key={item} tabIndex={i} onFocus={() => this.setState({term: item})} onClick={() => this.suggestionsSelected(item)} onKeyDown={this.handleKeySearchNavigation}>{item}</li>)}
       </ul>
     )
   }
-  submitForm(event): any {
+
+  private submitForm = (event): any => {
     const form = event.target as HTMLFormElement;
     const term = this.state.term
     event.preventDefault();
@@ -146,6 +163,52 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
         })
     }
   }
+
+  private handleKeySearchNavigation = (event: any): void => {
+    const { cursorSearch, suggestions, term, preTerm } = this.state
+
+    let cursor = cursorSearch
+
+    switch (event.keyCode) {
+
+      // arrow up
+      case 38:
+        event.preventDefault()
+        if (cursorSearch > 0) {
+          cursor = cursor - 1
+          this.searchSuggestions.children[cursor].focus()
+        }
+        if (cursorSearch === 0) {
+          this.searchBar.focus()
+          cursor = -1
+          this.setState({term: preTerm})
+        }
+        break
+
+      //arrow down
+      case 40:
+        event.preventDefault()
+        if (cursorSearch < suggestions.length-1) {
+          cursor = cursor + 1
+          this.searchSuggestions.children[cursor].focus()
+        }
+        if (cursorSearch === suggestions.length-1) {
+          this.searchBar.focus()
+          cursor = -1
+          this.setState({term: preTerm})
+        }
+        break
+
+      // enter
+      case 13:
+        event.preventDefault()
+        cursor = -1
+        this.suggestionsSelected(term)
+    }
+    this.setState({cursorSearch: cursor})
+  }
+
+
   onClickToggleNotifications = (event:any): any => {
     const toggle = this.state.toggleMessage
     this.setState({toggleMessage: !toggle})
@@ -163,7 +226,8 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     const toggle = this.state.toggleUpload
     this.setState({toggleUpload: !toggle})
   }
-  onWindowClick(event: { target: any; }):any {
+
+  private onWindowClick = (event: { target: any; }): void => {
 
     if (this.state.toggleSettings) {
       if (event.target !== this.settingsToggler && !this.settingsToggler.contains(event.target))
@@ -223,7 +287,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
           <div className="navbar-search">
             <form method="POST" onSubmit={this.submitForm}>
               <div className="navbar-form-group">
-                <input className="navbar-form-input" style={searchStyle} type="text" name="search" value={this.state.term} onChange={this.getTerm} placeholder="search"/>
+                <input className="navbar-form-input" ref={this.searchBarRef} style={searchStyle} type="text" name="search" value={this.state.term} onChange={this.getTerm} placeholder="search" onKeyDown={this.handleKeySearchNavigation}/>
                 {this.renderSuggestions()}
               </div>
             </form>
