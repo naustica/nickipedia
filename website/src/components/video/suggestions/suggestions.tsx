@@ -22,9 +22,10 @@ class VideoSuggestions extends Component<{suggestions: any, loading: boolean},{}
     }
   }
 
-  renderSuggestionsCards(loading) {
-    const content = loading ? this.props.suggestions.map(suggestion => (
-      <div className="card" key={suggestion.id} style={{height: "110px", width: "100%", backgroundColor: "#E0DFDF", marginBottom: "1rem"}}>
+  renderSuggestionsCards = (loading) => {
+
+    const content = loading ? this.props.suggestions.map((suggestion, i) => (
+      <div className="video-suggestion-card" key={suggestion.id}>
       </div>
     )) : (
       this.props.suggestions.slice(0, 14).map(suggestion => (
@@ -46,7 +47,6 @@ class VideoSuggestions extends Component<{suggestions: any, loading: boolean},{}
     return content
   }
   render() {
-    console.log(this.props.suggestions)
     return this.renderSuggestionsCards(this.props.loading)
   }
 }

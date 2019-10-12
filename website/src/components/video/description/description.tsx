@@ -199,8 +199,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     const videoTimestamp = this.convertVideoTimestamp(this.props.timestamp)
     const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "#262626"}
     const downvoteButtonStyle = this.state.userVoting === 'downvoted' ? {color: "#5975CC"} : {color: "#262626"}
-    const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
-
+    const Description = (
       <div className="video-description">
         <h2 className="video-description-title">{this.props.title}</h2>
         <p className="video-description-views">{this.props.views + ' views' + ' • ' + videoTimestamp}</p>
@@ -226,7 +225,10 @@ class VideoDescription extends Component<{id: number, title: string, description
         <hr/>
       </div>
     )
-    return loadingState
+    if (this.props.loading) {
+      return <div className="video-description--loading" />
+    }
+    return Description
   }
 }
 

@@ -195,6 +195,9 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
         </div>
       </div>
     )
+    if (loading) {
+      return <div className="video-player-container--loading" />
+    }
     return Player
   }
   render() {

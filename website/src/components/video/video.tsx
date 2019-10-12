@@ -59,7 +59,7 @@ class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
               loading={this.props.video.changing}
             />
             <div className="container">
-              <VideoComments id={this.props.video.data.id}/>
+              <VideoComments id={this.props.video.data.id} loading={this.props.video.changing}/>
             </div>
           </div>
           <div className="col-4" style={{paddingLeft: "1rem"}}>

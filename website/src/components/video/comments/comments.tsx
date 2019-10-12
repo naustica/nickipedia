@@ -10,7 +10,7 @@ import Loading from './../../loading/loading'
 import ConvertTime from './../../../utils/datetime'
 
 
-class VideoComments extends Component<{id: number}, {data?: any, comment?: string, loading?: boolean}> {
+class VideoComments extends Component<{id: number, loading: boolean}, {data?: any, comment?: string, loading?: boolean}> {
   constructor(props:any) {
     super(props)
     this.state = {
@@ -110,9 +110,15 @@ class VideoComments extends Component<{id: number}, {data?: any, comment?: strin
       ))
 
 
+    if (this.props.loading) {
+      return (
+        <div className="video-comment-container" />
+      )
+    }
+
 
     return (
-      <div>
+      <div className="video-comment-container">
         <div className="comments-info">
           <h1 className="comments-info-counter">{this.state.data.length + ' Comments'}</h1>
           <h2 className="comments-info-sorter">
