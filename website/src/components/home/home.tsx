@@ -81,7 +81,7 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
                   <IconContext.Provider value={{size: "24px"}}>
                     <GoFlame />
                   </IconContext.Provider>
-                  <h1>Trending</h1>
+                  <h1 style={{paddingLeft: "33px"}}>Trending</h1>
               </div>
               </Tab>
               <Tab className="navbar-tab">
