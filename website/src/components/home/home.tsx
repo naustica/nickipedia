@@ -95,7 +95,7 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
             </TabList>
             </div>
           </div>
-          <div className="col-11" style={{paddingLeft: "2rem"}}>
+          <div className="col-11" style={{paddingLeft: "50px"}}>
           <TabPanel>
           <h2 className={cx("frontpage-suggestions-header", {["frontpage-suggestions-header--loading"]: Boolean(this.props.videos.changing)})}>Recommended</h2>
             <div className="row">
