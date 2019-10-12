@@ -51,6 +51,11 @@
   overflow: hidden;
   max-width: 900px;
 
+  &:empty {
+    background-color: #EBEBEB;
+    animation: pulse 1s infinite ease;
+  }
+
   &:hover {
 
     .result-card-img .result-card-img-overlay {

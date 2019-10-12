@@ -18,6 +18,7 @@ class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
   constructor(props:any) {
     super(props)
     this.fetchMoreSearchResults = this.fetchMoreSearchResults.bind(this);
+    //this.props.search.fetching = true
   }
   componentWillMount() {
     window.scrollTo(0, 0)
@@ -47,8 +48,15 @@ class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
     if (this.props.search.data.length > 0) {
       return (this.props.search.data.map(result => <Card key={result.id} result={result} fetching={this.props.search.fetching} />))
     }
-    else {
+    if (this.props.search.data.length === 0 && this.props.search.fetched) {
       return (<div style={{height: "100%", width: "100%", fontSize: "16px", textAlign: "center"}}>no results :(</div>)
+    }
+    if (this.props.search.fetching) {
+      let loadingCards = []
+      for (let i; i < 8; i++) {
+        loadingCards.push(<div className="result-card" />)
+      }
+      return loadingCards
     }
   }
   updateSorting(value:any):any {
