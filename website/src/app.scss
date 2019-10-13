@@ -13,6 +13,7 @@
 @import "node_modules/sass-google-fonts/src/GoogleFonts.scss";
 
 @include google-font('Roboto', '400,500,700');
+//@include google-font('Darker+Grotesque', '400,500,700');
 
 
 *,
@@ -35,6 +36,7 @@ body {
     //background-color: #F2F2F2;
     margin-bottom: 1rem;
     font-family: 'Roboto';
+    //font-family: 'Dark Grotesque';
     color: #2A2A28;
 }
 a, a:link, a:visited, a:active, a:hover {
