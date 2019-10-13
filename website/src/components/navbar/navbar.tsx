@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { IoMdNotificationsOutline, IoMdSettings, IoMdExit, IoMdVideocam } from 'react-icons/io'
-import { GoDeviceCameraVideo } from 'react-icons/go'
+import { IoMdNotificationsOutline, IoMdSettings, IoMdExit, IoMdVideocam, IoMdHome, IoMdAlbums } from 'react-icons/io'
+import { GoDeviceCameraVideo, GoFlame } from 'react-icons/go'
 import { IconContext } from "react-icons"
 import cx from 'classnames'
 
@@ -272,6 +272,39 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
             <div className="navbar-menu-line"></div>
           </div>
           <div className={cx("side-navbar", {["side-navbar--active"]: toggleSidebar})}>
+            <div className="side-navbar-body">
+              <div className="side-navbar-body-option">
+                <IconContext.Provider value={{size: "24px"}}>
+                  <IoMdHome />
+                </IconContext.Provider>
+                <h1>Home</h1>
+              </div>
+              <div className="side-navbar-body-option">
+                <IconContext.Provider value={{size: "24px"}}>
+                  <GoFlame />
+                </IconContext.Provider>
+                <h1>Trending</h1>
+              </div>
+              <div className="side-navbar-body-option">
+                <IconContext.Provider value={{size: "24px"}}>
+                  <IoMdAlbums />
+                </IconContext.Provider>
+                <h1>Subscriptions</h1>
+              </div>
+              <hr />
+              <div className="side-navbar-body-header">Subscriptions</div>
+              <div className="side-navbar-body-subscription">
+                <img src="media/default/default_pic_a.jpg" />
+                <span className="side-navbar-body-subscription-name">kek</span>
+              </div>
+              <hr />
+              <div className="side-navbar-body-option">
+                <IconContext.Provider value={{size: "24px"}}>
+                  <IoMdSettings />
+                </IconContext.Provider>
+                <h1>Settings</h1>
+              </div>
+            </div>
           </div>
           <div className="navbar-logo">
             <Link to='/'>
