@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import { IoMdFolder, IoMdFolderOpen } from 'react-icons/io'
 import { IconContext } from 'react-icons'
 import cx from 'classnames'
@@ -6,7 +6,7 @@ import cx from 'classnames'
 import './../upload.scss'
 
 
-interface ReadOnly {
+interface Props {
   dragOverFile: (event: any) => void,
   dragLeaveFile: (event: any) => void,
   dropFile: (event: any) => void,
@@ -16,23 +16,23 @@ interface ReadOnly {
 }
 
 
-export default class ProcessFile extends Component<ReadOnly> {
+export default class ProcessFile extends Component<Props> {
 
-  fileInput: any
+  private fileInput: any
 
-  constructor(props: Readonly<ReadOnly>) {
+  constructor(props: Readonly<Props>) {
     super(props)
   }
 
-  fileInputRef = (fileInput: any): void => {
+  private fileInputRef = (fileInput: any): void => {
     this.fileInput = fileInput
   }
 
-  getInputFile = (): void => {
+  private getInputFile = (): void => {
     this.fileInput.click()
   }
 
-  renderFileUploadIcon = (): any => {
+  private renderFileUploadIcon = (): ReactNode => {
     const { drag } = this.props
 
     if (drag) {
@@ -51,7 +51,7 @@ export default class ProcessFile extends Component<ReadOnly> {
     }
   }
 
-  render() {
+  public render = (): ReactNode => {
 
     const { dragOverFile, dragLeaveFile, dropFile, process, onFileSelected } = this.props
 

@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import cx from 'classnames'
 
 import './../upload.scss'
 import Loading from '../../loading/loading'
 
-interface ReadOnly {
+interface Props {
   url: string,
   updateLink: (arg: any) => void,
   loading: boolean,
@@ -12,11 +12,11 @@ interface ReadOnly {
 }
 
 
-export default class ProcessLink extends Component<ReadOnly> {
-  constructor(props: Readonly<ReadOnly>) {
+export default class ProcessLink extends Component<Props> {
+  constructor(props: Readonly<Props>) {
     super(props)
   }
-  render() {
+  public render = (): ReactNode => {
 
     const { url, updateLink, loading, processLink } = this.props
 

@@ -1,12 +1,18 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component, ReactNode } from 'react'
+import { connect } from 'react-redux'
 import { IoMdOptions } from 'react-icons/io'
-import { IconContext } from "react-icons"
+import { IconContext } from 'react-icons'
 
 import './results.scss'
-import {fetchSearchStart, fetchSearchResults, cleanSearchResults} from './../../store/actions/searchActions'
+import { fetchSearchStart, fetchSearchResults, cleanSearchResults } from './../../store/actions/searchActions'
 
 import Card from './card/card'
+
+interface Props {
+  match: any,
+  dispatch: any,
+  search: any
+}
 
 
 @(connect((store: any) => {
@@ -14,29 +20,28 @@ import Card from './card/card'
     search: store.search
   }
 }) as any)
-class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
-  constructor(props:any) {
+class Results extends Component<Props> {
+  constructor(props: Props) {
     super(props)
-    this.fetchMoreSearchResults = this.fetchMoreSearchResults.bind(this);
     //this.props.search.fetching = true
   }
-  componentWillMount() {
+  public componentWillMount = (): void => {
     window.scrollTo(0, 0)
     window.addEventListener('scroll', this.fetchMoreSearchResults)
     const term = this.props.match.params.term
     this.fetchSearchResults(term, this.props.search.table, this.props.search.page)
   }
-  componentWillUnmount() {
+  public componentWillUnmount = (): void => {
     window.removeEventListener('scroll', this.fetchMoreSearchResults)
     this.props.dispatch(cleanSearchResults())
   }
-  fetchSearchResults(term: string, table: string, page: number) {
+  private fetchSearchResults = (term: string, table: string, page: number): void =>  {
     Promise.all([
       this.props.dispatch(fetchSearchStart()),
       this.props.dispatch(fetchSearchResults(term, table, page))
     ])
   }
-  fetchMoreSearchResults() {
+  private fetchMoreSearchResults = (): void => {
     const windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight
     const documentHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight,  document.documentElement.scrollHeight, document.documentElement.offsetHeight)
     const windowBottom = windowHeight + window.pageYOffset
@@ -44,7 +49,7 @@ class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
       this.fetchSearchResults(this.props.search.term, this.props.search.table, this.props.search.page + 1)
     }
   }
-  renderCards() {
+  private renderCards = (): ReactNode => {
     if (this.props.search.data.length > 0) {
       return (this.props.search.data.map(result => <Card key={result.id} result={result} fetching={this.props.search.fetching} />))
     }
@@ -59,12 +64,12 @@ class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
       return loadingCards
     }
   }
-  updateSorting(value:any):any {
+  private updateSorting = (value:any): any => {
     const data = this.props.search.data
     this.sortResults(data, value)
     this.setState({data: data})
   }
-  sortResults(data: any, value: string) {
+  private sortResults = (data: any, value: string) => {
     switch(true) {
       case value === 'id':
         data = data.sort((a, b) => a.id - b.id)
@@ -80,7 +85,7 @@ class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
         break
     }
   }
-  componentDidUpdate(prevProps: any) {
+  public componentDidUpdate = (prevProps: Props) => {
     //window.scrollTo(0, 0)
     if (this.props.match.params.term != prevProps.match.params.term) {
       window.scrollTo(0, 0)
@@ -89,7 +94,7 @@ class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
       this.fetchSearchResults(term, this.props.search.table, 1)
     }
   }
-  render() {
+  public render = (): ReactNode => {
     const loadingStyles = {} //this.props.search.fetching ? {backgroundColor: "#E0DFDF", color: "transparent", boxShadow: "none", border: "none"} : {}
     return (
       <div className="container" style={{paddingTop: "3rem"}}>
@@ -126,4 +131,4 @@ class Results extends Component<{match: any, dispatch: any, search: any}, {}> {
 }
 
 
-export default Results;
+export default Results

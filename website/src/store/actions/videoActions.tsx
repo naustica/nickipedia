@@ -1,12 +1,12 @@
-export function fetchVideoStart() {
+export const fetchVideoStart = () => {
   return {
     type: 'fetch_video_start',
     payload: {}
   }
 }
 
-export function fetchVideo(id: number) {
-  return async function(dispatch: any) {
+export const fetchVideo = (id: number) => {
+  return async (dispatch: any) => {
     try {
     const response = await fetch('api/video?video_id=' + id, {
       method: 'get'
@@ -20,8 +20,8 @@ export function fetchVideo(id: number) {
   }
 }
 
-export function fetchVideos() {
-  return async function(dispatch: any) {
+export const fetchVideos = () => {
+  return async (dispatch: any) => {
     try {
     const response = await fetch('api/video?all=True', {
       method: 'get'
@@ -35,8 +35,8 @@ export function fetchVideos() {
   }
 }
 
-export function addView(id: number, views: number) {
-  return async function(dispatch: any) {
+export const addView = (id: number, views: number) => {
+  return async (dispatch: any) => {
     try {
     const access_token = localStorage.getItem('access_token')
     const response = await fetch('api/video?video_id=' + id, {
@@ -55,15 +55,15 @@ export function addView(id: number, views: number) {
   }
 }
 
-export function getVideoSuggestionsStart() {
+export const getVideoSuggestionsStart = () => {
   return {
     type: 'get_video_suggestions_start',
     payload: {}
   }
 }
 
-export function getVideoSuggestions(id: number, limit: number) {
-  return async function(dispatch: any) {
+export const getVideoSuggestions = (id: number, limit: number) => {
+  return async (dispatch: any) => {
     try {
       const response = await fetch('api/video?all=True', {
         method: 'get'
@@ -90,8 +90,8 @@ export function getVideoSuggestions(id: number, limit: number) {
   }
 }
 
-export function uploadVideoFromUrl(url: string) {
-  return async function(dispatch: any) {
+export const uploadVideoFromUrl = (url: string) => {
+  return async (dispatch: any) => {
     const access_token = localStorage.getItem('access_token')
     try {
       const response = await fetch('api/video/add_from_url?url=' + url, {

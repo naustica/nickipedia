@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import { withRouter } from 'react-router-dom'
 
 
@@ -6,11 +6,11 @@ import './../login.scss'
 
 import Loading from './../../loading/loading'
 
-interface ReadOnly {
+interface Props {
   history:any
 }
 
-interface WriteOnly {
+interface State {
   username?: string,
   password?: string,
   email?: string,
@@ -22,8 +22,8 @@ interface WriteOnly {
 }
 
 
-class RegisterForm extends Component<ReadOnly, WriteOnly> {
-  constructor(props:any) {
+class RegisterForm extends Component<Props, State> {
+  constructor(props: any) {
     super(props)
     this.state = {
       username: '',
@@ -89,7 +89,7 @@ class RegisterForm extends Component<ReadOnly, WriteOnly> {
       }
     }
   }
-  render() {
+  public render = (): ReactNode => {
 
     const { loading } = this.state
 

@@ -1,14 +1,31 @@
-import React, {Component} from 'react'
+import React, { Component, ReactNode } from 'react'
 import {Link} from 'react-router-dom'
 import { IoMdHeart, IoMdHeartEmpty, IoMdTrash } from 'react-icons/io'
-import { IconContext } from "react-icons"
+import { IconContext } from 'react-icons'
 
 import './../video.scss'
 import Loading from './../../loading/loading'
 
 
-class VideoDescription extends Component<{id: number, title: string, description: string, author: string, timestamp: any, views: number, loading: boolean}, {likes: number, dislikes: number, userVoting: string, loading: boolean}> {
-  constructor(props:any) {
+interface Props {
+  id: number,
+  title: string,
+  description: string,
+  author: string,
+  timestamp: any,
+  views: number,
+  loading: boolean
+}
+
+interface State {
+  likes: number,
+  dislikes: number,
+  userVoting: string,
+  loading: boolean
+}
+
+export default class VideoDescription extends Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       likes: 0,
@@ -16,12 +33,9 @@ class VideoDescription extends Component<{id: number, title: string, description
       userVoting: 'unvoted',
       loading: false
     }
-    this.onClickLike = this.onClickLike.bind(this)
-    this.onClickDislike = this.onClickDislike.bind(this)
-    this.getLikesFromAPI = this.getLikesFromAPI.bind(this)
   }
 
-  async getLikesFromAPI(id) {
+  private getLikesFromAPI = async (id: number): Promise<void> => {
     this.setState({loading: true})
     const access_token = localStorage.getItem('access_token')
     await fetch('api/likes?v=' + id, {
@@ -67,18 +81,18 @@ class VideoDescription extends Component<{id: number, title: string, description
     this.setState({loading: false})
   }
 
-  componentDidMount() {
+  public componentDidMount = (): void => {
     this.getLikesFromAPI(this.props.id)
   }
 
-  componentDidUpdate(prevProps) {
+  public componentDidUpdate = (prevProps: Props): void => {
     if (this.props.id !== prevProps.id) {
       this.setState({likes: 0, dislikes: 0, userVoting: 'unvoted'})
       this.getLikesFromAPI(this.props.id)
     }
   }
 
-  onClickLike(event:React.MouseEvent<HTMLButtonElement>): any {
+  private onClickLike = (event:React.MouseEvent<HTMLButtonElement>): any => {
     const access_token = localStorage.getItem('access_token')
     let likes = this.state.likes
     let dislikes = this.state.dislikes
@@ -114,7 +128,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     }
   }
 
-  onClickDislike(event:React.MouseEvent<HTMLButtonElement>): any {
+  private onClickDislike = (event:React.MouseEvent<HTMLButtonElement>): any => {
     const access_token = localStorage.getItem('access_token')
     let likes = this.state.likes
     let dislikes = this.state.dislikes
@@ -150,12 +164,12 @@ class VideoDescription extends Component<{id: number, title: string, description
     }
   }
 
-  convertVideoTimestamp(date) {
+  private convertVideoTimestamp = (date: any): any => {
     let d = new Date(date)
     return d.getDate() + ' ' + d.toLocaleString('default', {month: 'short'}) + ' ' + d.getFullYear()
   }
 
-  renderLikeButton = () => {
+  private renderLikeButton = (): ReactNode => {
     if (this.state.userVoting === "upvoted") {
       return (
         <IconContext.Provider value={{size: "28px"}}>
@@ -172,7 +186,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     }
   }
 
-  renderDislikeButton = () => {
+  private renderDislikeButton = (): ReactNode => {
     return (
       <IconContext.Provider value={{size: "28px"}}>
         <IoMdTrash />
@@ -180,7 +194,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     )
   }
 
-  renderTextDescription = (): any => {
+  private renderTextDescription = (): ReactNode => {
     if (!this.props.loading) {
       if (this.props.description.length === 0 || this.props.description.length === 1) {
         return (
@@ -195,7 +209,7 @@ class VideoDescription extends Component<{id: number, title: string, description
     }
   }
 
-  render() {
+  public render = (): ReactNode => {
     const videoTimestamp = this.convertVideoTimestamp(this.props.timestamp)
     const upvoteButtonStyle = this.state.userVoting === 'upvoted' ? {color: "#E0235F"} : {color: "#262626"}
     const downvoteButtonStyle = this.state.userVoting === 'downvoted' ? {color: "#5975CC"} : {color: "#262626"}
@@ -231,6 +245,3 @@ class VideoDescription extends Component<{id: number, title: string, description
     return Description
   }
 }
-
-
-export default VideoDescription;

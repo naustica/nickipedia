@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
@@ -17,13 +17,13 @@ import Settings from './components/settings/settings'
 import AuthenticatedRoute from './components/authentication/authentication'
 
 
-function Error() {
+const Error = () => {
   return <h2>error</h2>
 }
 
 
 class App extends Component {
-    render() {
+    public render = (): ReactNode => {
       return (
           <Router>
             <Route path={['/', '/home', '/settings', '/result/:term', '/watch/:id']} exact component={Navbar} />

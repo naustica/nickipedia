@@ -1,12 +1,12 @@
-export function fetchAuthenticationStart() {
+export const fetchAuthenticationStart = () => {
   return {
     type: 'fetch_authentication_start',
     payload: {}
   }
 }
 
-export function fetchAuthenticationLogin(username: string, password: string) {
-  return async function(dispatch: any) {
+export const fetchAuthenticationLogin = (username: string, password: string) => {
+  return async (dispatch: any) => {
     try {
       const response = await fetch('api/auth/login', {
         method: 'post',
@@ -32,8 +32,8 @@ export function fetchAuthenticationLogin(username: string, password: string) {
   }
 }
 
-export function fetchAuthenticationLogout() {
-  return async function(dispatch: any) {
+export const fetchAuthenticationLogout = () => {
+  return async (dispatch: any) => {
     try {
       if (localStorage.getItem('access_token') != undefined) {
         const access_token = localStorage.getItem('access_token')
@@ -54,8 +54,8 @@ export function fetchAuthenticationLogout() {
   }
 }
 
-export function fetchAuthenticationRegister(username: string, email: string, password: string) {
-  return async function(dispatch: any) {
+export const fetchAuthenticationRegister = (username: string, email: string, password: string) => {
+  return async (dispatch: any) => {
     try {
       const response = await fetch('api/user/register', {
         method: 'post',
@@ -79,8 +79,8 @@ export function fetchAuthenticationRegister(username: string, email: string, pas
   }
 }
 
-export function fetchUser(username: string) {
-  return async function(dispatch: any) {
+export const fetchUser = (username: string) => {
+  return async (dispatch: any) => {
     try {
       const response = await fetch('api/user?username=' + username, {
         method: 'get'

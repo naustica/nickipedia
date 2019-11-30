@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import { IoMdCloudDone } from 'react-icons/io'
 import { IconContext } from 'react-icons'
 import cx from 'classnames'
 
 import './../upload.scss'
 
-interface ReadOnly {
+interface Props {
   uploadStatus: boolean,
   validateSteps: () => boolean,
   addInfo: () => Promise<void>
 }
 
 
-export default class UploadFinish extends Component<ReadOnly> {
-  constructor(props: Readonly<ReadOnly>) {
+export default class UploadFinish extends Component<Props> {
+  constructor(props: Readonly<Props>) {
     super(props)
   }
-  render() {
+  public render = (): ReactNode => {
 
     const { uploadStatus, validateSteps, addInfo } = this.props
 

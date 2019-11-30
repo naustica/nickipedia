@@ -1,19 +1,15 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React, { Component, ReactNode } from 'react'
 
 
-import './footer.scss';
+import './footer.scss'
 
 
-class Footer extends Component {
+export default class Footer extends Component {
 
-    render() {
+    public render = (): ReactNode => {
       return (
           <div className="footer">nickipedia 2019</div>
       )
     }
 
 }
-
-
-export default Footer

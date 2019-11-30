@@ -1,15 +1,20 @@
-import React, {Component} from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { Component, ReactNode } from 'react'
+import { Link, withRouter } from 'react-router-dom'
 import { IoMdNotificationsOutline, IoMdSettings, IoMdExit, IoMdVideocam, IoMdHome, IoMdAlbums } from 'react-icons/io'
 import { GoDeviceCameraVideo, GoFlame } from 'react-icons/go'
-import { IconContext } from "react-icons"
+import { IconContext } from 'react-icons'
 import cx from 'classnames'
 
 import './navbar.scss'
 
 import Upload from './../upload/upload'
 
-interface WriteOnly {
+
+interface Props {
+  history: any
+}
+
+interface State {
   toggleSettings: boolean,
   toggleMessage: boolean,
   toggleUpload: boolean,
@@ -22,21 +27,17 @@ interface WriteOnly {
   loading: boolean
 }
 
-interface ReadOnly {
-  history: any
-}
 
+class Navbar extends Component<Props, State> {
 
-class Navbar extends Component<ReadOnly, WriteOnly> {
+  private messageToggler: any
+  private settingsToggler: any
+  private uploadToggler: any
+  private sidebarToggler: any
+  private searchSuggestions: any
+  private searchBar: any
 
-  messageToggler: any
-  settingsToggler: any
-  uploadToggler: any
-  sidebarToggler: any
-  searchSuggestions: any
-  searchBar: any
-
-  constructor(props:any) {
+  constructor(props: any) {
     super(props)
     this.state = {
       toggleSettings: false,
@@ -52,31 +53,31 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     }
   }
 
-  messageTogglerRef = (messageToggler: any) => {
+  private messageTogglerRef = (messageToggler: any): void => {
     this.messageToggler = messageToggler
   }
 
-  settingsTogglerRef = (settingsToggler: any) => {
+  private settingsTogglerRef = (settingsToggler: any): void => {
     this.settingsToggler = settingsToggler
   }
 
-  uploadTogglerRef = (uploadToggler: any) => {
+  private uploadTogglerRef = (uploadToggler: any): void => {
     this.uploadToggler = uploadToggler
   }
 
-  sidebarTogglerRef = (sidebarToggler: any) => {
+  private sidebarTogglerRef = (sidebarToggler: any): void => {
     this.sidebarToggler = sidebarToggler
   }
 
-  searchSuggestionsRef = (searchSuggestions: any) => {
+  private searchSuggestionsRef = (searchSuggestions: any): void => {
     this.searchSuggestions = searchSuggestions
   }
 
-  searchBarRef = (searchBar: any) => {
+  private searchBarRef = (searchBar: any): void => {
     this.searchBar = searchBar
   }
 
-  public componentDidMount = () => {
+  public componentDidMount = (): void => {
     window.addEventListener('click', this.onWindowClick);
     this.setState({loading: true})
     fetch('api/video?all=True', {
@@ -110,7 +111,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
         })
   }
 
-  public componentWillUnmount = () => {
+  public componentWillUnmount = (): void => {
     window.removeEventListener('click', this.onWindowClick);
   }
 
@@ -125,12 +126,12 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
     this.setState({term: value, preTerm: value, suggestions: suggestions, cursorSearch: -1})
   }
 
-  private suggestionsSelected = (value) => {
+  private suggestionsSelected = (value: string): void => {
     this.setState({term: value, suggestions: []})
     this.props.history.push('/result/' + value)
   }
 
-  private renderSuggestions = () => {
+  private renderSuggestions = (): ReactNode => {
 
     const { cursorSearch } = this.state
 
@@ -209,19 +210,19 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
   }
 
 
-  onClickToggleNotifications = (event:any): any => {
+  private onClickToggleNotifications = (event:any): void => {
     const toggle = this.state.toggleMessage
     this.setState({toggleMessage: !toggle})
   }
-  onClickToggleSettings = (event:any): any => {
+  private onClickToggleSettings = (event:any): void => {
     const toggle = this.state.toggleSettings
     this.setState({toggleSettings: !toggle})
   }
-  onClickToggleSidebar = (event: any): any => {
+  private onClickToggleSidebar = (event: any): void => {
     const toggle = this.state.toggleSidebar
     this.setState({toggleSidebar: !toggle})
   }
-  onClickUpload = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  private onClickUpload = (event: React.MouseEvent<HTMLButtonElement>): void => {
     //this.props.history.push('/upload')
     const toggle = this.state.toggleUpload
     this.setState({toggleUpload: !toggle})
@@ -254,7 +255,7 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
           }
     }
   }
-  render() {
+  public render = (): ReactNode => {
     const { toggleSettings, toggleSidebar } = this.state
     const toggleSettingsStyle = this.state.toggleSettings ? {display: "inline"} : {display: "none"}
     const toggleMessageStyle = this.state.toggleMessage ? {display: "inline"} : {display: "none"}
@@ -384,4 +385,4 @@ class Navbar extends Component<ReadOnly, WriteOnly> {
 }
 
 
-export default withRouter(Navbar);
+export default withRouter(Navbar)

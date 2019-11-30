@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import cx from 'classnames'
 
 import './../upload.scss'
 
-interface ReadOnly {
+interface Props {
   title: string,
   description: string,
   onFileSelected: (event: any) => void,
@@ -14,23 +14,23 @@ interface ReadOnly {
 }
 
 
-export default class UploadMetadata extends Component<ReadOnly> {
+export default class UploadMetadata extends Component<Props> {
 
-  fileInput: any
+  private fileInput: any
 
-  constructor(props: Readonly<ReadOnly>) {
+  constructor(props: Readonly<Props>) {
     super(props)
   }
 
-  fileInputRef = (fileInput: any): void => {
+  private fileInputRef = (fileInput: any): void => {
     this.fileInput = fileInput
   }
 
-  getInputFile = (): void => {
+  private getInputFile = (): void => {
     this.fileInput.click()
   }
 
-  render() {
+  public render = (): ReactNode => {
 
     const { title, description, onFileSelected, updateInput, selectedImage, processProgressThumbnail, updateSelectedThumbnail  } = this.props
 

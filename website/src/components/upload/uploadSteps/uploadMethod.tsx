@@ -1,29 +1,29 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import { IoMdCloudUpload } from 'react-icons/io'
 import { IconContext } from 'react-icons'
 import cx from 'classnames'
 
 import './../upload.scss'
 
-interface ReadOnly {
+interface Props {
   uploadMethod: string,
   setUploadMethod: (arg: string) => void
 }
 
-interface WriteOnly {
+interface State {
   selectedUploadForm: boolean
 }
 
 
-export default class UploadMethod extends Component<ReadOnly, WriteOnly> {
-  constructor(props: Readonly<ReadOnly>) {
+export default class UploadMethod extends Component<Props, State> {
+  constructor(props: Readonly<Props>) {
     super(props)
     this.state = {
       selectedUploadForm: false
     }
   }
 
-  renderUploadSelection = () => {
+  private renderUploadSelection = (): string => {
     const { uploadMethod } = this.props
 
     switch (uploadMethod) {
@@ -38,7 +38,7 @@ export default class UploadMethod extends Component<ReadOnly, WriteOnly> {
     }
   }
 
-  render() {
+  public render = (): ReactNode => {
 
     const { selectedUploadForm } = this.state
     const { setUploadMethod } = this.props

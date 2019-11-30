@@ -1,12 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component, ReactNode } from 'react'
 
 
-class Loading extends Component<{loading: boolean},{}> {
-  constructor(props:any) {
+interface Props {
+  loading: boolean
+}
+
+export default class Loading extends Component<Props> {
+  constructor(props: Props) {
     super(props)
   }
-  render() {
-    if (this.props.loading) {
+  public render = (): ReactNode => {
+    const { loading } = this.props
+    if (loading) {
       return (
         <div className="text-center" style={{textAlign: "center"}}>
           <div className="loading-spinner">
@@ -21,6 +26,3 @@ class Loading extends Component<{loading: boolean},{}> {
     }
   }
 }
-
-
-export default Loading

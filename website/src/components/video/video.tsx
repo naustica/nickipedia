@@ -1,14 +1,21 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component, ReactNode } from 'react'
+import { connect } from 'react-redux'
 
-import './video.scss';
-import {fetchVideo, fetchVideoStart, addView, getVideoSuggestions, getVideoSuggestionsStart} from './../../store/actions/videoActions';
+import './video.scss'
+import { fetchVideo, fetchVideoStart, addView, getVideoSuggestions, getVideoSuggestionsStart } from './../../store/actions/videoActions'
 
-import VideoStream from './stream/stream';
-import VideoDescription from './description/description';
-import VideoComments from './comments/comments';
-import VideoSuggestions from './suggestions/suggestions';
-import Loading from './../loading/loading';
+import VideoStream from './stream/stream'
+import VideoDescription from './description/description'
+import VideoComments from './comments/comments'
+import VideoSuggestions from './suggestions/suggestions'
+import Loading from './../loading/loading'
+
+
+interface Props {
+  match?: any,
+  dispatch?: any,
+  video?: any
+}
 
 
 @(connect((store: any) => {
@@ -16,18 +23,18 @@ import Loading from './../loading/loading';
     video: store.video
   }
 }) as any)
-class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
-  constructor(props:any) {
+class Video extends Component<Props> {
+  constructor(props: Props) {
     super(props)
     this.props.video.fetching = true
     this.props.video.changing = true
   }
-  componentWillMount() {
+  public componentWillMount = (): void => {
     window.scrollTo(0, 0)
     const id = this.props.match.params.id
     this.getVideoData(id)
   }
-  getVideoData(id: number) {
+  private getVideoData = (id: number): void => {
     Promise.all([
       this.props.dispatch(fetchVideoStart()),
       this.props.dispatch(getVideoSuggestionsStart()),
@@ -37,14 +44,14 @@ class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
       this.props.dispatch(getVideoSuggestions(id, 12))
     })
   }
-  componentDidUpdate(prevProps: any) {
+  public componentDidUpdate = (prevProps: Props): void => {
     if (this.props.match.params.id !== prevProps.match.params.id) {
       window.scrollTo(0, 0)
       const id = this.props.match.params.id
       this.getVideoData(id)
     }
   }
-  render() {
+  public render = (): ReactNode => {
     return (
       <div className="container" style={{padding: "1.5rem", paddingLeft: "0.2rem", paddingRight: "0.5rem"}}>
         <div className="row">
@@ -72,4 +79,4 @@ class Video extends Component<{match?: any, dispatch?: any, video?: any}, {}> {
 }
 
 
-export default Video;
+export default Video

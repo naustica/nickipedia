@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import { IoMdCheckmark } from 'react-icons/io'
 import { IconContext } from 'react-icons'
 import cx from 'classnames'
@@ -13,12 +13,12 @@ import UploadOptionalData from './uploadSteps/uploadOptionalData'
 import UploadFinish from './uploadSteps/uploadFinish'
 
 
-interface ReadOnly {
+interface Props {
   style: any,
   reference: any
 }
 
-interface WriteOnly {
+interface State {
   url?: string,
   loading?: boolean,
   error?: string,
@@ -63,9 +63,9 @@ const initialState = {
 }
 
 
-class Upload extends Component<ReadOnly, WriteOnly> {
+export default class Upload extends Component<Props, State> {
 
-  constructor(props:any) {
+  constructor(props: Props) {
     super(props)
     this.state = initialState
   }
@@ -249,7 +249,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     }
   }
 
-  updateProgress = (event: { lengthComputable: any, loaded: number, total: number }) => {
+  private updateProgress = (event: { lengthComputable: any, loaded: number, total: number }): void => {
     if (event.lengthComputable) {
       let percent = (event.loaded / event.total) * 100
       if (this.state.step === 2) {
@@ -293,22 +293,22 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     }
   }
 
-  dragOverFile = (event: any) => {
+  public dragOverFile = (event: any): void => {
     event.preventDefault()
     this.setState({drag: true})
   }
 
-  dragLeaveFile = (event: any) => {
+  public dragLeaveFile = (event: any): void => {
     event.preventDefault()
     this.setState({drag: false})
   }
 
-  dropFile = (event: any) => {
+  public dropFile = (event: any): void => {
     event.preventDefault()
     this.processFile(event.dataTransfer.files[0])
   }
 
-  onFileSelected = (event: any) => {
+  public onFileSelected = (event: any): void => {
     const { step } = this.state
     console.log(event.target.files[0])
     if (step === 2) {
@@ -319,15 +319,15 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     }
   }
 
-  setUploadMethod = (method: string): void => {
+  public setUploadMethod = (method: string): void => {
     this.setState({uploadMethod: method})
   }
 
-  updateSelectedThumbnail = (pictureId: number): void => {
+  public updateSelectedThumbnail = (pictureId: number): void => {
     this.setState({selectedImage: pictureId})
   }
 
-  checkSucceddedSteps = (step: number): boolean => {
+  public checkSucceddedSteps = (step: number): boolean => {
     const { succeddedSteps } = this.state
     if (succeddedSteps.includes(step)) {
       return true
@@ -335,7 +335,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     else false
   }
 
-  navigateTabs = (step: number): boolean => {
+  public navigateTabs = (step: number): boolean => {
     const { succeddedSteps } = this.state
 
     if (succeddedSteps.includes(step) || succeddedSteps.includes(step-1)) {
@@ -344,13 +344,13 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     else false
   }
 
-  selectNavigateTab = (step: number): void => {
+  public selectNavigateTab = (step: number): void => {
     if (this.navigateTabs(step)) {
       this.setState({step: step})
     }
   }
 
-  renderNavigationTabs = (): any => {
+  private renderNavigationTabs = (): any => {
 
     const { step } = this.state
 
@@ -403,7 +403,7 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     return tabs
   }
 
-  render() {
+  public render = (): ReactNode => {
     const { step,
             uploadMethod,
             url,
@@ -483,6 +483,3 @@ class Upload extends Component<ReadOnly, WriteOnly> {
     )
   }
 }
-
-
-export default Upload;

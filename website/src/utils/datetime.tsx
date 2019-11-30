@@ -1,4 +1,4 @@
-export default function ConvertTime(data: { timestamp: any }[]) {
+const convertTime = (data: { timestamp: any }[]): any => {
   for (var i=0; i<data.length; i++) {
     let currentDate:any = new Date()
     let date:any = new Date(data[i].timestamp)
@@ -59,9 +59,11 @@ export default function ConvertTime(data: { timestamp: any }[]) {
     }
 }
 
+export default convertTime
+
 // convert play time from video
 
-export function ConvertPlayTime(time: number) {
+export const convertPlayTime = (time: number): string => {
   let minutes: any = Math.floor(time / 60)
   var seconds: any = time - minutes * 60
   seconds = Math.floor(Math.ceil(seconds * 100) / 100)
@@ -76,7 +78,7 @@ export function ConvertPlayTime(time: number) {
 
 // convert duration time for suggestion cards
 
-export function ConvertDurationTime(duration: string) {
+export const convertDurationTime = (duration: string): string | null => {
   try {
     let durationSplit = duration.split(':')
     let seconds = durationSplit[2]

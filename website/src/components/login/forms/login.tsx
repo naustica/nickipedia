@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import './../login.scss'
 
 import Loading from './../../loading/loading'
 
-interface ReadOnly {
+interface Props {
   history: any
 }
 
-interface WriteOnly {
+interface State {
   username?: string,
   password?: string,
   access_token?: string,
@@ -20,8 +20,8 @@ interface WriteOnly {
 }
 
 
-class LoginForm extends Component<ReadOnly, WriteOnly> {
-  constructor(props:any) {
+class LoginForm extends Component<Props, State> {
+  constructor(props: any) {
     super(props)
     this.state = {
       username: '',
@@ -89,7 +89,7 @@ class LoginForm extends Component<ReadOnly, WriteOnly> {
       }
     }
   }
-  render() {
+  public render = (): ReactNode => {
 
     const { loading } = this.state
 

@@ -1,9 +1,20 @@
-import React, {Component} from 'react';
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
-import {connect} from 'react-redux';
+import React, { Component, ReactNode } from 'react'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import { connect } from 'react-redux'
 
-import './settings.scss';
-import {fetchAuthenticationStart, fetchUser} from './../../store/actions/authenticationActions';
+import './settings.scss'
+import { fetchAuthenticationStart, fetchUser } from './../../store/actions/authenticationActions'
+
+
+interface Props {
+  dispatch?: any,
+  user?: any
+}
+
+interface State {
+  darkmode: boolean,
+  hiddenAudio: any
+}
 
 
 @(connect((store: any) => {
@@ -11,27 +22,26 @@ import {fetchAuthenticationStart, fetchUser} from './../../store/actions/authent
     user: store.authentication
   }
 }) as any)
-class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolean, hiddenAudio: any}> {
-  constructor(props:any) {
+class Settings extends Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       hiddenAudio: new Audio('/media/default/song.mp3'),
       darkmode: false
     }
-    this.handleDarkmode = this.handleDarkmode.bind(this)
   }
-  componentWillMount() {
+  public componentWillMount = (): void => {
     window.scrollTo(0, 0)
     const username = localStorage.getItem('username')
     this.getUserData(username)
   }
-  getUserData(username: string) {
+  private getUserData = (username: string): void => {
     Promise.all([
       this.props.dispatch(fetchAuthenticationStart()),
       this.props.dispatch(fetchUser(username))
     ])
   }
-  handleDarkmode(event: any): void {
+  private handleDarkmode = (event: any): void => {
     this.setState({darkmode: event.target.checked})
     if (event.target.checked === true) {
       this.state.hiddenAudio.play()
@@ -44,7 +54,7 @@ class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolea
       this.state.hiddenAudio.pause()
     }
   }
-  render() {
+  public render = (): ReactNode => {
     return (
       <div className="container" style={{padding: "2rem"}}>
         <h3 style={{paddingBottom: "2rem", fontSize: "20px", fontWeight: 500}}>Settings</h3>
@@ -103,4 +113,4 @@ class Settings extends Component<{dispatch?: any, user?: any}, {darkmode: boolea
 }
 
 
-export default Settings;
+export default Settings

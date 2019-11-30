@@ -1,16 +1,22 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 import { connect } from 'react-redux'
 import { IoMdHome } from 'react-icons/io'
 import { GoFileDirectory, GoFlame } from 'react-icons/go'
-import { IconContext } from "react-icons"
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs'
+import { IconContext } from 'react-icons'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import cx from 'classnames'
 
 import './home.scss'
 
 import Card from './card/card'
 
-import {fetchVideos, fetchVideoStart, getVideoSuggestions, getVideoSuggestionsStart} from './../../store/actions/videoActions'
+import { fetchVideos, fetchVideoStart, getVideoSuggestions, getVideoSuggestionsStart } from './../../store/actions/videoActions'
+
+
+interface Props {
+  dispatch?: any,
+  videos?: any
+}
 
 
 const MAX_SUGGESTIONS: number = 16
@@ -21,11 +27,11 @@ const MAX_SUGGESTIONS: number = 16
     videos: store.video
   }
 }) as any)
-class Home extends Component<{dispatch?: any, videos?: any},{}> {
-  constructor(props:any) {
+class Home extends Component<Props> {
+  constructor(props: Props) {
     super(props)
   }
-  public componentWillMount = (): any => {
+  public componentWillMount = (): void => {
     window.scrollTo(0, 0)
     Promise.all([
       this.props.dispatch(fetchVideoStart()),
@@ -36,7 +42,7 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
     })
   }
 
-  private renderCards = (begin: number, end: number): any => {
+  private renderCards = (begin: number, end: number): ReactNode => {
 
     let result: any
 
@@ -60,7 +66,7 @@ class Home extends Component<{dispatch?: any, videos?: any},{}> {
     }
   }
 
-  render() {
+  public render = (): ReactNode => {
     return (
       <div className="container" id="home-container">
         <div className="row">

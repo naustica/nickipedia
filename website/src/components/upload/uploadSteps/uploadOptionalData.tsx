@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 
 import './../upload.scss'
 
-interface ReadOnly {
+interface Props {
   originalAuthor: string,
   originalViews: string,
   hashtags: string,
@@ -10,11 +10,11 @@ interface ReadOnly {
 }
 
 
-export default class UploadOptionalData extends Component<ReadOnly> {
-  constructor(props: Readonly<ReadOnly>) {
+export default class UploadOptionalData extends Component<Props> {
+  constructor(props: Readonly<Props>) {
     super(props)
   }
-  render() {
+  public render = (): ReactNode => {
 
     const { originalAuthor, originalViews, hashtags, updateInput } = this.props
 

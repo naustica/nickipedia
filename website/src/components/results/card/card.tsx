@@ -1,15 +1,28 @@
-import React, {Component} from 'react'
+import React, { Component, ReactNode } from 'react'
 import {Link} from 'react-router-dom'
 import { IoIosPlay } from 'react-icons/io'
 import { GoKebabVertical } from 'react-icons/go'
-import { IconContext } from "react-icons"
+import { IconContext } from 'react-icons'
 
-import './../results.scss';
-import ConvertTime, { ConvertDurationTime } from './../../../utils/datetime';
+import './../results.scss'
+import ConvertTime, { convertDurationTime } from './../../../utils/datetime'
+
+interface Props {
+  result:any,
+  fetching: boolean
+}
+
+interface State {
+  maxLength: number,
+  likes: number,
+  comments: number,
+  timestamp: any,
+  loading: boolean
+}
 
 
-class Card extends Component<{result:any, fetching: boolean}, {maxLength: number, likes: number, comments: number, timestamp: any, loading: boolean}> {
-  constructor(props:any) {
+export default class Card extends Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       maxLength: 200,
@@ -18,11 +31,17 @@ class Card extends Component<{result:any, fetching: boolean}, {maxLength: number
       timestamp: null,
       loading: false
     }
-    this.computeLikes = this.computeLikes.bind(this)
-    this.computeComments = this.computeComments.bind(this)
-    this.computeDate = this.computeDate.bind(this)
   }
-  computeLikes() {
+
+  public componentDidMount = (): void => {
+    this.setState({loading: true})
+    this.computeLikes()
+    this.computeComments()
+    this.computeDate()
+    this.setState({loading: false})
+  }
+
+  private computeLikes = (): void => {
     var i
     let likes = 0
     for (i=0; i < this.props.result.voting.length; i++) {
@@ -32,27 +51,23 @@ class Card extends Component<{result:any, fetching: boolean}, {maxLength: number
       this.setState({likes: likes})
     }
   }
-  computeComments() {
-    var i
+
+  private computeComments = (): void => {
+    let i
     let comments = 0
     for (i=0; i < this.props.result.comments.length; i++) {
         comments++
       }
       this.setState({comments: comments})
   }
-  computeDate() {
+
+  private computeDate = (): void => {
     let data:any = [{timestamp: this.props.result.timestamp}]
     ConvertTime(data)
     this.setState({timestamp: data[0].timestamp})
   }
-  componentDidMount() {
-    this.setState({loading: true})
-    this.computeLikes()
-    this.computeComments()
-    this.computeDate()
-    this.setState({loading: false})
-  }
-  render() {
+
+  public render = (): ReactNode => {
     const checkLengthDescription = this.props.result.text.length > this.state.maxLength ? this.props.result.text.substring(0, this.state.maxLength) + '...' : this.props.result.text
     const loadingStyles = this.props.fetching ? {backgroundColor: "#E0DFDF", color: "transparent", boxShadow: "none", border: "none"} : {}
     return (
@@ -60,7 +75,7 @@ class Card extends Component<{result:any, fetching: boolean}, {maxLength: number
           <Link to={'/watch/' + this.props.result.id} style={{color: "black"}}>
             <div className="result-card-img">
               <img src={'media/default/background.jpg'} className="result-card-img" alt="..." />
-              <span className="result-card-video-duration">{ConvertDurationTime(this.props.result.duration)}</span>
+              <span className="result-card-video-duration">{convertDurationTime(this.props.result.duration)}</span>
               <div className="result-card-img-overlay">
                 <IconContext.Provider value={{size: "26px"}}>
                   <IoIosPlay />
@@ -82,6 +97,3 @@ class Card extends Component<{result:any, fetching: boolean}, {maxLength: number
   )
   }
 }
-
-
-export default Card;

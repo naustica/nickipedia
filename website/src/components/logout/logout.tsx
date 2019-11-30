@@ -1,18 +1,27 @@
-import React, {Component} from 'react';
-import {withRouter, Redirect} from 'react-router-dom';
+import React, { Component, ReactNode } from 'react'
+import { withRouter, Redirect } from 'react-router-dom'
 
-import Loading from './../loading/loading';
+import Loading from './../loading/loading'
+
+interface Props {
+
+}
+
+interface State {
+  loading: boolean,
+  error: string
+}
 
 
-class Logout extends Component<{},{loading: boolean, error: string}> {
-  constructor(props:any) {
+class Logout extends Component<Props, State> {
+  constructor(props: any) {
     super(props)
     this.state = {
       loading: true,
       error: ''
     }
   }
-  componentDidMount() {
+  public componentDidMount = (): void => {
     if (localStorage.getItem('access_token') != undefined) {
       const access_token = localStorage.getItem('access_token')
       fetch('api/auth/logout', {
@@ -30,7 +39,7 @@ class Logout extends Component<{},{loading: boolean, error: string}> {
     this.setState({loading: false})
 
   }
-  render() {
+  public render = (): ReactNode => {
     const loadingState = this.state.loading ? (<Loading loading={this.state.loading}/>) : (
         <Redirect to={{pathname: '/login'}} />
     )
@@ -41,4 +50,4 @@ class Logout extends Component<{},{loading: boolean, error: string}> {
 }
 
 
-export default withRouter(Logout);
+export default withRouter(Logout)

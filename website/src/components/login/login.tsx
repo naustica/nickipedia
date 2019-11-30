@@ -1,26 +1,26 @@
-import React, { Component } from 'react'
+import React, { Component, ReactNode } from 'react'
 
 import './login.scss'
 
 import LoginForm from './forms/login'
 import RegisterForm from './forms/register'
 
-interface ReadOnly {
+interface Props {
 
 }
-interface WriteOnly {
+interface State {
   form: string
 }
 
-class Login extends Component<ReadOnly, WriteOnly> {
-  constructor(props: any) {
+class Login extends Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       form: 'login'
     }
   }
 
-  changeForm = (): void => {
+  private changeForm = (): void => {
     const { form } = this.state
     if (form === 'login') {
       this.setState({form: 'register'})
@@ -30,7 +30,7 @@ class Login extends Component<ReadOnly, WriteOnly> {
     }
   }
 
-  renderForm = (): any => {
+  private renderForm = (): ReactNode => {
     const { form } = this.state
 
     if (form === 'login') {
@@ -45,7 +45,7 @@ class Login extends Component<ReadOnly, WriteOnly> {
     }
   }
 
-  renderInfo = (): any => {
+  private renderInfo = (): ReactNode => {
     const { form } = this.state
       if (form === 'login') {
         return (
@@ -65,7 +65,7 @@ class Login extends Component<ReadOnly, WriteOnly> {
       }
   }
 
-  render() {
+  public render = (): ReactNode => {
     return (
       <div className="container-login">
         <div className="login-form-wrapper">

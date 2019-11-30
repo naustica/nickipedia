@@ -1,7 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component, ReactNode } from 'react'
 import {Link} from 'react-router-dom'
 import { IoMdOptions } from 'react-icons/io'
-import { IconContext } from "react-icons"
+import { IconContext } from 'react-icons'
 
 
 import './../video.scss'
@@ -9,20 +9,28 @@ import './../video.scss'
 import Loading from './../../loading/loading'
 import ConvertTime from './../../../utils/datetime'
 
+interface Props {
+  id: number,
+  loading: boolean
+}
 
-class VideoComments extends Component<{id: number, loading: boolean}, {data?: any, comment?: string, loading?: boolean}> {
-  constructor(props:any) {
+interface State {
+  data?: any,
+  comment?: string,
+  loading?: boolean
+}
+
+
+export default class VideoComments extends Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       data: [],
       comment: '',
       loading: false
     }
-    this.onChange = this.onChange.bind(this)
-    this.submitForm = this.submitForm.bind(this)
-    this.getComments = this.getComments.bind(this)
   }
-  async getComments(id) {
+  private getComments = async (id: number): Promise<void> => {
     await fetch('api/comment?all=True&video_id=' + id, {
       method: 'get'
     })
@@ -38,18 +46,18 @@ class VideoComments extends Component<{id: number, loading: boolean}, {data?: an
         console.log(error)
       })
   }
-  componentDidMount() {
+  public componentDidMount = (): void => {
     this.getComments(this.props.id)
   }
-  componentDidUpdate(prevProps) {
+  public componentDidUpdate = (prevProps: Props) => {
     if (this.props.id !== prevProps.id) {
       this.getComments(this.props.id)
     }
   }
-  onChange(event:React.ChangeEvent<HTMLInputElement>): void {
+  private onChange = (event:React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({[event.target.name]: event.target.value})
   }
-  submitForm(event:React.FormEvent<HTMLFormElement>): any {
+  private submitForm = (event:React.FormEvent<HTMLFormElement>): any => {
     const access_token = localStorage.getItem('access_token')
     const username = localStorage.getItem('username')
     var form = event.target as HTMLFormElement;
@@ -76,7 +84,7 @@ class VideoComments extends Component<{id: number, loading: boolean}, {data?: an
         form.reset();
       })
   }
-  render() {
+  public render = (): ReactNode => {
     const postForm = (
       <div className="comment-write-card">
         <div className="comment-write-card-img">
@@ -136,6 +144,3 @@ class VideoComments extends Component<{id: number, loading: boolean}, {data?: an
     )
   }
 }
-
-
-export default VideoComments;

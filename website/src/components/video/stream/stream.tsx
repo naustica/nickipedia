@@ -1,19 +1,19 @@
-import React, {Component} from 'react'
+import React, { Component, ReactNode } from 'react'
 import ReactPlayer from 'react-player'
 import { IoIosPlay, IoIosPause, IoMdExpand, IoMdVolumeHigh, IoMdVolumeOff } from 'react-icons/io'
-import { IconContext } from "react-icons"
+import { IconContext } from 'react-icons'
 
-import {ConvertPlayTime} from './../../../utils/datetime'
+import { convertPlayTime } from './../../../utils/datetime'
 
 import './../video.scss'
 
 
-interface ReadOnly {
+interface Props {
   author: string,
   filename: string,
   loading: boolean
 }
-interface WriteOnly {
+interface State {
   error: boolean,
   playing: boolean,
   played: number,
@@ -25,12 +25,12 @@ interface WriteOnly {
   muted: boolean
 }
 
-class VideoStream extends Component<ReadOnly, WriteOnly> {
+export default class VideoStream extends Component<Props, State> {
 
-  player: any
-  videoContainer: any
+  private player: any
+  private videoContainer: any
 
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props)
     this.state = {
       error: false,
@@ -44,32 +44,32 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
       muted: false
     }
   }
-  videoRef = (player: any) => {
+  private videoRef = (player: any): void => {
     this.player = player
   }
-  videoContainerRef = (videoContainer: any) => {
+  private videoContainerRef = (videoContainer: any): void => {
     this.videoContainer = videoContainer
   }
-  togglePlayPause = () => {
+  private togglePlayPause = (): void => {
     this.setState({playing: !this.state.playing})
   }
-  getCurrentVideoProgress = (state) => {
+  private getCurrentVideoProgress = (state): void => {
     this.setState(state)
   }
-  videoEnded = () => {
+  private videoEnded = (): void => {
     this.setState({playing: false})
   }
-  seekVideo = (event: { target: { value: string } }) => {
+  private seekVideo = (event: { target: { value: string } }): void => {
     this.setState({played: parseFloat(event.target.value)})
     this.player.seekTo(parseFloat(event.target.value))
   }
-  changeVolume = (event: { target: { value: string } }) => {
+  private changeVolume = (event: { target: { value: string } }): void => {
     this.setState({volume: parseFloat(event.target.value)})
   }
-  handleDuration = (duration: any) => {
+  private handleDuration = (duration: any): void => {
     this.setState({duration})
   }
-  getFullscreen = () => {
+  private getFullscreen = (): void => {
     if (this.state.fullscreen) {
       if (document.fullscreen) {
         document.exitFullscreen()
@@ -81,7 +81,7 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
       this.setState({fullscreen: true})
     }
   }
-  handleKeyDown = (event: any) => {
+  private handleKeyDown = (event: any): void => {
     // enter
     if (event.keyCode === 32) {
       event.preventDefault()
@@ -109,10 +109,10 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
       event.preventDefault()
     }
   }
-  toggleMuted = () => {
+  private toggleMuted = (): void => {
     this.setState({muted: !this.state.muted})
   }
-  renderPlayButton = () => {
+  private renderPlayButton = (): ReactNode => {
     if (this.state.playing) {
       return (
         <IconContext.Provider value={{size: "25px"}}>
@@ -128,7 +128,7 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
       )
     }
   }
-  renderVolumeButton = () => {
+  private renderVolumeButton = (): ReactNode => {
     if (this.state.muted || this.state.volume === 0) {
       return (
         <IconContext.Provider value={{size: "25px"}}>
@@ -144,7 +144,7 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
       )
     }
   }
-  renderPlayer = (loading: boolean, error: boolean) => {
+  private renderPlayer = (loading: boolean, error: boolean): ReactNode => {
     const errorOverlay = this.state.error ? {opacity: 1} : {opacity: 0}
     const showVideoControls = this.state.playing ? {} : {opacity: 1}
     const Player = (
@@ -183,7 +183,7 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
             />
           </div>
           <div className="video-play-time">
-            {ConvertPlayTime(this.state.duration * this.state.played)} / {ConvertPlayTime(this.state.duration)}
+            {convertPlayTime(this.state.duration * this.state.played)} / {convertPlayTime(this.state.duration)}
           </div>
           <div className="video-expand">
             <button className="video-expand-button" onClick={this.getFullscreen}>
@@ -200,10 +200,7 @@ class VideoStream extends Component<ReadOnly, WriteOnly> {
     }
     return Player
   }
-  render() {
+  public render = (): ReactNode => {
     return this.renderPlayer(this.props.loading, this.state.error)
   }
 }
-
-
-export default VideoStream;

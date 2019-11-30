@@ -1,10 +1,15 @@
-import React, {Component} from 'react';
-import {Route, Redirect} from 'react-router-dom';
+import React, { Component, ReactNode } from 'react'
+import { Route, Redirect } from 'react-router-dom'
 
+interface Props {
+  component: any,
+  path: string,
+  exact?: boolean
+}
 
-class AuthenticatedRoute extends Component<{component: any, path: string, exact?: boolean},{}> {
-  render() {
-    const {component: Component, ...rest} = this.props;
+export default class AuthenticatedRoute extends Component<Props> {
+  public render = (): ReactNode => {
+    const { component: Component, ...rest } = this.props;
     if (localStorage.getItem('access_token') != undefined) {
       return <Route {...rest} render={(props) => <Component {...props} />} />
     } else {
@@ -12,6 +17,3 @@ class AuthenticatedRoute extends Component<{component: any, path: string, exact?
     }
   }
 }
-
-
-export default AuthenticatedRoute

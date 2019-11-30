@@ -1,12 +1,12 @@
-export function fetchSearchStart() {
+export const fetchSearchStart = () => {
   return {
     type: 'fetch_search_start',
     payload: {}
   }
 }
 
-export function fetchSearchResults(term: string, table: string, page: number) {
-  return async function(dispatch: any) {
+export const fetchSearchResults = (term: string, table: string, page: number) => {
+  return async (dispatch: any) => {
     try {
     const response = await fetch('api/search?term=' + term + '&table=' + table + '&page=' + page, {
       method: 'get'
@@ -20,7 +20,7 @@ export function fetchSearchResults(term: string, table: string, page: number) {
   }
 }
 
-export function cleanSearchResults() {
+export const cleanSearchResults = () => {
   return {
     type: 'clean_search_results',
     payload: {}
