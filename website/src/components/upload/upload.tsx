@@ -8,7 +8,7 @@ import './upload.scss'
 import UploadMethod from './uploadSteps/uploadMethod'
 import ProcessLink from './uploadSteps/processLink'
 import ProcessFile from './uploadSteps/processFile'
-import UploadMetadata from './uploadSteps/UploadMetadata'
+import UploadMetadata from './uploadSteps/uploadMetadata'
 import UploadOptionalData from './uploadSteps/uploadOptionalData'
 import UploadFinish from './uploadSteps/uploadFinish'
 
